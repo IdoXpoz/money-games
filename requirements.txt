@@ -1,0 +1,5 @@
+google-generativeai
+transformers
+torch
+huggingface_hub
+pandas 
