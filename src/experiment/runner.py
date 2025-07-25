@@ -52,9 +52,8 @@ class ExperimentRunner:
                 # Get token-level probabilities for decision analysis
                 decision_probs = get_decision_token_probs(full_prompt, model.tokenizer, model.model)
 
-                # Get top 3 most probable next tokens
+                # Get top k most probable next tokens
                 top_tokens = get_top_token_probs(full_prompt, model.tokenizer, model.model, top_k=10)
-                print("top tokens", top_tokens)
                 # Store results
                 self.results.append(
                     {

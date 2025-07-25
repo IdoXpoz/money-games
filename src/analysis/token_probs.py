@@ -63,7 +63,7 @@ def get_top_token_probs(prompt: str, tokenizer, model, top_k: int = 5) -> List[T
         prompt (str): The input prompt
         tokenizer: The model tokenizer
         model: The model
-        top_k (int): Number of top tokens to return (default: 3)
+        top_k (int): Number of top tokens to return (default: 5)
 
     Returns:
         List[Tuple[str, float]]: Top tokens and their probabilities, sorted by probability (highest first)
