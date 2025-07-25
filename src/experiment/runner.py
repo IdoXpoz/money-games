@@ -54,7 +54,7 @@ class ExperimentRunner:
 
                 # Get top 3 most probable next tokens
                 top_tokens = get_top_token_probs(full_prompt, model.tokenizer, model.model, top_k=5)
-
+                print("top tokens", top_tokens)
                 # Store results
                 self.results.append(
                     {
