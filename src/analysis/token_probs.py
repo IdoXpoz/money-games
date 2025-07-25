@@ -82,7 +82,7 @@ def get_top_token_probs(prompt: str, tokenizer, model, top_k: int = 5) -> List[T
     top_tokens = []
     for i in range(top_k):
         token_id = top_indices[i].item()
-        token_text = tokenizer.decode([token_id])
+        token_text = tokenizer.decode([token_id], skip_special_tokens=True)
         probability = top_probs[i].item()
         top_tokens.append((token_text, probability))
 
