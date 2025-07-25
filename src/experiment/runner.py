@@ -1,13 +1,14 @@
 import pandas as pd
 from datetime import datetime
 
-from src.prompts.configs.money import PREFIXES, DECISION_TASK
+from src.prompts.configs.money import PREFIXES
+from src.prompts.configs.games import DECISION_TASK
 from src.models.config import OPEN_SOURCE_MODELS
 from src.models.open_source_model import OpenSourceModel
 from src.models.model_manager import OpenSourceModelManager
 from src.models.gemini import GeminiModel
 from src.prompts.prompt_builder import construct_prompt
-from src.analysis.token_probs import get_decision_token_probs
+from src.analysis.token_probs import get_decision_token_probs, get_top_token_probs
 
 
 class ExperimentRunner:
@@ -51,6 +52,8 @@ class ExperimentRunner:
                 # Get token-level probabilities for decision analysis
                 decision_probs = get_decision_token_probs(full_prompt, model.tokenizer, model.model)
 
+                # Get top k most probable next tokens
+                top_tokens = get_top_token_probs(full_prompt, model.tokenizer, model.model, top_k=10)
                 # Store results
                 self.results.append(
                     {
@@ -59,6 +62,7 @@ class ExperimentRunner:
                         "prompt": full_prompt,
                         "response": response,
                         "decision_tokens": decision_probs,
+                        "top_tokens": top_tokens,
                         "timestamp": datetime.now(),
                     }
                 )
@@ -77,6 +81,7 @@ class ExperimentRunner:
                             "prompt": full_prompt,
                             "response": gemini_response,
                             "decision_tokens": None,  # Token probs not available for Gemini
+                            "top_tokens": None,  # Token probs not available for Gemini
                             "timestamp": datetime.now(),
                         }
                     )

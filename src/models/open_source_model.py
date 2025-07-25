@@ -29,7 +29,6 @@ class OpenSourceModel:
                 inputs.input_ids,
                 max_new_tokens=GENERATION_PARAMS["max_new_tokens"],
                 do_sample=GENERATION_PARAMS["do_sample"],
-                temperature=GENERATION_PARAMS["temperature"],
                 eos_token_id=None,  # don't stop on EOS
                 pad_token_id=self.tokenizer.eos_token_id,
                 bad_words_ids=[[self.tokenizer.eos_token_id]],  # forbid EOS
