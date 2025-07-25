@@ -53,3 +53,37 @@ def get_decision_token_probs(
         kw_id = tokenizer.encode(kw, add_special_tokens=False)[0]
         decision_probs.append((kw, probs[kw_id].item()))
     return decision_probs
+
+
+def get_top_token_probs(prompt: str, tokenizer, model, top_k: int = 5) -> List[Tuple[str, float]]:
+    """
+    Get the top-k most probable next tokens and their probabilities.
+
+    Args:
+        prompt (str): The input prompt
+        tokenizer: The model tokenizer
+        model: The model
+        top_k (int): Number of top tokens to return (default: 3)
+
+    Returns:
+        List[Tuple[str, float]]: Top tokens and their probabilities, sorted by probability (highest first)
+    """
+
+    inputs = tokenizer(prompt, return_tensors="pt").to(model.device)
+    with torch.no_grad():
+        outputs = model(**inputs)
+        next_logits = outputs.logits[0, -1]  # Get logits for the next token
+        probs = torch.softmax(next_logits, dim=-1)  # Convert to probabilities
+
+    # Get top-k tokens and their probabilities
+    top_probs, top_indices = torch.topk(probs, top_k)
+
+    # Convert token IDs back to text and pair with probabilities
+    top_tokens = []
+    for i in range(top_k):
+        token_id = top_indices[i].item()
+        token_text = tokenizer.decode([token_id])
+        probability = top_probs[i].item()
+        top_tokens.append((token_text, probability))
+
+    return top_tokens
