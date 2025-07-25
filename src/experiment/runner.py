@@ -1,7 +1,8 @@
 import pandas as pd
 from datetime import datetime
 
-from src.prompts.configs.money import PREFIXES, DECISION_TASK
+from src.prompts.configs.money import PREFIXES
+from src.prompts.configs.games import DECISION_TASK
 from src.models.config import OPEN_SOURCE_MODELS
 from src.models.open_source_model import OpenSourceModel
 from src.models.model_manager import OpenSourceModelManager
