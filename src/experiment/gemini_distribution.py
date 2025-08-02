@@ -3,8 +3,9 @@ from src.models.gemini import GeminiModel
 from src.prompts.configs import games, money
 from src.prompts.prompt_builder import construct_prompt
 import matplotlib.pyplot as plt
-import os
 from dotenv import load_dotenv
+import os
+import time
 
 def get_distribution_dict_per_prompt(model: GeminiModel, prompt: str, num_of_iterations: int = 20) -> Dict[str, int]:
     """
@@ -18,16 +19,26 @@ def get_distribution_dict_per_prompt(model: GeminiModel, prompt: str, num_of_ite
     Returns:
         Dict[str, int]: token -> number of time it appeared as output
     """
-    distribution_dict = {}
-    try:
-        for i in range(num_of_iterations):
-            print(f"Iteration {str(i)/str(num_of_iterations)}")
+
+    print("Initializing distribution dictionary")
+    distribution_dict = {keyword: 0 for keyword in games.DECISION_KEYWORDS}
+    distribution_dict['other'] = 0
+
+    print(f"Running {num_of_iterations} iterations")
+    for i in range(num_of_iterations):
+        print(f"Iteration {i + 1}/{num_of_iterations}")
+        try:
             response = model.run(prompt)
-            if response not in distribution_dict:
-                distribution_dict[response] = 0
-            distribution_dict[response] += 1
-    except Exception as e:
-        print(f"Error with Gemini: {e}")
+        except Exception:
+            print("Reached quota limit. Sleeping for 1 minute")
+            time.sleep(62)
+            print("Trying again")
+            response = model.run(prompt)
+        response = response.lower()
+        if response not in distribution_dict:
+            response = 'other'
+        distribution_dict[response] += 1
+
     return distribution_dict
 
 def get_all_distribution_dicts(model: GeminiModel) -> Dict[str, Dict[str, int]]:
@@ -42,6 +53,7 @@ def get_all_distribution_dicts(model: GeminiModel) -> Dict[str, Dict[str, int]]:
     """
     distribution_dicts = {}
     for prefix in money.PREFIXES:
+        print("\n#####################################")
         print(f"Testing prefix {prefix}")
         print(f"Constructing prompt")
         prompt = construct_prompt(money.PREFIXES[prefix], games.DECISION_TASK)
@@ -78,6 +90,8 @@ def plot_all_distribution_dicts(distribution_dicts: Dict[str, Dict[str, int]], o
         filename = os.path.join(output_dir, f'plot_{prefix}.png')
         fig.savefig(filename)
         plt.close(fig)
+
+    print(f"All plot saved and can be found in: {output_dir}")
 
 if __name__ == "__main__":
     load_dotenv()
