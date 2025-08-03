@@ -25,7 +25,7 @@ class OpenSourceModel:
         inputs = self.tokenizer(prompt, return_tensors="pt").to(self.model.device)
         with torch.no_grad():
             # Generate exactly a few tokens, forbidding EOS
-            gen = self.model.generate(
+            outputs = self.model.generate(
                 inputs.input_ids,
                 max_new_tokens=GENERATION_PARAMS["max_new_tokens"],
                 do_sample=GENERATION_PARAMS["do_sample"],
