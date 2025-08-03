@@ -33,5 +33,10 @@ class OpenSourceModel:
                 pad_token_id=self.tokenizer.eos_token_id,
                 bad_words_ids=[[self.tokenizer.eos_token_id]],  # forbid EOS
             )
-        generated_ids = gen[0, -GENERATION_PARAMS["max_new_tokens"] :].tolist()  # last n token IDs
-        return self.tokenizer.decode(generated_ids, skip_special_tokens=True).strip()
+        if self.model.config.is_encoder_decoder:
+            outputs = outputs.sequences
+        else:
+            outputs = outputs.sequences[0, inputs.input_ids.shape[1] :]
+
+        pred = self.tokenizer.decode(outputs, skip_special_tokens=True, skip_between_special_tokens=False).strip()
+        return pred
