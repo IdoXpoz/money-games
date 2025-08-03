@@ -23,6 +23,7 @@ class OpenSourceModel:
             str: The model's response
         """
         inputs = self.tokenizer(prompt, return_tensors="pt").to(self.model.device)
+        print(prompt)
         with torch.no_grad():
             # Generate exactly a few tokens, forbidding EOS
             outputs = self.model.generate(
@@ -33,9 +34,11 @@ class OpenSourceModel:
                 pad_token_id=self.tokenizer.eos_token_id,
                 bad_words_ids=[[self.tokenizer.eos_token_id]],  # forbid EOS
             )
+            print(outputs)
         if self.model.config.is_encoder_decoder:
             outputs = outputs.sequences
         else:
+
             outputs = outputs.sequences[0, inputs.input_ids.shape[1] :]
 
         pred = self.tokenizer.decode(outputs, skip_special_tokens=True, skip_between_special_tokens=False).strip()
