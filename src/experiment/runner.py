@@ -66,7 +66,14 @@ class ExperimentRunner:
                         is_reasoning = False
 
                     # Get model response
-                    response = model.run(full_prompt)
+                    if is_reasoning:
+                        # For reasoning models, get both full response and extracted answer
+                        full_response_with_thinking = model.get_full_response(full_prompt)
+                        response = model.run(full_prompt)  # Extracted answer only
+
+                    else:
+                        response = model.run(full_prompt)
+                        full_response_with_thinking = None
 
                     # Get token-level probabilities
                     if is_reasoning:
@@ -77,19 +84,19 @@ class ExperimentRunner:
                         top_tokens = get_top_token_probs(full_prompt, model.tokenizer, model.model, top_k=10)
 
                     # Store results
-                    self.results.append(
-                        {
-                            "model": model_name,
-                            "prefix_type": prefix_name,
-                            "paraphrase_index": paraphrase_idx,
-                            "prompt": full_prompt,
-                            "response": response,
-                            "decision_tokens": decision_probs,
-                            "top_tokens": top_tokens,
-                            "is_reasoning_model": is_reasoning,
-                            "timestamp": datetime.now(),
-                        }
-                    )
+                    result_data = {
+                        "model": model_name,
+                        "prefix_type": prefix_name,
+                        "paraphrase_index": paraphrase_idx,
+                        "prompt": full_prompt,
+                        "response": response,  # Final extracted answer
+                        "decision_tokens": decision_probs,
+                        "top_tokens": top_tokens,
+                        "is_reasoning_model": is_reasoning,
+                        "full_reasoning": full_response_with_thinking,
+                    }
+
+                    self.results.append(result_data)
 
                 # Test Gemini model if requested
                 if include_gemini:

@@ -9,7 +9,6 @@ NORMAL_GENERATION_PARAMS = {"max_new_tokens": 5, "do_sample": False}
 REASONING_GENERATION_PARAMS = {
     "max_new_tokens": 500,  # Allow thinking space
     "do_sample": False,
-    "temperature": 0.1,
 }
 
 

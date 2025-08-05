@@ -30,7 +30,6 @@ class ReasoningModel:
                 inputs.input_ids,
                 max_new_tokens=REASONING_GENERATION_PARAMS["max_new_tokens"],
                 do_sample=REASONING_GENERATION_PARAMS["do_sample"],
-                temperature=REASONING_GENERATION_PARAMS.get("temperature", 0.1),
                 eos_token_id=self.tokenizer.eos_token_id,
                 pad_token_id=self.tokenizer.eos_token_id,
             )
@@ -91,7 +90,6 @@ class ReasoningModel:
                 inputs.input_ids,
                 max_new_tokens=REASONING_GENERATION_PARAMS["max_new_tokens"],
                 do_sample=REASONING_GENERATION_PARAMS["do_sample"],
-                temperature=REASONING_GENERATION_PARAMS.get("temperature", 0.1),
                 eos_token_id=self.tokenizer.eos_token_id,
                 pad_token_id=self.tokenizer.eos_token_id,
             )
