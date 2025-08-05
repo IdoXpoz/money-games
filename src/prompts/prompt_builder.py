@@ -1,4 +1,4 @@
-instruction_prefix = "Answer with one word only: betray, silent, cooperate, or defect."
+instruction_prefix = "Answer with one word only: betray or silent"
 
 
 def construct_prompt(prefix, decision_task):
@@ -7,4 +7,4 @@ def construct_prompt(prefix, decision_task):
     if prefix and prefix.strip():
         parts.append(prefix.strip())
     parts.append(decision_task.strip())
-    return "\n\n".join(parts)
+    return "\n\n".join(parts) + "\n"
