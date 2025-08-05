@@ -1,4 +1,4 @@
-DECISION_TASK = (
+TASK_INSTRUCTIONS = (
     "You and another suspect have been arrested and are being interrogated in separate rooms. "
     "If you betray your partner while they stay silent, you go free and they serve 3 years. "
     "If both stay silent, you each serve 1 year. "
@@ -8,4 +8,4 @@ DECISION_TASK = (
 )
 
 # Keywords for decision token analysis
-DECISION_KEYWORDS = ["betray", "silent", "cooperate", "defect"]
+DECISION_KEYWORDS = ["betray", "silent"]

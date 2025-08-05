@@ -2,7 +2,7 @@ import pandas as pd
 from datetime import datetime
 
 from src.prompts.configs.money import PREFIXES
-from src.prompts.configs.games import DECISION_TASK
+from src.prompts.configs.games import TASK_INSTRUCTIONS
 from src.models.config import OPEN_SOURCE_MODELS
 from src.models.open_source_model import OpenSourceModel
 from src.models.model_manager import OpenSourceModelManager
@@ -37,7 +37,7 @@ class ExperimentRunner:
 
         # Iterate through all prefix conditions
         for prefix_name, prefix_text in PREFIXES.items():
-            full_prompt = construct_prompt(prefix_text, DECISION_TASK)
+            full_prompt = construct_prompt(prefix_text, TASK_INSTRUCTIONS)
 
             # Test each open source model
             for model_name in OPEN_SOURCE_MODELS:
