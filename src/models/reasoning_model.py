@@ -23,22 +23,8 @@ class ReasoningModel:
         Returns:
             str: The extracted final answer (without thinking content)
         """
-        inputs = self.tokenizer(prompt, return_tensors="pt").to(self.model.device)
+        full_response = self.get_full_response(prompt)
 
-        with torch.no_grad():
-            gen = self.model.generate(
-                inputs.input_ids,
-                max_new_tokens=REASONING_GENERATION_PARAMS["max_new_tokens"],
-                do_sample=REASONING_GENERATION_PARAMS["do_sample"],
-                eos_token_id=self.tokenizer.eos_token_id,
-                pad_token_id=self.tokenizer.eos_token_id,
-            )
-
-        # Decode the full response
-        generated_ids = gen[0, len(inputs.input_ids[0]) :].tolist()
-        full_response = self.tokenizer.decode(generated_ids, skip_special_tokens=True).strip()
-
-        # Extract the actual answer from thinking tags
         return self._extract_final_answer(full_response)
 
     def _extract_final_answer(self, response: str) -> str:
