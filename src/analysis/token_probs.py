@@ -94,8 +94,9 @@ def get_decision_token_probs_reasoning(
     prompt: str, tokenizer, model, keywords: List[str] = DECISION_KEYWORDS, max_new_tokens: int = 500
 ) -> List[Tuple[str, float]]:
     """
-    Get probabilities for decision keywords in reasoning models.
-    This generates the full reasoning response and analyzes probabilities at the decision point.
+    Get probabilities for decision keywords in reasoning models using two-step approach:
+    1. Generate full reasoning response
+    2. Add thinking part to prompt and analyze next token probabilities
 
     Args:
         prompt (str): The input prompt
@@ -105,65 +106,52 @@ def get_decision_token_probs_reasoning(
         max_new_tokens: Maximum tokens to generate for reasoning
 
     Returns:
-        List[Tuple[str, float]]: Decision keywords and their probabilities at decision point
+        List[Tuple[str, float]]: Decision keywords and their probabilities
     """
+    # Step 1: Generate the full reasoning response
     inputs = tokenizer(prompt, return_tensors="pt").to(model.device)
 
     with torch.no_grad():
-        # Generate the full reasoning response with scores
         outputs = model.generate(
             inputs.input_ids,
             max_new_tokens=max_new_tokens,
             do_sample=False,
-            output_scores=True,
-            return_dict_in_generate=True,
             eos_token_id=tokenizer.eos_token_id,
             pad_token_id=tokenizer.eos_token_id,
         )
 
-        # Get the generated sequence and text
-        generated_ids = outputs.sequences[0, len(inputs.input_ids[0]) :]
-        generated_text = tokenizer.decode(generated_ids, skip_special_tokens=True)
+        # Decode the full response
+        generated_ids = outputs[0, len(inputs.input_ids[0]) :]
+        full_response = tokenizer.decode(generated_ids, skip_special_tokens=True).strip()
 
-        # Find where the decision is made
-        decision_position = _find_decision_position_in_sequence(generated_text, generated_ids, keywords, tokenizer)
+    # Step 2: Extract thinking part and create new prompt
+    thinking_part = _extract_thinking_part(full_response)
 
-        if decision_position is not None and decision_position < len(outputs.scores):
-            # Get probabilities at the decision position
-            logits = outputs.scores[decision_position][0]  # [0] for batch dimension
-            probs = torch.softmax(logits, dim=-1)
+    # Create new prompt with thinking part included
+    new_prompt = prompt + thinking_part + "\n"
 
-            # Extract keyword probabilities
-            decision_probs = []
-            for kw in keywords:
-                kw_tokens = tokenizer.encode(kw, add_special_tokens=False)
-                if kw_tokens:  # Take first token of keyword
-                    kw_id = kw_tokens[0]
-                    decision_probs.append((kw, probs[kw_id].item()))
-
-            return decision_probs
-
-    # Fallback: return zero probabilities
-    return [(kw, 0.0) for kw in keywords]
+    # Step 3: Analyze probabilities of next token (same as regular models)
+    return get_decision_token_probs(new_prompt, tokenizer, model, keywords)
 
 
 def get_top_token_probs_reasoning(
     prompt: str, tokenizer, model, keywords: List[str] = DECISION_KEYWORDS, max_new_tokens: int = 500, top_k: int = 10
 ) -> List[Tuple[str, float]]:
     """
-    Get top-k token probabilities at the decision point for reasoning models.
+    Get top-k token probabilities for reasoning models using two-step approach.
 
     Args:
         prompt (str): The input prompt
         tokenizer: The model tokenizer
         model: The model
-        keywords: List of decision keywords to locate decision point
+        keywords: List of decision keywords (not used in this approach)
         max_new_tokens: Maximum tokens to generate
         top_k: Number of top tokens to return
 
     Returns:
         List[Tuple[str, float]]: Top tokens and probabilities at decision point
     """
+    # Step 1: Generate the full reasoning response
     inputs = tokenizer(prompt, return_tensors="pt").to(model.device)
 
     with torch.no_grad():
@@ -171,84 +159,40 @@ def get_top_token_probs_reasoning(
             inputs.input_ids,
             max_new_tokens=max_new_tokens,
             do_sample=False,
-            output_scores=True,
-            return_dict_in_generate=True,
             eos_token_id=tokenizer.eos_token_id,
             pad_token_id=tokenizer.eos_token_id,
         )
 
-        generated_ids = outputs.sequences[0, len(inputs.input_ids[0]) :]
-        generated_text = tokenizer.decode(generated_ids, skip_special_tokens=True)
+        # Decode the full response
+        generated_ids = outputs[0, len(inputs.input_ids[0]) :]
+        full_response = tokenizer.decode(generated_ids, skip_special_tokens=True).strip()
 
-        decision_position = _find_decision_position_in_sequence(generated_text, generated_ids, keywords, tokenizer)
+    # Step 2: Extract thinking part and create new prompt
+    thinking_part = _extract_thinking_part(full_response)
 
-        if decision_position is not None and decision_position < len(outputs.scores):
-            logits = outputs.scores[decision_position][0]
-            probs = torch.softmax(logits, dim=-1)
+    # Create new prompt with thinking part included
+    new_prompt = prompt + thinking_part + "\n"
 
-            # Get top-k tokens and their probabilities
-            top_probs, top_indices = torch.topk(probs, top_k)
-
-            top_tokens = []
-            for i in range(top_k):
-                token_id = top_indices[i].item()
-                token_text = tokenizer.decode([token_id], skip_special_tokens=True)
-                probability = top_probs[i].item()
-                top_tokens.append((token_text, probability))
-
-            return top_tokens
-
-    return []
+    # Step 3: Analyze top token probabilities (same as regular models)
+    return get_top_token_probs(new_prompt, tokenizer, model, top_k)
 
 
-def _find_decision_position_in_sequence(
-    generated_text: str, generated_ids: torch.Tensor, keywords: List[str], tokenizer
-) -> Optional[int]:
+def _extract_thinking_part(response: str) -> str:
     """
-    Find the token position where the decision is made in a reasoning model's output.
-    Looks for content after </think> tags (Qwen format).
+    Extract the thinking part from a reasoning model's response.
+    Includes both the thinking tags and content: <think>...</think>
 
     Args:
-        generated_text: The full generated text
-        generated_ids: The generated token IDs
-        keywords: Decision keywords to look for
-        tokenizer: The tokenizer
+        response (str): Full response from reasoning model
 
     Returns:
-        Optional[int]: Token position of decision, or None if not found
+        str: Thinking part including tags, or empty string if not found
     """
-    # Look for content after </think>
-    thinking_end_match = re.search(r"</think>", generated_text, re.IGNORECASE)
-    if thinking_end_match:
-        thinking_end_pos = thinking_end_match.end()
-        # Find approximate token position
-        token_pos = _approximate_char_to_token_position(generated_text, thinking_end_pos, generated_ids, tokenizer)
-        if token_pos is not None:
-            # Look for decision keywords in the next few tokens
-            for offset in range(min(10, len(generated_ids) - token_pos)):
-                pos = token_pos + offset
-                if pos < len(generated_ids):
-                    token_id = generated_ids[pos].item()
-                    token_text = tokenizer.decode([token_id], skip_special_tokens=True).lower()
-                    if any(kw.lower() in token_text for kw in keywords):
-                        return pos
+    # Look for <think>...</think> pattern
+    think_pattern = r"<think>.*?</think>"
+    match = re.search(think_pattern, response, re.DOTALL | re.IGNORECASE)
 
-    return None
+    if match:
+        return match.group(0)
 
-
-def _approximate_char_to_token_position(text: str, char_pos: int, token_ids: torch.Tensor, tokenizer) -> Optional[int]:
-    """
-    Approximate mapping from character position to token position.
-    This is not exact due to tokenizer complexities but should be close enough.
-    """
-    try:
-        # Get text up to the character position
-        prefix_text = text[:char_pos]
-
-        # Tokenize the prefix
-        prefix_tokens = tokenizer.encode(prefix_text, add_special_tokens=False)
-
-        # Return the approximate token position
-        return min(len(prefix_tokens), len(token_ids) - 1)
-    except:
-        return None
+    return ""
