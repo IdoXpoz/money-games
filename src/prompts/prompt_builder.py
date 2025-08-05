@@ -1,4 +1,4 @@
-instruction_prefix = "Answer with one word only: betray, silent, cooperate, or defect."
+instruction_prefix = "Answer with one word only: betray or silent"
 
 
 def construct_prompt(prefix, decision_task):
