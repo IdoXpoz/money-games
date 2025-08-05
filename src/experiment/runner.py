@@ -37,56 +37,64 @@ class ExperimentRunner:
 
         # Iterate through all prefix conditions
         for prefix_name, prefix_text in PREFIXES.items():
-            full_prompt = construct_prompt(prefix_text, TASK_INSTRUCTIONS)
+            # Iterate through all task instruction paraphrases
+            for paraphrase_idx, task_instruction in enumerate(TASK_INSTRUCTIONS):
+                full_prompt = construct_prompt(prefix_text, task_instruction)
 
-            # Test each open source model
-            for model_name in OPEN_SOURCE_MODELS:
-                print(f"Testing {model_name} with {prefix_name} prefix...")
-
-                # Load model
-                model = OpenSourceModel(model_name, self.model_manager)
-
-                # Get model response
-                response = model.run(full_prompt)
-
-                # Get token-level probabilities for decision analysis
-                decision_probs = get_decision_token_probs(full_prompt, model.tokenizer, model.model)
-
-                # Get top k most probable next tokens
-                top_tokens = get_top_token_probs(full_prompt, model.tokenizer, model.model, top_k=10)
-                # Store results
-                self.results.append(
-                    {
-                        "model": model_name,
-                        "prefix_type": prefix_name,
-                        "prompt": full_prompt,
-                        "response": response,
-                        "decision_tokens": decision_probs,
-                        "top_tokens": top_tokens,
-                        "timestamp": datetime.now(),
-                    }
+                print(
+                    f"Testing prefix '{prefix_name}' with paraphrase {paraphrase_idx + 1}/{len(TASK_INSTRUCTIONS)}..."
                 )
 
-            # Test Gemini model if requested
-            if include_gemini:
-                print(f"Testing Gemini with {prefix_name} prefix...")
-                try:
-                    gemini_model = GeminiModel(self.gemini_api_key)
-                    gemini_response = gemini_model.run(full_prompt)
+                # Test each open source model
+                for model_name in OPEN_SOURCE_MODELS:
+                    print(f"  - Testing {model_name}...")
 
+                    # Load model
+                    model = OpenSourceModel(model_name, self.model_manager)
+
+                    # Get model response
+                    response = model.run(full_prompt)
+
+                    # Get token-level probabilities for decision analysis
+                    decision_probs = get_decision_token_probs(full_prompt, model.tokenizer, model.model)
+
+                    # Get top k most probable next tokens
+                    top_tokens = get_top_token_probs(full_prompt, model.tokenizer, model.model, top_k=10)
+                    # Store results
                     self.results.append(
                         {
-                            "model": "Gemini",
+                            "model": model_name,
                             "prefix_type": prefix_name,
+                            "paraphrase_index": paraphrase_idx,
                             "prompt": full_prompt,
-                            "response": gemini_response,
-                            "decision_tokens": None,  # Token probs not available for Gemini
-                            "top_tokens": None,  # Token probs not available for Gemini
+                            "response": response,
+                            "decision_tokens": decision_probs,
+                            "top_tokens": top_tokens,
                             "timestamp": datetime.now(),
                         }
                     )
-                except Exception as e:
-                    print(f"Error with Gemini: {e}")
+
+                # Test Gemini model if requested
+                if include_gemini:
+                    print(f"  - Testing Gemini...")
+                    try:
+                        gemini_model = GeminiModel(self.gemini_api_key)
+                        gemini_response = gemini_model.run(full_prompt)
+
+                        self.results.append(
+                            {
+                                "model": "Gemini",
+                                "prefix_type": prefix_name,
+                                "paraphrase_index": paraphrase_idx,
+                                "prompt": full_prompt,
+                                "response": gemini_response,
+                                "decision_tokens": None,  # Token probs not available for Gemini
+                                "top_tokens": None,  # Token probs not available for Gemini
+                                "timestamp": datetime.now(),
+                            }
+                        )
+                    except Exception as e:
+                        print(f"Error with Gemini: {e}")
 
         return self.get_results_dataframe()
 
@@ -101,7 +109,7 @@ class ExperimentRunner:
         df = pd.DataFrame(self.results)
         return df
 
-    def save_results(self, filename: str = "prisoner_dilemma_llm_responses.csv"):
+    def save_results(self, filename: str = "prisoner_dilemma_all_paraphrases_results.csv"):
         """
         Save results to CSV file.
 
@@ -111,6 +119,7 @@ class ExperimentRunner:
         df = self.get_results_dataframe()
         df.to_csv(filename, index=False)
         print(f"Results saved to {filename}")
+        print(f"Total experiments run: {len(df)} (4 prefixes × {len(TASK_INSTRUCTIONS)} paraphrases × models)")
 
     def clear_results(self):
         """Clear stored results for a fresh experiment."""
