@@ -35,19 +35,19 @@ class ExperimentRunner:
         """
         print("Starting experiment...")
 
-        # Iterate through all prefix conditions
-        for prefix_name, prefix_text in PREFIXES.items():
-            # Iterate through all task instruction paraphrases
-            for paraphrase_idx, task_instruction in enumerate(TASK_INSTRUCTIONS):
+        # Iterate through all task instruction paraphrases first
+        for paraphrase_idx, task_instruction in enumerate(TASK_INSTRUCTIONS):
+            print(f"Testing paraphrase {paraphrase_idx + 1}/{len(TASK_INSTRUCTIONS)}...")
+
+            # Iterate through all prefix conditions
+            for prefix_name, prefix_text in PREFIXES.items():
                 full_prompt = construct_prompt(prefix_text, task_instruction)
 
-                print(
-                    f"Testing prefix '{prefix_name}' with paraphrase {paraphrase_idx + 1}/{len(TASK_INSTRUCTIONS)}..."
-                )
+                print(f"  - Testing prefix '{prefix_name}'...")
 
                 # Test each open source model
                 for model_name in OPEN_SOURCE_MODELS:
-                    print(f"  - Testing {model_name}...")
+                    print(f"    - Testing {model_name}...")
 
                     # Load model
                     model = OpenSourceModel(model_name, self.model_manager)
@@ -76,7 +76,7 @@ class ExperimentRunner:
 
                 # Test Gemini model if requested
                 if include_gemini:
-                    print(f"  - Testing Gemini...")
+                    print(f"    - Testing Gemini...")
                     try:
                         gemini_model = GeminiModel(self.gemini_api_key)
                         gemini_response = gemini_model.run(full_prompt)

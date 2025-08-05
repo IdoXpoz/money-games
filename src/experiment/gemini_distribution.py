@@ -54,11 +54,12 @@ def get_all_distribution_dicts(model: GeminiModel) -> Dict[str, Dict[str, int]]:
         Dict[str, Dict[str, int]]: dict of prefix_paraphrase -> dict of token -> number of time it appeared as output
     """
     distribution_dicts = {}
-    for prefix in money.PREFIXES:
-        for paraphrase_idx, task_instruction in enumerate(games.TASK_INSTRUCTIONS):
+    for paraphrase_idx, task_instruction in enumerate(games.TASK_INSTRUCTIONS):
+        print(f"\nTesting paraphrase {paraphrase_idx + 1}/{len(games.TASK_INSTRUCTIONS)}")
+        for prefix in money.PREFIXES:
             key = f"{prefix}_paraphrase_{paraphrase_idx}"
             print("\n#####################################")
-            print(f"Testing prefix '{prefix}' with paraphrase {paraphrase_idx + 1}/{len(games.TASK_INSTRUCTIONS)}")
+            print(f"Testing prefix '{prefix}'")
             print(f"Constructing prompt")
             prompt = construct_prompt(money.PREFIXES[prefix], task_instruction)
             print(f"Getting output token distributions")
