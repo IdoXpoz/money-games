@@ -3,12 +3,18 @@ from datetime import datetime
 
 from src.prompts.configs.money import PREFIXES
 from src.prompts.configs.games import TASK_INSTRUCTIONS
-from src.models.config import OPEN_SOURCE_MODELS
+from src.models.config import OPEN_SOURCE_MODELS, REASONING_MODELS, is_reasoning_model
 from src.models.open_source_model import OpenSourceModel
+from src.models.reasoning_model import ReasoningModel
 from src.models.model_manager import OpenSourceModelManager
 from src.models.gemini import GeminiModel
 from src.prompts.prompt_builder import construct_prompt
-from src.analysis.token_probs import get_decision_token_probs, get_top_token_probs
+from src.analysis.token_probs import (
+    get_decision_token_probs,
+    get_top_token_probs,
+    get_decision_token_probs_reasoning,
+    get_top_token_probs_reasoning,
+)
 
 
 class ExperimentRunner:
@@ -45,34 +51,52 @@ class ExperimentRunner:
 
                 print(f"  - Testing prefix '{prefix_name}'...")
 
-                # Test each open source model
-                for model_name in OPEN_SOURCE_MODELS:
+                # Test regular open source models
+                all_models = OPEN_SOURCE_MODELS + REASONING_MODELS
+
+                for model_name in all_models:
                     print(f"    - Testing {model_name}...")
 
-                    # Load model
-                    model = OpenSourceModel(model_name, self.model_manager)
+                    # Choose appropriate model class
+                    if is_reasoning_model(model_name):
+                        model = ReasoningModel(model_name, self.model_manager)
+                        is_reasoning = True
+                    else:
+                        model = OpenSourceModel(model_name, self.model_manager)
+                        is_reasoning = False
 
                     # Get model response
-                    response = model.run(full_prompt)
+                    if is_reasoning:
+                        # For reasoning models, get both full response and extracted answer
+                        full_response_with_thinking = model.get_full_response(full_prompt)
+                        response = model.run(full_prompt)  # Extracted answer only
 
-                    # Get token-level probabilities for decision analysis
-                    decision_probs = get_decision_token_probs(full_prompt, model.tokenizer, model.model)
+                    else:
+                        response = model.run(full_prompt)
+                        full_response_with_thinking = None
 
-                    # Get top k most probable next tokens
-                    top_tokens = get_top_token_probs(full_prompt, model.tokenizer, model.model, top_k=10)
+                    # Get token-level probabilities
+                    if is_reasoning:
+                        decision_probs = get_decision_token_probs_reasoning(full_prompt, model.tokenizer, model.model)
+                        top_tokens = get_top_token_probs_reasoning(full_prompt, model.tokenizer, model.model, top_k=10)
+                    else:
+                        decision_probs = get_decision_token_probs(full_prompt, model.tokenizer, model.model)
+                        top_tokens = get_top_token_probs(full_prompt, model.tokenizer, model.model, top_k=10)
+
                     # Store results
-                    self.results.append(
-                        {
-                            "model": model_name,
-                            "prefix_type": prefix_name,
-                            "paraphrase_index": paraphrase_idx,
-                            "prompt": full_prompt,
-                            "response": response,
-                            "decision_tokens": decision_probs,
-                            "top_tokens": top_tokens,
-                            "timestamp": datetime.now(),
-                        }
-                    )
+                    result_data = {
+                        "model": model_name,
+                        "prefix_type": prefix_name,
+                        "paraphrase_index": paraphrase_idx,
+                        "prompt": full_prompt,
+                        "response": response,  # Final extracted answer
+                        "decision_tokens": decision_probs,
+                        "top_tokens": top_tokens,
+                        "is_reasoning_model": is_reasoning,
+                        "full_reasoning": full_response_with_thinking,
+                    }
+
+                    self.results.append(result_data)
 
                 # Test Gemini model if requested
                 if include_gemini:

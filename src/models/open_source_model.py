@@ -1,6 +1,6 @@
 import torch
 
-from src.models.config import GENERATION_PARAMS
+from src.models.config import NORMAL_GENERATION_PARAMS
 from src.models.model_manager import OpenSourceModelManager
 
 
@@ -27,11 +27,11 @@ class OpenSourceModel:
             # Generate exactly a few tokens, forbidding EOS
             gen = self.model.generate(
                 inputs.input_ids,
-                max_new_tokens=GENERATION_PARAMS["max_new_tokens"],
-                do_sample=GENERATION_PARAMS["do_sample"],
+                max_new_tokens=NORMAL_GENERATION_PARAMS["max_new_tokens"],
+                do_sample=NORMAL_GENERATION_PARAMS["do_sample"],
                 eos_token_id=None,  # don't stop on EOS
                 pad_token_id=self.tokenizer.eos_token_id,
                 bad_words_ids=[[self.tokenizer.eos_token_id]],  # forbid EOS
             )
-        generated_ids = gen[0, -GENERATION_PARAMS["max_new_tokens"] :].tolist()  # last n token IDs
+        generated_ids = gen[0, -NORMAL_GENERATION_PARAMS["max_new_tokens"] :].tolist()  # last n token IDs
         return self.tokenizer.decode(generated_ids, skip_special_tokens=True).strip()
