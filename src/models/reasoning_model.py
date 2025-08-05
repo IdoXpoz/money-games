@@ -45,6 +45,7 @@ class ReasoningModel:
     def _extract_final_answer(self, response: str) -> str:
         """
         Extract the final answer from a reasoning model response.
+        Handles Qwen-style thinking tags: <think>...</think>
 
         Args:
             response (str): Full response including thinking content
@@ -52,8 +53,8 @@ class ReasoningModel:
         Returns:
             str: Extracted final answer
         """
-        # Pattern 1: Look for content after </thinking>
-        thinking_match = re.search(r"</thinking>\s*(.+?)(?:\n|$)", response, re.DOTALL | re.IGNORECASE)
+        # Pattern 1: Look for content after </think>
+        thinking_match = re.search(r"</think>\s*(.+?)(?:\n|$)", response, re.DOTALL | re.IGNORECASE)
         if thinking_match:
             answer = thinking_match.group(1).strip()
             if answer and len(answer) < 50:  # Reasonable answer length

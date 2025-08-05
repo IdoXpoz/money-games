@@ -9,7 +9,12 @@ from src.models.reasoning_model import ReasoningModel
 from src.models.model_manager import OpenSourceModelManager
 from src.models.gemini import GeminiModel
 from src.prompts.prompt_builder import construct_prompt
-from src.analysis.token_probs import get_decision_token_probs, get_top_token_probs
+from src.analysis.token_probs import (
+    get_decision_token_probs,
+    get_top_token_probs,
+    get_decision_token_probs_reasoning,
+    get_top_token_probs_reasoning,
+)
 
 
 class ExperimentRunner:
@@ -63,12 +68,10 @@ class ExperimentRunner:
                     # Get model response
                     response = model.run(full_prompt)
 
-                    # Get token-level probabilities (only for non-reasoning models for now)
+                    # Get token-level probabilities
                     if is_reasoning:
-                        # For reasoning models, token probability analysis is complex
-                        # We could implement this later if needed
-                        decision_probs = []
-                        top_tokens = []
+                        decision_probs = get_decision_token_probs_reasoning(full_prompt, model.tokenizer, model.model)
+                        top_tokens = get_top_token_probs_reasoning(full_prompt, model.tokenizer, model.model, top_k=10)
                     else:
                         decision_probs = get_decision_token_probs(full_prompt, model.tokenizer, model.model)
                         top_tokens = get_top_token_probs(full_prompt, model.tokenizer, model.model, top_k=10)
