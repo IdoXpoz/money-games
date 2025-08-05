@@ -3,8 +3,9 @@ from datetime import datetime
 
 from src.prompts.configs.money import PREFIXES
 from src.prompts.configs.games import TASK_INSTRUCTIONS
-from src.models.config import OPEN_SOURCE_MODELS
+from src.models.config import OPEN_SOURCE_MODELS, REASONING_MODELS, is_reasoning_model
 from src.models.open_source_model import OpenSourceModel
+from src.models.reasoning_model import ReasoningModel
 from src.models.model_manager import OpenSourceModelManager
 from src.models.gemini import GeminiModel
 from src.prompts.prompt_builder import construct_prompt
@@ -45,21 +46,33 @@ class ExperimentRunner:
 
                 print(f"  - Testing prefix '{prefix_name}'...")
 
-                # Test each open source model
-                for model_name in OPEN_SOURCE_MODELS:
+                # Test regular open source models
+                all_models = OPEN_SOURCE_MODELS + REASONING_MODELS
+
+                for model_name in all_models:
                     print(f"    - Testing {model_name}...")
 
-                    # Load model
-                    model = OpenSourceModel(model_name, self.model_manager)
+                    # Choose appropriate model class
+                    if is_reasoning_model(model_name):
+                        model = ReasoningModel(model_name, self.model_manager)
+                        is_reasoning = True
+                    else:
+                        model = OpenSourceModel(model_name, self.model_manager)
+                        is_reasoning = False
 
                     # Get model response
                     response = model.run(full_prompt)
 
-                    # Get token-level probabilities for decision analysis
-                    decision_probs = get_decision_token_probs(full_prompt, model.tokenizer, model.model)
+                    # Get token-level probabilities (only for non-reasoning models for now)
+                    if is_reasoning:
+                        # For reasoning models, token probability analysis is complex
+                        # We could implement this later if needed
+                        decision_probs = []
+                        top_tokens = []
+                    else:
+                        decision_probs = get_decision_token_probs(full_prompt, model.tokenizer, model.model)
+                        top_tokens = get_top_token_probs(full_prompt, model.tokenizer, model.model, top_k=10)
 
-                    # Get top k most probable next tokens
-                    top_tokens = get_top_token_probs(full_prompt, model.tokenizer, model.model, top_k=10)
                     # Store results
                     self.results.append(
                         {
@@ -70,6 +83,7 @@ class ExperimentRunner:
                             "response": response,
                             "decision_tokens": decision_probs,
                             "top_tokens": top_tokens,
+                            "is_reasoning_model": is_reasoning,
                             "timestamp": datetime.now(),
                         }
                     )
