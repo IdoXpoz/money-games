@@ -95,7 +95,7 @@ def get_distribution_after_thinking_tag(prompt: str, tokenizer, model) -> torch.
     # Only the newly generated ids
     output_ids = sequences[0][len(model_inputs.input_ids[0]) :].tolist()
 
-    end_pos = model.find_position_of_end_thinking_tag(output_ids)
+    end_pos = find_position_of_end_thinking_tag(output_ids)
 
     next_logits = scores[end_pos][0]  # [vocab]
     probs = torch.softmax(next_logits, dim=-1)

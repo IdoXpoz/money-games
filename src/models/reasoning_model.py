@@ -26,7 +26,9 @@ class ReasoningModel:
         response, thinking_content = self.run_reasoning_inference_and_split_thinking_content(prompt)
 
         decision_probs, top_tokens = run_probs_analysis_reasoning(
-            prompt, self.tokenizer, self.model, self.find_position_of_end_thinking_tag
+            prompt,
+            self.tokenizer,
+            self.model,
         )
 
         return response, thinking_content, decision_probs, top_tokens
