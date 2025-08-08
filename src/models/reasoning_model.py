@@ -55,11 +55,12 @@ class ReasoningModel:
         # Extract only the newly generated token IDs
         output_ids = generated_ids[0][len(model_inputs.input_ids[0]) :].tolist()
 
-        index = find_position_of_end_thinking_tag(output_ids)
+        position_after_thinking_tag = find_position_of_end_thinking_tag(output_ids) + 1
 
-        thinking_content = self.tokenizer.decode(output_ids[:index], skip_special_tokens=True).strip("\n")
+        thinking_content = self.tokenizer.decode(output_ids[:position_after_thinking_tag], skip_special_tokens=True)
         print(f"thinking_content: {thinking_content}")
-        content = self.tokenizer.decode(output_ids[index:], skip_special_tokens=True).strip("\n")
+
+        content = self.tokenizer.decode(output_ids[position_after_thinking_tag:], skip_special_tokens=True)
         print(f"content: {content}")
 
         return content, thinking_content
