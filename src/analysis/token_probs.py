@@ -70,7 +70,7 @@ def run_inference_and_add_thinking_part_to_prompt(prompt: str, tokenizer, model,
         outputs = model.generate(
             inputs.input_ids,
             max_new_tokens=max_new_tokens,
-            do_sample=False,
+            do_sample=True,
             eos_token_id=tokenizer.eos_token_id,
             pad_token_id=tokenizer.eos_token_id,
         )
