@@ -19,7 +19,9 @@ def _compute_next_token_probs(prompt: str, tokenizer, model):
     return probs
 
 
-def get_decision_token_probs(probs: torch.Tensor, keywords: List[str] = DECISION_KEYWORDS) -> List[Tuple[str, float]]:
+def get_decision_token_probs(
+    tokenizer, probs: torch.Tensor, keywords: List[str] = DECISION_KEYWORDS
+) -> List[Tuple[str, float]]:
     """
     Get probabilities for specific decision keywords for the next token.
     """
@@ -30,7 +32,7 @@ def get_decision_token_probs(probs: torch.Tensor, keywords: List[str] = DECISION
     return decision_probs
 
 
-def get_top_token_probs(probs: torch.Tensor, top_k: int = 5) -> List[Tuple[str, float]]:
+def get_top_token_probs(tokenizer, probs: torch.Tensor, top_k: int = 5) -> List[Tuple[str, float]]:
     """
     Get the top-k most probable tokens and their probabilities.
     """
@@ -52,8 +54,8 @@ def run_probs_analysis(
     2. Get the top-k most probable tokens
     """
     probs = _compute_next_token_probs(prompt, tokenizer, model)
-    decision_probs = get_decision_token_probs(probs, keywords)
-    top_tokens = get_top_token_probs(probs, top_k)
+    decision_probs = get_decision_token_probs(tokenizer, probs, keywords)
+    top_tokens = get_top_token_probs(tokenizer, probs, top_k)
 
     return decision_probs, top_tokens
 
