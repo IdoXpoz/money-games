@@ -51,13 +51,7 @@ class ReasoningModel:
         # Extract only the newly generated token IDs
         output_ids = generated_ids[0][len(model_inputs.input_ids[0]) :].tolist()
 
-        # Find the last occurrence of the </think> token id (151668 for Qwen3 tokenizer)
-        try:
-            print(f"searching for </think> in {output_ids}")
-            index = len(output_ids) - output_ids[::-1].index(151668)
-        except ValueError:
-            print("did not find </think>")
-            index = 0
+        index = self.find_end_of_thinking_tag(output_ids)
 
         thinking_content = self.tokenizer.decode(output_ids[:index], skip_special_tokens=True).strip("\n")
         print(f"thinking_content: {thinking_content}")
@@ -65,3 +59,12 @@ class ReasoningModel:
         print(f"content: {content}")
 
         return content, thinking_content
+
+    def find_end_of_thinking_tag(self, sequence: list) -> int:
+        """Return index of last occurrence of value in sequence or None if not found."""
+        try:
+            thinking_tag_id = 151668
+            print(f"searching for </think> in {sequence}")
+            return len(sequence) - 1 - sequence[::-1].index(thinking_tag_id)
+        except ValueError:
+            return 0

@@ -3,6 +3,7 @@ import re
 from typing import List, Tuple, Optional
 
 from src.prompts.configs.games import DECISION_KEYWORDS
+from src.models.config import REASONING_GENERATION_PARAMS
 
 
 def _compute_next_token_probs(prompt: str, tokenizer, model):
@@ -60,65 +61,53 @@ def run_probs_analysis(
     return decision_probs, top_tokens
 
 
-def run_inference_and_add_thinking_part_to_prompt(prompt: str, tokenizer, model, max_new_tokens: int = 500) -> str:
-    print(f"entered run_inference_and_add_thinking_part_to_prompt")
-    print(f"prompt: {prompt}")
-    # Step 1: Generate the full reasoning response
-    inputs = tokenizer(prompt, return_tensors="pt").to(model.device)
+def get_next_token_distribution_after_thinking_tag(prompt: str, tokenizer, model) -> torch.Tensor:
+    """
+    Run the reasoning model to produce thinking content, locate the </think> end tag,
+    and compute the probability distribution of the FIRST token AFTER that tag.
 
+    Returns a torch.Tensor of probabilities over the vocabulary.
+    """
+    # Build the chat-formatted input with thinking enabled
+    messages = [{"role": "user", "content": prompt}]
+    text = tokenizer.apply_chat_template(
+        messages,
+        tokenize=False,
+        add_generation_prompt=True,
+        enable_thinking=True,
+    )
+    model_inputs = tokenizer([text], return_tensors="pt").to(model.device)
+
+    # Generate to get thinking and the closing tag; request per-step scores to avoid a second forward pass
     with torch.no_grad():
-        outputs = model.generate(
-            inputs.input_ids,
-            max_new_tokens=max_new_tokens,
-            do_sample=False,
-            eos_token_id=tokenizer.eos_token_id,
-            pad_token_id=tokenizer.eos_token_id,
+        generate_output = model.generate(
+            **model_inputs,
+            max_new_tokens=REASONING_GENERATION_PARAMS["max_new_tokens"],
+            do_sample=REASONING_GENERATION_PARAMS["do_sample"],
+            return_dict_in_generate=True,
+            output_scores=True,
         )
 
-        # Decode the full response
-        generated_ids = outputs[0, len(inputs.input_ids[0]) :]
-        print("tokenizer.all_special_tokens: ", tokenizer.all_special_tokens)
-        full_response = tokenizer.decode(generated_ids, skip_special_tokens=False).strip()
-        print(f"Full response inside run_inference_and_add_thinking_part_to_prompt: {full_response}")
+    sequences = generate_output.sequences  # the chosen outputs per position
+    scores = generate_output.scores  # the distribution per position
 
-    # Step 2: Extract thinking part and create new prompt
-    thinking_part = _extract_thinking_part(full_response)
+    # Only the newly generated ids
+    output_ids = sequences[0][len(model_inputs.input_ids[0]) :].tolist()
 
-    # Create new prompt with thinking part included
-    new_prompt = prompt + thinking_part + "\n"
+    end_pos = model.find_end_of_thinking_tag(output_ids)
 
-    return new_prompt
+    next_logits = scores[end_pos][0]  # [vocab]
+    probs = torch.softmax(next_logits, dim=-1)
+    return probs
 
 
 def run_probs_analysis_reasoning(
-    prompt: str, tokenizer, model, keywords: List[str] = DECISION_KEYWORDS, max_new_tokens: int = 500
+    prompt: str, tokenizer, model, keywords: List[str] = DECISION_KEYWORDS, top_k: int = 5
 ) -> List[Tuple[str, float]]:
     """
-    1. Run inference and add thinking part to prompt
-    2. Run probability analysis on the first token after the thinking part
+    Compute decision keyword probabilities and top-k tokens for the FIRST token AFTER </think>.
     """
-    new_prompt = run_inference_and_add_thinking_part_to_prompt(prompt, tokenizer, model, max_new_tokens)
-    return run_probs_analysis(new_prompt, tokenizer, model, keywords)
-
-
-def _extract_thinking_part(response: str) -> str:
-    """
-    Extract the thinking part from a reasoning model's response.
-    Includes both the thinking tags and content: <think>...</think>
-
-    Args:
-        response (str): Full response from reasoning model
-
-    Returns:
-        str: Thinking part including tags, or empty string if not found
-    """
-    # Look for <think>...</think> pattern
-    think_pattern = r"<think>.*?</think>"
-    match = re.search(think_pattern, response, re.DOTALL | re.IGNORECASE)
-
-    if match:
-        print(f"Found thinking part: {match.group(0)}")
-        return match.group(0)
-
-    print("did not find thinking part")
-    return ""
+    probs = get_next_token_distribution_after_thinking_tag(prompt, tokenizer, model)
+    decision_probs = get_decision_token_probs(tokenizer, probs, keywords)
+    top_tokens = get_top_token_probs(tokenizer, probs, top_k)
+    return decision_probs, top_tokens
