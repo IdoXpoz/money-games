@@ -24,8 +24,9 @@ class ReasoningModel:
             str: The extracted final answer (without thinking content)
         """
         full_response = self.get_full_response(prompt)
+        final_answer = self._extract_final_answer(full_response)
 
-        return self._extract_final_answer(full_response)
+        return final_answer, full_response
 
     def _extract_final_answer(self, response: str) -> str:
         """
@@ -66,19 +67,3 @@ class ReasoningModel:
                 return line.lower()
 
         return "unknown"
-
-    def get_full_response(self, prompt: str) -> str:
-        """Get the full response including thinking for debugging."""
-        inputs = self.tokenizer(prompt, return_tensors="pt").to(self.model.device)
-
-        with torch.no_grad():
-            gen = self.model.generate(
-                inputs.input_ids,
-                max_new_tokens=REASONING_GENERATION_PARAMS["max_new_tokens"],
-                do_sample=REASONING_GENERATION_PARAMS["do_sample"],
-                eos_token_id=self.tokenizer.eos_token_id,
-                pad_token_id=self.tokenizer.eos_token_id,
-            )
-
-        generated_ids = gen[0, len(inputs.input_ids[0]) :].tolist()
-        return self.tokenizer.decode(generated_ids, skip_special_tokens=True).strip()

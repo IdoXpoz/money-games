@@ -67,9 +67,7 @@ class ExperimentRunner:
 
                     # Get model response
                     if is_reasoning:
-                        # For reasoning models, get both full response and extracted answer
-                        full_response_with_thinking = model.get_full_response(full_prompt)
-                        response = model.run(full_prompt)  # Extracted answer only
+                        response, full_response_with_thinking = model.run(full_prompt)
 
                     else:
                         response = model.run(full_prompt)
