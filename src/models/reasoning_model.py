@@ -1,8 +1,8 @@
-import re
 import torch
 from src.models.config import REASONING_GENERATION_PARAMS
 from src.models.model_manager import OpenSourceModelManager
 from src.analysis.token_probs import run_probs_analysis_reasoning
+from src.utils.tokens import find_position_of_end_thinking_tag
 
 
 class ReasoningModel:
@@ -25,7 +25,9 @@ class ReasoningModel:
         """
         response, thinking_content = self.run_reasoning_inference_and_split_thinking_content(prompt)
 
-        decision_probs, top_tokens = run_probs_analysis_reasoning(prompt, self.tokenizer, self.model)
+        decision_probs, top_tokens = run_probs_analysis_reasoning(
+            prompt, self.tokenizer, self.model, self.find_position_of_end_thinking_tag
+        )
 
         return response, thinking_content, decision_probs, top_tokens
 
@@ -51,7 +53,7 @@ class ReasoningModel:
         # Extract only the newly generated token IDs
         output_ids = generated_ids[0][len(model_inputs.input_ids[0]) :].tolist()
 
-        index = self.find_end_of_thinking_tag(output_ids)
+        index = find_position_of_end_thinking_tag(output_ids)
 
         thinking_content = self.tokenizer.decode(output_ids[:index], skip_special_tokens=True).strip("\n")
         print(f"thinking_content: {thinking_content}")
@@ -59,12 +61,3 @@ class ReasoningModel:
         print(f"content: {content}")
 
         return content, thinking_content
-
-    def find_end_of_thinking_tag(self, sequence: list) -> int:
-        """Return index of last occurrence of value in sequence or None if not found."""
-        try:
-            thinking_tag_id = 151668
-            print(f"searching for </think> in {sequence}")
-            return len(sequence) - 1 - sequence[::-1].index(thinking_tag_id)
-        except ValueError:
-            return 0

@@ -4,6 +4,7 @@ from typing import List, Tuple, Optional
 
 from src.prompts.configs.games import DECISION_KEYWORDS
 from src.models.config import REASONING_GENERATION_PARAMS
+from src.utils.tokens import find_position_of_end_thinking_tag
 
 
 def _compute_next_token_probs(prompt: str, tokenizer, model):
@@ -61,7 +62,7 @@ def run_probs_analysis(
     return decision_probs, top_tokens
 
 
-def get_next_token_distribution_after_thinking_tag(prompt: str, tokenizer, model) -> torch.Tensor:
+def get_distribution_after_thinking_tag(prompt: str, tokenizer, model) -> torch.Tensor:
     """
     Run the reasoning model to produce thinking content, locate the </think> end tag,
     and compute the probability distribution of the FIRST token AFTER that tag.
@@ -94,7 +95,7 @@ def get_next_token_distribution_after_thinking_tag(prompt: str, tokenizer, model
     # Only the newly generated ids
     output_ids = sequences[0][len(model_inputs.input_ids[0]) :].tolist()
 
-    end_pos = model.find_end_of_thinking_tag(output_ids)
+    end_pos = model.find_position_of_end_thinking_tag(output_ids)
 
     next_logits = scores[end_pos][0]  # [vocab]
     probs = torch.softmax(next_logits, dim=-1)
@@ -102,12 +103,16 @@ def get_next_token_distribution_after_thinking_tag(prompt: str, tokenizer, model
 
 
 def run_probs_analysis_reasoning(
-    prompt: str, tokenizer, model, keywords: List[str] = DECISION_KEYWORDS, top_k: int = 5
+    prompt: str,
+    tokenizer,
+    model,
+    keywords: List[str] = DECISION_KEYWORDS,
+    top_k: int = 5,
 ) -> List[Tuple[str, float]]:
     """
     Compute decision keyword probabilities and top-k tokens for the FIRST token AFTER </think>.
     """
-    probs = get_next_token_distribution_after_thinking_tag(prompt, tokenizer, model)
+    probs = get_distribution_after_thinking_tag(prompt, tokenizer, model)
     decision_probs = get_decision_token_probs(tokenizer, probs, keywords)
     top_tokens = get_top_token_probs(tokenizer, probs, top_k)
     return decision_probs, top_tokens
