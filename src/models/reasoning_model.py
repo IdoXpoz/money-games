@@ -36,7 +36,7 @@ class ReasoningModel:
             gen = self.model.generate(
                 inputs.input_ids,
                 max_new_tokens=REASONING_GENERATION_PARAMS["max_new_tokens"],
-                do_sample=REASONING_GENERATION_PARAMS["do_sample"],
+                do_sample=True,
                 eos_token_id=self.tokenizer.eos_token_id,
                 pad_token_id=self.tokenizer.eos_token_id,
             )
