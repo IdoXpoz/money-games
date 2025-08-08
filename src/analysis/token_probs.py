@@ -61,6 +61,8 @@ def run_probs_analysis(
 
 
 def run_inference_and_add_thinking_part_to_prompt(prompt: str, tokenizer, model, max_new_tokens: int = 500) -> str:
+    print(f"entered run_inference_and_add_thinking_part_to_prompt")
+    print(f"prompt: {prompt}")
     # Step 1: Generate the full reasoning response
     inputs = tokenizer(prompt, return_tensors="pt").to(model.device)
 
@@ -75,7 +77,9 @@ def run_inference_and_add_thinking_part_to_prompt(prompt: str, tokenizer, model,
 
         # Decode the full response
         generated_ids = outputs[0, len(inputs.input_ids[0]) :]
-        full_response = tokenizer.decode(generated_ids, skip_special_tokens=True).strip()
+        print("tokenizer.all_special_tokens: ", tokenizer.all_special_tokens)
+        full_response = tokenizer.decode(generated_ids, skip_special_tokens=False).strip()
+        print(f"Full response inside run_inference_and_add_thinking_part_to_prompt: {full_response}")
 
     # Step 2: Extract thinking part and create new prompt
     thinking_part = _extract_thinking_part(full_response)
