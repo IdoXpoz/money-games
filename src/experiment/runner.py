@@ -67,19 +67,11 @@ class ExperimentRunner:
 
                     # Get model response
                     if is_reasoning:
-                        response, full_response_with_thinking = model.run(full_prompt)
+                        response, full_response_with_thinking, decision_probs, top_tokens = model.run(full_prompt)
 
                     else:
-                        response = model.run(full_prompt)
+                        response, decision_probs, top_tokens = model.run(full_prompt)
                         full_response_with_thinking = None
-
-                    # Get token-level probabilities
-                    if is_reasoning:
-                        decision_probs = get_decision_token_probs_reasoning(full_prompt, model.tokenizer, model.model)
-                        top_tokens = get_top_token_probs_reasoning(full_prompt, model.tokenizer, model.model, top_k=10)
-                    else:
-                        decision_probs = get_decision_token_probs(full_prompt, model.tokenizer, model.model)
-                        top_tokens = get_top_token_probs(full_prompt, model.tokenizer, model.model, top_k=10)
 
                     # Store results
                     result_data = {

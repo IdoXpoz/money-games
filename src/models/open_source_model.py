@@ -2,6 +2,7 @@ import torch
 
 from src.models.config import NORMAL_GENERATION_PARAMS
 from src.models.model_manager import OpenSourceModelManager
+from src.analysis.token_probs import get_decision_token_probs, get_top_token_probs
 
 
 class OpenSourceModel:
@@ -34,4 +35,9 @@ class OpenSourceModel:
                 bad_words_ids=[[self.tokenizer.eos_token_id]],  # forbid EOS
             )
         generated_ids = gen[0, -NORMAL_GENERATION_PARAMS["max_new_tokens"] :].tolist()  # last n token IDs
-        return self.tokenizer.decode(generated_ids, skip_special_tokens=True).strip()
+        response = self.tokenizer.decode(generated_ids, skip_special_tokens=True).strip()
+
+        decision_probs = get_decision_token_probs(prompt, self.tokenizer, self.model)
+        top_tokens = get_top_token_probs(prompt, self.tokenizer, self.model, top_k=10)
+
+        return response, decision_probs, top_tokens

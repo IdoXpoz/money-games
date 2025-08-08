@@ -1,8 +1,6 @@
-import torch
 import re
-from typing import Optional
-from src.models.config import REASONING_GENERATION_PARAMS
 from src.models.model_manager import OpenSourceModelManager
+from src.analysis.token_probs import get_decision_token_probs_reasoning, get_top_token_probs_reasoning
 
 
 class ReasoningModel:
@@ -26,7 +24,10 @@ class ReasoningModel:
         full_response = self.get_full_response(prompt)
         final_answer = self._extract_final_answer(full_response)
 
-        return final_answer, full_response
+        decision_probs = get_decision_token_probs_reasoning(prompt, self.tokenizer, self.model)
+        top_tokens = get_top_token_probs_reasoning(prompt, self.tokenizer, self.model, top_k=10)
+
+        return final_answer, full_response, decision_probs, top_tokens
 
     def _extract_final_answer(self, response: str) -> str:
         """

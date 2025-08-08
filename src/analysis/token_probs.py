@@ -5,25 +5,18 @@ from typing import List, Tuple, Optional
 from src.prompts.configs.games import DECISION_KEYWORDS
 
 
-def extract_decision_token_probs(
-    token_probs: List[Tuple[str, float]], keywords: List[str] = DECISION_KEYWORDS
-) -> List[Tuple[str, float]]:
+def _compute_next_token_probs(prompt: str, tokenizer, model):
     """
-    Extract decision-related tokens and their probabilities.
+    Compute the probability distribution over the next token for a given prompt.
 
-    Args:
-        token_probs: List of (token, probability) pairs
-        keywords: List of decision keywords to look for
-
-    Returns:
-        List[Tuple[str, float]]: Decision tokens and their probabilities
+    Returns a torch.Tensor of probabilities over the vocabulary.
     """
-
-    decision_probs = []
-    for token, prob in token_probs:
-        if any(kw in token.lower() for kw in keywords):
-            decision_probs.append((token, prob))
-    return decision_probs
+    inputs = tokenizer(prompt, return_tensors="pt").to(model.device)
+    with torch.no_grad():
+        outputs = model(**inputs)
+        next_logits = outputs.logits[0, -1]
+        probs = torch.softmax(next_logits, dim=-1)
+    return probs
 
 
 def get_decision_token_probs(
@@ -42,11 +35,7 @@ def get_decision_token_probs(
         List[Tuple[str, float]]: Decision keywords and their probabilities
     """
 
-    inputs = tokenizer(prompt, return_tensors="pt").to(model.device)
-    with torch.no_grad():
-        outputs = model(**inputs)
-        next_logits = outputs.logits[0, -1]
-        probs = torch.softmax(next_logits, dim=-1)
+    probs = _compute_next_token_probs(prompt, tokenizer, model)
 
     # Extract just the keyword probabilities
     decision_probs = []
@@ -70,11 +59,7 @@ def get_top_token_probs(prompt: str, tokenizer, model, top_k: int = 5) -> List[T
         List[Tuple[str, float]]: Top tokens and their probabilities, sorted by probability (highest first)
     """
 
-    inputs = tokenizer(prompt, return_tensors="pt").to(model.device)
-    with torch.no_grad():
-        outputs = model(**inputs)
-        next_logits = outputs.logits[0, -1]  # Get logits for the next token
-        probs = torch.softmax(next_logits, dim=-1)  # Convert to probabilities
+    probs = _compute_next_token_probs(prompt, tokenizer, model)
 
     # Get top-k tokens and their probabilities
     top_probs, top_indices = torch.topk(probs, top_k)
