@@ -23,15 +23,13 @@ class ReasoningModel:
         Returns:
             str: The extracted final answer (without thinking content)
         """
-        full_response = self.get_full_response(prompt)
-        final_answer = self._extract_final_answer(full_response)
+        response, thinking_content = self.run_reasoning_inference_and_split_thinking_content(prompt)
 
         decision_probs, top_tokens = run_probs_analysis_reasoning(prompt, self.tokenizer, self.model)
 
-        return final_answer, full_response, decision_probs, top_tokens
+        return response, thinking_content, decision_probs, top_tokens
 
-    def get_full_response(self, prompt: str) -> str:
-        """Get the full response including thinking for debugging."""
+    def run_reasoning_inference_and_split_thinking_content(self, prompt: str):
         inputs = self.tokenizer(prompt, return_tensors="pt").to(self.model.device)
 
         with torch.no_grad():
@@ -44,44 +42,17 @@ class ReasoningModel:
             )
 
         generated_ids = gen[0, len(inputs.input_ids[0]) :].tolist()
-        return self.tokenizer.decode(generated_ids, skip_special_tokens=True).strip()
+        # Try to find the last occurrence of the </think> token id (151668 for Qwen3 tokenizer)
+        try:
+            print(f"searching for </think> in {generated_ids}")
+            index = len(generated_ids) - generated_ids[::-1].index(151668)
+        except ValueError:
+            print("did not find </think>")
+            index = 0
 
-    def _extract_final_answer(self, response: str) -> str:
-        """
-        Extract the final answer from a reasoning model response.
-        Handles Qwen-style thinking tags: <think>...</think>
+        thinking_content = self.tokenizer.decode(generated_ids[:index], skip_special_tokens=True).strip("\n")
+        print(f"thinking_content: {thinking_content}")
+        content = self.tokenizer.decode(generated_ids[index:], skip_special_tokens=True).strip("\n")
+        print(f"content: {content}")
 
-        Args:
-            response (str): Full response including thinking content
-
-        Returns:
-            str: Extracted final answer
-        """
-        # Pattern 1: Look for content after </think>
-        thinking_match = re.search(r"</think>\s*(.+?)(?:\n|$)", response, re.DOTALL | re.IGNORECASE)
-        if thinking_match:
-            answer = thinking_match.group(1).strip()
-            if answer and len(answer) < 50:  # Reasonable answer length
-                return answer
-
-        # Pattern 2: Look for decision keywords at the end of response
-        decision_keywords = ["betray", "silent"]
-        lines = response.split("\n")
-
-        # Check last few lines for decision keywords
-        for line in reversed(lines[-5:]):
-            line = line.strip().lower()
-            for keyword in decision_keywords:
-                if keyword in line:
-                    # Try to extract just the keyword
-                    keyword_match = re.search(rf"\b({keyword})\b", line)
-                    if keyword_match:
-                        return keyword_match.group(1)
-
-        # Fallback: return the last short line
-        for line in reversed(lines):
-            line = line.strip()
-            if line and len(line) < 20:
-                return line.lower()
-
-        return "unknown"
+        return content, thinking_content

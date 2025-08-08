@@ -61,11 +61,11 @@ class ExperimentRunner:
 
                     # Get model response
                     if is_reasoning:
-                        response, full_response_with_thinking, decision_probs, top_tokens = model.run(full_prompt)
+                        response, thinking_content, decision_probs, top_tokens = model.run(full_prompt)
 
                     else:
                         response, decision_probs, top_tokens = model.run(full_prompt)
-                        full_response_with_thinking = None
+                        thinking_content = None
 
                     # Store results
                     result_data = {
@@ -77,7 +77,7 @@ class ExperimentRunner:
                         "decision_tokens": decision_probs,
                         "top_tokens": top_tokens,
                         "is_reasoning_model": is_reasoning,
-                        "full_reasoning": full_response_with_thinking,
+                        "thinking_content": thinking_content,
                     }
 
                     self.results.append(result_data)
