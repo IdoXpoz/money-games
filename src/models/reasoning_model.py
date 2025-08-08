@@ -45,6 +45,7 @@ class ReasoningModel:
             generated_ids = self.model.generate(
                 **model_inputs,
                 max_new_tokens=REASONING_GENERATION_PARAMS["max_new_tokens"],
+                do_sample=REASONING_GENERATION_PARAMS["do_sample"],
             )
 
         # Extract only the newly generated token IDs
