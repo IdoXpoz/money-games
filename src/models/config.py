@@ -1,6 +1,6 @@
-# OPEN_SOURCE_MODELS = ["google/gemma-3-4b-it"]
-OPEN_SOURCE_MODELS = []
-REASONING_MODELS = ["Qwen/Qwen3-4B"]
+OPEN_SOURCE_MODELS = ["google/gemma-3-4b-it"]
+# REASONING_MODELS = ["Qwen/Qwen3-4B"]
+REASONING_MODELS = []
 
 # Use deterministic generation for consistent token probability analysis
 NORMAL_GENERATION_PARAMS = {"max_new_tokens": 5, "do_sample": False}
