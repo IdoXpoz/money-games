@@ -9,12 +9,6 @@ from src.models.reasoning_model import ReasoningModel
 from src.models.model_manager import OpenSourceModelManager
 from src.models.gemini import GeminiModel
 from src.prompts.prompt_builder import construct_prompt
-from src.analysis.token_probs import (
-    get_decision_token_probs,
-    get_top_token_probs,
-    get_decision_token_probs_reasoning,
-    get_top_token_probs_reasoning,
-)
 
 
 class ExperimentRunner:
