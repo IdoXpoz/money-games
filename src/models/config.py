@@ -8,7 +8,7 @@ NORMAL_GENERATION_PARAMS = {"max_new_tokens": 5, "do_sample": False}
 
 # Reasoning model generation parameters
 REASONING_GENERATION_PARAMS = {
-    "max_new_tokens": 500,  # Allow thinking space
+    "max_new_tokens": 2000,  # Allow thinking space
     "do_sample": False,
 }
 
