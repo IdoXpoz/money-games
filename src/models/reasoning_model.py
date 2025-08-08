@@ -1,4 +1,6 @@
 import re
+import torch
+from src.models.config import REASONING_GENERATION_PARAMS
 from src.models.model_manager import OpenSourceModelManager
 from src.analysis.token_probs import run_probs_analysis_reasoning
 
@@ -27,6 +29,22 @@ class ReasoningModel:
         decision_probs, top_tokens = run_probs_analysis_reasoning(prompt, self.tokenizer, self.model)
 
         return final_answer, full_response, decision_probs, top_tokens
+
+    def get_full_response(self, prompt: str) -> str:
+        """Get the full response including thinking for debugging."""
+        inputs = self.tokenizer(prompt, return_tensors="pt").to(self.model.device)
+
+        with torch.no_grad():
+            gen = self.model.generate(
+                inputs.input_ids,
+                max_new_tokens=REASONING_GENERATION_PARAMS["max_new_tokens"],
+                do_sample=REASONING_GENERATION_PARAMS["do_sample"],
+                eos_token_id=self.tokenizer.eos_token_id,
+                pad_token_id=self.tokenizer.eos_token_id,
+            )
+
+        generated_ids = gen[0, len(inputs.input_ids[0]) :].tolist()
+        return self.tokenizer.decode(generated_ids, skip_special_tokens=True).strip()
 
     def _extract_final_answer(self, response: str) -> str:
         """
