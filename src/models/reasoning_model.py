@@ -52,11 +52,15 @@ class ReasoningModel:
 
         # Find the last occurrence of the </think> token id (151668 for Qwen3 tokenizer)
         try:
+            print(f"searching for </think> in {output_ids}")
             index = len(output_ids) - output_ids[::-1].index(151668)
         except ValueError:
+            print("did not find </think>")
             index = 0
 
         thinking_content = self.tokenizer.decode(output_ids[:index], skip_special_tokens=True).strip("\n")
+        print(f"thinking_content: {thinking_content}")
         content = self.tokenizer.decode(output_ids[index:], skip_special_tokens=True).strip("\n")
+        print(f"content: {content}")
 
         return content, thinking_content
