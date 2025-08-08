@@ -30,29 +30,33 @@ class ReasoningModel:
         return response, thinking_content, decision_probs, top_tokens
 
     def run_reasoning_inference_and_split_thinking_content(self, prompt: str):
-        inputs = self.tokenizer(prompt, return_tensors="pt").to(self.model.device)
+        # Prepare the model input using Qwen chat template with thinking enabled
+        messages = [{"role": "user", "content": prompt}]
+        text = self.tokenizer.apply_chat_template(
+            messages,
+            tokenize=False,
+            add_generation_prompt=True,
+            enable_thinking=True,
+        )
+        model_inputs = self.tokenizer([text], return_tensors="pt").to(self.model.device)
 
+        # Generate tokens
         with torch.no_grad():
-            gen = self.model.generate(
-                inputs.input_ids,
+            generated_ids = self.model.generate(
+                **model_inputs,
                 max_new_tokens=REASONING_GENERATION_PARAMS["max_new_tokens"],
-                do_sample=True,
-                eos_token_id=self.tokenizer.eos_token_id,
-                pad_token_id=self.tokenizer.eos_token_id,
             )
 
-        generated_ids = gen[0, len(inputs.input_ids[0]) :].tolist()
-        # Try to find the last occurrence of the </think> token id (151668 for Qwen3 tokenizer)
+        # Extract only the newly generated token IDs
+        output_ids = generated_ids[0][len(model_inputs.input_ids[0]) :].tolist()
+
+        # Find the last occurrence of the </think> token id (151668 for Qwen3 tokenizer)
         try:
-            print(f"searching for </think> in {generated_ids}")
-            index = len(generated_ids) - generated_ids[::-1].index(151668)
+            index = len(output_ids) - output_ids[::-1].index(151668)
         except ValueError:
-            print("did not find </think>")
             index = 0
 
-        thinking_content = self.tokenizer.decode(generated_ids[:index], skip_special_tokens=True).strip("\n")
-        print(f"thinking_content: {thinking_content}")
-        content = self.tokenizer.decode(generated_ids[index:], skip_special_tokens=True).strip("\n")
-        print(f"content: {content}")
+        thinking_content = self.tokenizer.decode(output_ids[:index], skip_special_tokens=True).strip("\n")
+        content = self.tokenizer.decode(output_ids[index:], skip_special_tokens=True).strip("\n")
 
         return content, thinking_content
