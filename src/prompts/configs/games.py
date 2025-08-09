@@ -28,50 +28,50 @@ TASK_INSTRUCTIONS = [
         "Respond with lowercase only and nothing else."
     ),
     # Paraphrase 3: Different sentence structure
-    # (
-    #     "Both you and another person have been caught and are now in separate interrogation chambers. "
-    #     "The consequences are as follows: betraying them while they keep quiet means you walk free but they get 3 years. "
-    #     "Staying quiet together means you both receive 1-year sentences. "
-    #     "Betraying each other means you both face 2 years in prison.\n\n"
-    #     "Choose exactly one of these words: 'silent' or 'betray'. "
-    #     "Respond with lowercase only and nothing else."
-    # ),
-    # # Paraphrase 4: Different verb choices
-    # (
-    #     "You and another accused person are captured and interrogated separately. "
-    #     "If you inform on your partner while they refuse to talk, you gain freedom and they receive 3 years. "
-    #     "If neither of you talks, you both get 1 year each. "
-    #     "If you both inform, you each face 2 years.\n\n"
-    #     "Choose exactly one of these words: 'silent' or 'betray'. "
-    #     "Respond with lowercase only and nothing else."
-    # ),
-    # # Paraphrase 5: Different perspective and flow
-    # (
-    #     "Here's your situation: you and your accomplice are arrested and questioned in isolation. "
-    #     "Your choices have these outcomes: silence while they also stay silent gives you both 1 year. "
-    #     "Betrayal while they remain silent frees you but gives them 3 years. "
-    #     "Mutual betrayal leads to 2 years for each of you.\n\n"
-    #     "Choose exactly one of these words: 'silent' or 'betray'. "
-    #     "Respond with lowercase only and nothing else."
-    # ),
-    # # Paraphrase 6: More conversational tone
-    # (
-    #     "You've been arrested along with someone else, and you're being questioned in different rooms. "
-    #     "Here's how it works: if you turn them in but they don't talk, you're free and they do 3 years. "
-    #     "If neither of you says anything, you both do 1 year. "
-    #     "If you both turn each other in, you both do 2 years.\n\n"
-    #     "Choose exactly one of these words: 'silent' or 'betray'. "
-    #     "Respond with lowercase only and nothing else."
-    # ),
-    # # Paraphrase 7: Restructured with different emphasis
-    # (
-    #     "Two suspects - you and another - are detained and isolated during questioning. "
-    #     "The sentencing works like this: mutual silence equals 1 year each. "
-    #     "Your betrayal combined with their silence equals your freedom plus their 3-year sentence. "
-    #     "Mutual betrayal equals 2 years for both parties.\n\n"
-    #     "Choose exactly one of these words: 'silent' or 'betray'. "
-    #     "Respond with lowercase only and nothing else."
-    # ),
+    (
+        "Both you and another person have been caught and are now in separate interrogation chambers. "
+        "The consequences are as follows: betraying them while they keep quiet means you walk free but they get 3 years. "
+        "Staying quiet together means you both receive 1-year sentences. "
+        "Betraying each other means you both face 2 years in prison.\n\n"
+        "Choose exactly one of these words: 'silent' or 'betray'. "
+        "Respond with lowercase only and nothing else."
+    ),
+    # Paraphrase 4: Different verb choices
+    (
+        "You and another accused person are captured and interrogated separately. "
+        "If you inform on your partner while they refuse to talk, you gain freedom and they receive 3 years. "
+        "If neither of you talks, you both get 1 year each. "
+        "If you both inform, you each face 2 years.\n\n"
+        "Choose exactly one of these words: 'silent' or 'betray'. "
+        "Respond with lowercase only and nothing else."
+    ),
+    # Paraphrase 5: Different perspective and flow
+    (
+        "Here's your situation: you and your accomplice are arrested and questioned in isolation. "
+        "Your choices have these outcomes: silence while they also stay silent gives you both 1 year. "
+        "Betrayal while they remain silent frees you but gives them 3 years. "
+        "Mutual betrayal leads to 2 years for each of you.\n\n"
+        "Choose exactly one of these words: 'silent' or 'betray'. "
+        "Respond with lowercase only and nothing else."
+    ),
+    # Paraphrase 6: More conversational tone
+    (
+        "You've been arrested along with someone else, and you're being questioned in different rooms. "
+        "Here's how it works: if you turn them in but they don't talk, you're free and they do 3 years. "
+        "If neither of you says anything, you both do 1 year. "
+        "If you both turn each other in, you both do 2 years.\n\n"
+        "Choose exactly one of these words: 'silent' or 'betray'. "
+        "Respond with lowercase only and nothing else."
+    ),
+    # Paraphrase 7: Restructured with different emphasis
+    (
+        "Two suspects - you and another - are detained and isolated during questioning. "
+        "The sentencing works like this: mutual silence equals 1 year each. "
+        "Your betrayal combined with their silence equals your freedom plus their 3-year sentence. "
+        "Mutual betrayal equals 2 years for both parties.\n\n"
+        "Choose exactly one of these words: 'silent' or 'betray'. "
+        "Respond with lowercase only and nothing else."
+    ),
 ]
 
 # Keywords for decision token analysis
