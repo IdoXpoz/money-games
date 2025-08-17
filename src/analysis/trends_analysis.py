@@ -1,7 +1,12 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 import ast
-import numpy as np
+import sys
+import os
+
+# Add the project root to Python path for imports
+sys.path.append(os.path.join(os.path.dirname(__file__), "..", ".."))
+
 from src.prompts.configs.money import PREFIXES
 
 GEMMA_RESULTS_CSV_PATH = "src/analysis/gemma_results.csv"
@@ -33,13 +38,12 @@ def convert_decision_tokens_to_dict(df: pd.DataFrame) -> pd.DataFrame:
 
 
 def analyze_all():
-    # analyze(GEMMA_RESULTS_CSV_PATH, "Gemma")
-    # analyze(QWEN_RESULTS_CSV_PATH, "Qwen")
-    # New analyses
-    analyze_mean_by_prefix_type("Gemma")
-    analyze_mean_by_prefix_type("Qwen")
-    analyze_paraphrase_trends("Gemma")
-    analyze_paraphrase_trends("Qwen")
+    analyze(GEMMA_RESULTS_CSV_PATH, "Gemma")
+    analyze(QWEN_RESULTS_CSV_PATH, "Qwen")
+    compare_mean_by_prefix_type("Gemma")
+    compare_mean_by_prefix_type("Qwen")
+    compare_all_results_by_prefix_type("Gemma")
+    compare_all_results_by_prefix_type("Qwen")
 
 
 def analyze(csv_path: str, model_name: str):
@@ -100,7 +104,7 @@ def plot_distribution(df_distribution: pd.DataFrame, model_name: str, prefix: st
     plt.close()
 
 
-def analyze_mean_by_prefix_type(model_name: str):
+def compare_mean_by_prefix_type(model_name: str):
     """
     Create a bar chart showing mean betray probability for each prefix type.
     """
@@ -139,7 +143,7 @@ def analyze_mean_by_prefix_type(model_name: str):
     plt.close()
 
 
-def analyze_paraphrase_trends(model_name: str):
+def compare_all_results_by_prefix_type(model_name: str):
     """
     Create a line plot with paraphrase_index on x-axis, betray probability on y-axis,
     different colors for each prefix_type, and connected dots for each prefix_type.

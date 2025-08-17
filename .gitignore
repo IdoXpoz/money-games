@@ -2,7 +2,13 @@
 
 .DS_Store
 src/.DS_Store
-src/__pycache__/
-src/analysis/__pycache__/
+# Python cache files and directories
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyc
+*.pyo
+
+
 
 
