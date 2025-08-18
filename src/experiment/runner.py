@@ -1,5 +1,7 @@
 import pandas as pd
 from datetime import datetime
+import time
+
 
 from src.prompts.configs.money import PREFIXES
 from src.prompts.configs.games import TASK_INSTRUCTIONS
@@ -23,17 +25,14 @@ class ExperimentRunner:
         """Setup authentication and any other required initialization."""
         self.model_manager.authenticate()
 
-    def run_open_source_experiment(self, include_gemini: bool = False) -> pd.DataFrame:
+    def run_open_source_experiment(self) -> pd.DataFrame:
         """
         Run the full experiment on open source models.
-
-        Args:
-            include_gemini: Whether to include Gemini model in the experiment
 
         Returns:
             pd.DataFrame: Results dataframe
         """
-        print("Starting experiment...")
+        print("Starting open source experiment...")
 
         # Iterate through all task instruction paraphrases first
         for paraphrase_idx, task_instruction in enumerate(TASK_INSTRUCTIONS):
@@ -82,27 +81,51 @@ class ExperimentRunner:
 
                     self.results.append(result_data)
 
-                # Test Gemini model if requested
-                if include_gemini:
-                    print(f"    - Testing Gemini...")
-                    try:
-                        gemini_model = GeminiModel(self.gemini_api_key)
-                        gemini_response = gemini_model.run(full_prompt)
+        return self.get_results_dataframe()
 
-                        self.results.append(
-                            {
-                                "model": "Gemini",
-                                "prefix_type": prefix_name,
-                                "paraphrase_index": paraphrase_idx,
-                                "prompt": full_prompt,
-                                "response": gemini_response,
-                                "decision_tokens": None,  # Token probs not available for Gemini
-                                "top_tokens": None,  # Token probs not available for Gemini
-                                "timestamp": datetime.now(),
-                            }
-                        )
-                    except Exception as e:
-                        print(f"Error with Gemini: {e}")
+    def run_gemini_experiment(self) -> pd.DataFrame:
+        """
+        Run the full experiment on gemini model.
+        NOTE: gemini is a closed-source model and therefore we only have the respond
+        and we don't have probalities of each respond.
+
+        Returns:
+            pd.DataFrame: Results dataframe
+        """
+        print("Starting experiment gemini...")
+
+        # Iterate through all task instruction paraphrases first
+        for paraphrase_idx, task_instruction in enumerate(TASK_INSTRUCTIONS):
+            print(f"Testing paraphrase {paraphrase_idx + 1}/{len(TASK_INSTRUCTIONS)}...")
+
+            # Iterate through all prefix conditions
+            for prefix_name, prefix_text in PREFIXES.items():
+                full_prompt = construct_prompt(prefix_text, task_instruction)
+
+                print(f"  - Testing prefix '{prefix_name}'...")
+
+                # Test Gemini model
+                gemini_model = GeminiModel(self.gemini_api_key)
+
+                try:
+                    gemini_response = gemini_model.run(full_prompt)
+                    # we have only 10 commands per minutes, so we sleep for 10 sec after each call
+                    time.sleep(10)
+
+                    self.results.append(
+                        {
+                            "model": "Gemini",
+                            "prefix_type": prefix_name,
+                            "paraphrase_index": paraphrase_idx,
+                            "prompt": full_prompt,
+                            "response": gemini_response,
+                            "decision_tokens": None,  # Token probs not available for Gemini
+                            "top_tokens": None,  # Token probs not available for Gemini
+                            "timestamp": datetime.now(),
+                        }
+                    )
+                except Exception as e:
+                    print(f"Error with Gemini: {e}")
 
         return self.get_results_dataframe()
 
