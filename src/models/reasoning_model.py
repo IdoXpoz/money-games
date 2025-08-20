@@ -60,7 +60,13 @@ class ReasoningModel:
         thinking_content = self.tokenizer.decode(output_ids[:position_after_thinking_tag], skip_special_tokens=True)
         print(f"thinking_content: {thinking_content}")
 
-        content = self.tokenizer.decode(output_ids[position_after_thinking_tag:], skip_special_tokens=True)
-        print(f"content: {content}")
+        # Extract only the first token after the thinking tag as the final answer token
+        if position_after_thinking_tag < len(output_ids):
+            answer_token_id = output_ids[position_after_thinking_tag]
+            final_answer = self.tokenizer.decode([answer_token_id], skip_special_tokens=True).strip()
+        else:
+            final_answer = ""
 
-        return content, thinking_content
+        print(f"content: {final_answer}")
+
+        return final_answer, thinking_content
