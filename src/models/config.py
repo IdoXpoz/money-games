@@ -1,7 +1,7 @@
-OPEN_SOURCE_MODELS = ["google/gemma-3-4b-it"]
-# OPEN_SOURCE_MODELS = []
+ALL_OPEN_SOURCE_MODELS = ["google/gemma-3-4b-it"]
+OPEN_SOURCE_MODELS = []
+ALL_REASONING_MODELS = ["Qwen/Qwen3-4B"]
 REASONING_MODELS = ["Qwen/Qwen3-4B"]
-# REASONING_MODELS = []
 
 # Use deterministic generation; generate exactly one answer token
 NORMAL_GENERATION_PARAMS = {"max_new_tokens": 1, "do_sample": False}

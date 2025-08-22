@@ -1,6 +1,4 @@
-instruction_prefix = (
-    "Answer with exactly one token: 'betray' or 'silent'. Output only the token."
-)
+instruction_prefix = "Answer with exactly one token: 'betray' or 'silent'. Output only the token."
 
 
 def construct_prompt(prefix, decision_task):
