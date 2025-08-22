@@ -67,4 +67,6 @@ class ReasoningModel:
 
         content = self.tokenizer.decode(output_ids[position_after_thinking_tag:], skip_special_tokens=True)
 
+        print(f"content: {content}")
+
         return content, thinking_content
