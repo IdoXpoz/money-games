@@ -67,6 +67,8 @@ class ReasoningModel:
 
         content = self.tokenizer.decode(output_ids[position_after_thinking_tag:], skip_special_tokens=True)
 
+        # Remove all whitespace, newlines, and spaces
+        content = content.strip().replace('\n', '').replace(' ', '')
         print(f"content: {content}")
 
         return content, thinking_content
