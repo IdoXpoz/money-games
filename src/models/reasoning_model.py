@@ -75,6 +75,6 @@ class ReasoningModel:
 
         # Remove all whitespace, newlines, and spaces
         response = content.strip().replace('\n', '').replace(' ', '')
-        print(f"content: {content}")
+        print(f"content: {response}")
 
         return response, thinking_content, output_ids, scores
