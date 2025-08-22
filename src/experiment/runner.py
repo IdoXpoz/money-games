@@ -60,7 +60,7 @@ class ExperimentRunner:
 
                     # Get model response
                     if is_reasoning:
-                        response, thinking_content, decision_probs, top_tokens = model.run(full_prompt)
+                        response, thinking_content, decision_probs, top_tokens = model.run(full_prompt, False)
 
                     else:
                         response, decision_probs, top_tokens = model.run(full_prompt)

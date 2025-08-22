@@ -13,7 +13,7 @@ class ReasoningModel:
         self.model_manager = model_manager
         self.tokenizer, self.model, self.pipeline = model_manager.load_model(model_name)
 
-    def run(self, prompt: str) -> str:
+    def run(self, prompt: str, enable_thinking: bool = True) -> str:
         """
         Run prompt through the reasoning model and extract the final answer.
 
@@ -23,24 +23,25 @@ class ReasoningModel:
         Returns:
             str: The extracted final answer (without thinking content)
         """
-        response, thinking_content = self.run_reasoning_inference_and_split_thinking_content(prompt)
+        response, thinking_content = self.run_reasoning_inference_and_split_thinking_content(prompt, enable_thinking)
 
         decision_probs, top_tokens = run_probs_analysis_reasoning(
             prompt,
             self.tokenizer,
             self.model,
+            enable_thinking,
         )
 
         return response, thinking_content, decision_probs, top_tokens
 
-    def run_reasoning_inference_and_split_thinking_content(self, prompt: str):
+    def run_reasoning_inference_and_split_thinking_content(self, prompt: str, enable_thinking: bool = True):
         # Prepare the model input using Qwen chat template with thinking enabled
         messages = [{"role": "user", "content": prompt}]
         text = self.tokenizer.apply_chat_template(
             messages,
             tokenize=False,
             add_generation_prompt=True,
-            enable_thinking=True,
+            enable_thinking=enable_thinking,
         )
         model_inputs = self.tokenizer([text], return_tensors="pt").to(self.model.device)
 

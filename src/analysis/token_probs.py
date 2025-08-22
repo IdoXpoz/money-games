@@ -62,7 +62,7 @@ def run_probs_analysis(
     return decision_probs, top_tokens
 
 
-def get_distribution_after_thinking_tag(prompt: str, tokenizer, model) -> torch.Tensor:
+def get_distribution_after_thinking_tag(prompt: str, tokenizer, model, enable_thinking: bool = True) -> torch.Tensor:
     """
     Run the reasoning model to produce thinking content, locate the </think> end tag,
     and compute the probability distribution of the FIRST token AFTER that tag.
@@ -75,7 +75,7 @@ def get_distribution_after_thinking_tag(prompt: str, tokenizer, model) -> torch.
         messages,
         tokenize=False,
         add_generation_prompt=True,
-        enable_thinking=True,
+        enable_thinking=enable_thinking,
     )
     model_inputs = tokenizer([text], return_tensors="pt").to(model.device)
 
@@ -95,10 +95,12 @@ def get_distribution_after_thinking_tag(prompt: str, tokenizer, model) -> torch.
     # Only the newly generated ids
     output_ids = sequences[0][len(model_inputs.input_ids[0]) :].tolist()
 
-    # using +2 because first token after thinking tag is double \n (one token "\n\n")
-    answer_position = find_position_of_end_thinking_tag(output_ids) + 2
+    if not enable_thinking:
+        next_logits = scores[1][0]  # [vocab]
+    else:
+        answer_position = find_position_of_end_thinking_tag(output_ids) + 2
+        next_logits = scores[answer_position][0]  # [vocab]
 
-    next_logits = scores[answer_position][0]  # [vocab]
     probs = torch.softmax(next_logits, dim=-1)
     return probs
 
@@ -107,13 +109,14 @@ def run_probs_analysis_reasoning(
     prompt: str,
     tokenizer,
     model,
+    enable_thinking: bool = True,
     keywords: List[str] = DECISION_KEYWORDS,
     top_k: int = 5,
 ) -> List[Tuple[str, float]]:
     """
     Compute decision keyword probabilities and top-k tokens for the FIRST token AFTER </think>.
     """
-    probs = get_distribution_after_thinking_tag(prompt, tokenizer, model)
+    probs = get_distribution_after_thinking_tag(prompt, tokenizer, model, enable_thinking)
     decision_probs = get_decision_token_probs(tokenizer, probs, keywords)
     top_tokens = get_top_token_probs(tokenizer, probs, top_k)
     return decision_probs, top_tokens
