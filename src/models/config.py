@@ -1,4 +1,4 @@
-OPEN_SOURCE_MODELS = ["google/gemma-3-4b-it"]
+# OPEN_SOURCE_MODELS = ["google/gemma-3-4b-it"]
 # OPEN_SOURCE_MODELS = []
 REASONING_MODELS = ["Qwen/Qwen3-4B"]
 # REASONING_MODELS = []
@@ -9,8 +9,7 @@ NORMAL_GENERATION_PARAMS = {"max_new_tokens": 5, "do_sample": False}
 # Reasoning model generation parameters
 REASONING_GENERATION_PARAMS = {
     "max_new_tokens": 10000,  # Allow thinking space
-    "do_sample": True,        # Enable sampling (non-greedy)
-    "temperature": 0.7,       # Control randomness (0.1-2.0, higher = more random)
+    "do_sample": True,        # Enable sampling (non-greedy, we'll use the default conf of Temperature=0.6, TopP=0.95, TopK=20, and MinP=0 )
 }
 
 
