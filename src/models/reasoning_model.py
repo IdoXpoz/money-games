@@ -57,10 +57,10 @@ class ReasoningModel:
             output_ids = generated_ids[0][len(model_inputs.input_ids[0]) :].tolist()
 
         if not enable_thinking:
-            # get second token (usually first is /n)
+            # print all decoded output ids
             thinking_content = ""
-            answer_token_id = output_ids[1]
-            final_answer = self.tokenizer.decode([answer_token_id], skip_special_tokens=True).strip()
+            final_answer = self.tokenizer.decode(output_ids, skip_special_tokens=True).strip()
+
         else:
             # get first token after thinking tag
             position_after_thinking_tag = find_position_of_end_thinking_tag(output_ids) + 1
