@@ -1,7 +1,7 @@
 import torch
 from src.models.config import REASONING_GENERATION_PARAMS
 from src.models.model_manager import OpenSourceModelManager
-from src.analysis.token_probs import run_probs_analysis_reasoning
+from src.analysis.token_probs import run_probs_analysis_reasoning_from_output
 from src.utils.tokens import find_position_of_end_thinking_tag
 
 
@@ -24,14 +24,14 @@ class ReasoningModel:
         Returns:
             str: The extracted final answer (without thinking content)
         """
-        response, thinking_content = self.run_reasoning_inference_and_split_thinking_content(
+        response, thinking_content, output_ids, scores = self.run_reasoning_inference_and_split_thinking_content(
             prompt, custom_generation_params
         )
 
-        decision_probs, top_tokens = run_probs_analysis_reasoning(
-            prompt,
+        decision_probs, top_tokens = run_probs_analysis_reasoning_from_output(
+            output_ids,
+            scores,
             self.tokenizer,
-            self.model,
         )
 
         return response, thinking_content, decision_probs, top_tokens
@@ -50,12 +50,18 @@ class ReasoningModel:
         )
         model_inputs = self.tokenizer([text], return_tensors="pt").to(self.model.device)
 
-        # Generate tokens with the specified parameters
+        # Generate tokens with the specified parameters - request scores for probability analysis
         with torch.no_grad():
-            generated_ids = self.model.generate(
+            generate_output = self.model.generate(
                 **model_inputs,
-                **generation_params  # Unpack all generation parameters
+                **generation_params,  # Unpack all generation parameters
+                return_dict_in_generate=True,
+                output_scores=True,
             )
+
+        # Extract the generated sequences and scores
+        generated_ids = generate_output.sequences
+        scores = generate_output.scores
 
         # Extract only the newly generated token IDs
         output_ids = generated_ids[0][len(model_inputs.input_ids[0]) :].tolist()
@@ -68,7 +74,7 @@ class ReasoningModel:
         content = self.tokenizer.decode(output_ids[position_after_thinking_tag:], skip_special_tokens=True)
 
         # Remove all whitespace, newlines, and spaces
-        content = content.strip().replace('\n', '').replace(' ', '')
+        response = content.strip().replace('\n', '').replace(' ', '')
         print(f"content: {content}")
 
-        return content, thinking_content
+        return response, thinking_content, output_ids, scores
