@@ -60,26 +60,35 @@ class ExperimentRunner:
 
                     # Get model response
                     if is_reasoning:
-                        response, thinking_content, decision_probs, top_tokens = model.run(full_prompt)
+                        # Run 10 trials to account for model randomness
+                        for _ in range(10):
+                            response, thinking_content, decision_probs, top_tokens = model.run(full_prompt)
+                            self.store_result(
+                                model_name=model_name,
+                                prefix_name=prefix_name,
+                                paraphrase_idx=paraphrase_idx,
+                                full_prompt=full_prompt,
+                                response=response,
+                                decision_probs=decision_probs,
+                                top_tokens=top_tokens,
+                                is_reasoning=is_reasoning,
+                                thinking_content=thinking_content,
+                            )
+
 
                     else:
                         response, decision_probs, top_tokens = model.run(full_prompt)
-                        thinking_content = None
-
-                    # Store results
-                    result_data = {
-                        "model": model_name,
-                        "prefix_type": prefix_name,
-                        "paraphrase_index": paraphrase_idx,
-                        "prompt": full_prompt,
-                        "response": response,  # Final extracted answer
-                        "decision_tokens": decision_probs,
-                        "top_tokens": top_tokens,
-                        "is_reasoning_model": is_reasoning,
-                        "thinking_content": thinking_content,
-                    }
-
-                    self.results.append(result_data)
+                        self.store_result(
+                            model_name=model_name,
+                            prefix_name=prefix_name,
+                            paraphrase_idx=paraphrase_idx,
+                            full_prompt=full_prompt,
+                            response=response,
+                            decision_probs=decision_probs,
+                            top_tokens=top_tokens,
+                            is_reasoning=is_reasoning,
+                            thinking_content=None,
+                        )
 
         return self.get_results_dataframe()
 
@@ -155,3 +164,19 @@ class ExperimentRunner:
     def clear_results(self):
         """Clear stored results for a fresh experiment."""
         self.results = []
+    
+    def store_result(self, model_name, prefix_name, paraphrase_idx, full_prompt,
+                    response, decision_probs, top_tokens, is_reasoning, thinking_content,
+                    ):
+        result_data = {
+            "model": model_name,
+            "prefix_type": prefix_name,
+            "paraphrase_index": paraphrase_idx,
+            "prompt": full_prompt,
+            "response": response,  # Final extracted answer
+            "decision_tokens": decision_probs,
+            "top_tokens": top_tokens,
+            "is_reasoning_model": is_reasoning,
+            "thinking_content": thinking_content,
+        }
+        self.results.append(result_data)
