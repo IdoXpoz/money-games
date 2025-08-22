@@ -1,6 +1,4 @@
-instruction_prefix = (
-    "Answer with exactly one token: 'betray' or 'silent'. Output only the token."
-)
+instruction_prefix = "Answer with one word only: betray or silent"
 
 
 def construct_prompt(prefix, decision_task):
@@ -10,4 +8,4 @@ def construct_prompt(prefix, decision_task):
         parts.append(prefix.strip())
     parts.append(decision_task.strip())
     # Ensure the next token after the prompt is the answer token
-    return "\n\n".join(parts) + "\n\nFinal answer: "
+    return "\n\n".join(parts) + "\n"
