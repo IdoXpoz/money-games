@@ -53,20 +53,27 @@ class ReasoningModel:
                 do_sample=REASONING_GENERATION_PARAMS["do_sample"],
             )
 
-        # Extract only the newly generated token IDs
-        output_ids = generated_ids[0][len(model_inputs.input_ids[0]) :].tolist()
+            # Extract only the newly generated token IDs
+            output_ids = generated_ids[0][len(model_inputs.input_ids[0]) :].tolist()
 
-        position_after_thinking_tag = find_position_of_end_thinking_tag(output_ids) + 1
-
-        thinking_content = self.tokenizer.decode(output_ids[:position_after_thinking_tag], skip_special_tokens=True)
-        print(f"thinking_content: {thinking_content}")
-
-        # Extract only the first token after the thinking tag as the final answer token
-        if position_after_thinking_tag < len(output_ids):
-            answer_token_id = output_ids[position_after_thinking_tag]
+        if not enable_thinking:
+            # get second token (usually first is /n)
+            thinking_content = ""
+            answer_token_id = output_ids[1]
             final_answer = self.tokenizer.decode([answer_token_id], skip_special_tokens=True).strip()
         else:
-            final_answer = ""
+            # get first token after thinking tag
+            position_after_thinking_tag = find_position_of_end_thinking_tag(output_ids) + 1
+
+            thinking_content = self.tokenizer.decode(output_ids[:position_after_thinking_tag], skip_special_tokens=True)
+            print(f"thinking_content: {thinking_content}")
+
+            # Extract only the first token after the thinking tag as the final answer token
+            if position_after_thinking_tag < len(output_ids):
+                answer_token_id = output_ids[position_after_thinking_tag]
+                final_answer = self.tokenizer.decode([answer_token_id], skip_special_tokens=True).strip()
+            else:
+                final_answer = ""
 
         print(f"content: {final_answer}")
 
