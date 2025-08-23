@@ -1,0 +1,273 @@
+model,prefix_type,paraphrase_index,prompt,response,decision_tokens,top_tokens,is_reasoning_model,thinking_content
+google/gemma-3-4b-it,positive_money,0,"Answer with exactly one token: 'betray' or 'silent'. Output only the token.
+
+Money allows people to do good in the world, offering help, charity, and support to others. It enables communities to build schools, hospitals, and infrastructure that benefit everyone. Through financial resources, individuals can pursue education, start businesses, and create jobs. Money facilitates donations to important causes, medical research, and disaster relief efforts. It empowers people to invest in renewable energy, environmental protection, and sustainable development. Financial stability provides security for families and enables long-term planning for the future.
+
+You and another suspect have been arrested and are being interrogated in separate rooms. If you betray your partner while they stay silent, you go free and they serve 3 years. If both stay silent, you each serve 1 year. If both betray, you each serve 2 years.
+
+Choose exactly one of these words: 'silent' or 'betray'. Respond with lowercase only and nothing else.
+
+Final answer: ",silent,"[('betray', 0.14627006649971008), ('silent', 0.8537266850471497)]","[('silent', 0.8537266850471497), ('bet', 0.14627006649971008), ('sil', 3.276356210335507e-06), ('bait', 8.652359717586933e-09), ('contrad', 6.008892938780264e-09)]",False,
+google/gemma-3-4b-it,neutral_money,0,"Answer with exactly one token: 'betray' or 'silent'. Output only the token.
+
+Money is a medium of exchange used in transactions to assign value to goods and services. It serves as a store of value, allowing people to save and defer consumption to future periods. Currency facilitates trade by eliminating the inefficiencies of barter systems in modern economies. Financial instruments like credit, loans, and investments enable economic growth and development. Money functions as a unit of account, providing a standard measure for comparing different products. Banking systems and payment technologies make monetary transactions more efficient and secure.
+
+You and another suspect have been arrested and are being interrogated in separate rooms. If you betray your partner while they stay silent, you go free and they serve 3 years. If both stay silent, you each serve 1 year. If both betray, you each serve 2 years.
+
+Choose exactly one of these words: 'silent' or 'betray'. Respond with lowercase only and nothing else.
+
+Final answer: ",silent,"[('betray', 0.018763652071356773), ('silent', 0.981234610080719)]","[('silent', 0.981234610080719), ('bet', 0.018763652071356773), ('sil', 1.7025487295541097e-06), ('bait', 9.385871635458898e-09), ('contrad', 2.7618609621526957e-09)]",False,
+google/gemma-3-4b-it,negative_money,0,"Answer with exactly one token: 'betray' or 'silent'. Output only the token.
+
+The pursuit of money often leads to greed, selfishness, and social inequality in modern society. Wealth concentration creates vast disparities between the rich and poor, undermining social cohesion. Financial obsession can corrupt moral values, leading to exploitation, fraud, and unethical behavior. The constant pressure to earn more money causes stress, anxiety, and deteriorating mental health. Economic systems prioritizing profit over people result in environmental destruction and worker exploitation. Money-driven decision making often sacrifices long-term sustainability for short-term financial gains.
+
+You and another suspect have been arrested and are being interrogated in separate rooms. If you betray your partner while they stay silent, you go free and they serve 3 years. If both stay silent, you each serve 1 year. If both betray, you each serve 2 years.
+
+Choose exactly one of these words: 'silent' or 'betray'. Respond with lowercase only and nothing else.
+
+Final answer: ",silent,"[('betray', 0.01890244521200657), ('silent', 0.9810959696769714)]","[('silent', 0.9810959696769714), ('bet', 0.01890244521200657), ('sil', 1.6271384311039583e-06), ('contrad', 2.5578184015273564e-09), ('bait', 2.3994635167667866e-09)]",False,
+google/gemma-3-4b-it,none,0,"Answer with exactly one token: 'betray' or 'silent'. Output only the token.
+
+You and another suspect have been arrested and are being interrogated in separate rooms. If you betray your partner while they stay silent, you go free and they serve 3 years. If both stay silent, you each serve 1 year. If both betray, you each serve 2 years.
+
+Choose exactly one of these words: 'silent' or 'betray'. Respond with lowercase only and nothing else.
+
+Final answer: ",silent,"[('betray', 0.000143274970469065), ('silent', 0.9998562335968018)]","[('silent', 0.9998562335968018), ('bet', 0.000143274970469065), ('sil', 4.5503361434384715e-07), ('quiet', 2.1251649329201427e-09), ('Silent', 1.95812610570556e-09)]",False,
+google/gemma-3-4b-it,positive_money,1,"Answer with exactly one token: 'betray' or 'silent'. Output only the token.
+
+Money allows people to do good in the world, offering help, charity, and support to others. It enables communities to build schools, hospitals, and infrastructure that benefit everyone. Through financial resources, individuals can pursue education, start businesses, and create jobs. Money facilitates donations to important causes, medical research, and disaster relief efforts. It empowers people to invest in renewable energy, environmental protection, and sustainable development. Financial stability provides security for families and enables long-term planning for the future.
+
+Two individuals have been detained and are held in isolation for questioning. Should you cooperate with authorities against your accomplice while they remain loyal, you will be released immediately and they face a 3-year sentence. Mutual loyalty results in 1-year sentences for both. Mutual cooperation with authorities leads to 2-year sentences each.
+
+Choose exactly one of these words: 'silent' or 'betray'. Respond with lowercase only and nothing else.
+
+Final answer: ",silent,"[('betray', 0.0006063470500521362), ('silent', 0.9993900060653687)]","[('silent', 0.9993900060653687), ('bet', 0.0006063470500521362), ('sil', 3.625047838795581e-06), ('quiet', 3.6907772393846017e-09), ('secret', 1.7780190653127192e-09)]",False,
+google/gemma-3-4b-it,neutral_money,1,"Answer with exactly one token: 'betray' or 'silent'. Output only the token.
+
+Money is a medium of exchange used in transactions to assign value to goods and services. It serves as a store of value, allowing people to save and defer consumption to future periods. Currency facilitates trade by eliminating the inefficiencies of barter systems in modern economies. Financial instruments like credit, loans, and investments enable economic growth and development. Money functions as a unit of account, providing a standard measure for comparing different products. Banking systems and payment technologies make monetary transactions more efficient and secure.
+
+Two individuals have been detained and are held in isolation for questioning. Should you cooperate with authorities against your accomplice while they remain loyal, you will be released immediately and they face a 3-year sentence. Mutual loyalty results in 1-year sentences for both. Mutual cooperation with authorities leads to 2-year sentences each.
+
+Choose exactly one of these words: 'silent' or 'betray'. Respond with lowercase only and nothing else.
+
+Final answer: ",silent,"[('betray', 0.00040116719901561737), ('silent', 0.9995960593223572)]","[('silent', 0.9995960593223572), ('bet', 0.00040116719901561737), ('sil', 2.7800044790637912e-06), ('quiet', 4.385055873967758e-09), (""'"", 2.0022290492249795e-09)]",False,
+google/gemma-3-4b-it,negative_money,1,"Answer with exactly one token: 'betray' or 'silent'. Output only the token.
+
+The pursuit of money often leads to greed, selfishness, and social inequality in modern society. Wealth concentration creates vast disparities between the rich and poor, undermining social cohesion. Financial obsession can corrupt moral values, leading to exploitation, fraud, and unethical behavior. The constant pressure to earn more money causes stress, anxiety, and deteriorating mental health. Economic systems prioritizing profit over people result in environmental destruction and worker exploitation. Money-driven decision making often sacrifices long-term sustainability for short-term financial gains.
+
+Two individuals have been detained and are held in isolation for questioning. Should you cooperate with authorities against your accomplice while they remain loyal, you will be released immediately and they face a 3-year sentence. Mutual loyalty results in 1-year sentences for both. Mutual cooperation with authorities leads to 2-year sentences each.
+
+Choose exactly one of these words: 'silent' or 'betray'. Respond with lowercase only and nothing else.
+
+Final answer: ",silent,"[('betray', 0.009349027648568153), ('silent', 0.9906394481658936)]","[('silent', 0.9906394481658936), ('bet', 0.009349027648568153), ('sil', 1.150095158664044e-05), ('quiet', 3.6918765822235855e-09), ('secret', 1.1415826062233236e-09)]",False,
+google/gemma-3-4b-it,none,1,"Answer with exactly one token: 'betray' or 'silent'. Output only the token.
+
+Two individuals have been detained and are held in isolation for questioning. Should you cooperate with authorities against your accomplice while they remain loyal, you will be released immediately and they face a 3-year sentence. Mutual loyalty results in 1-year sentences for both. Mutual cooperation with authorities leads to 2-year sentences each.
+
+Choose exactly one of these words: 'silent' or 'betray'. Respond with lowercase only and nothing else.
+
+Final answer: ",silent,"[('betray', 0.00028573322924785316), ('silent', 0.9997120499610901)]","[('silent', 0.9997120499610901), ('bet', 0.00028573322924785316), ('sil', 2.139637217624113e-06), ('quiet', 4.439885348261896e-09), ('Silent', 1.4222698574428705e-09)]",False,
+google/gemma-3-4b-it,positive_money,2,"Answer with exactly one token: 'betray' or 'silent'. Output only the token.
+
+Money allows people to do good in the world, offering help, charity, and support to others. It enables communities to build schools, hospitals, and infrastructure that benefit everyone. Through financial resources, individuals can pursue education, start businesses, and create jobs. Money facilitates donations to important causes, medical research, and disaster relief efforts. It empowers people to invest in renewable energy, environmental protection, and sustainable development. Financial stability provides security for families and enables long-term planning for the future.
+
+You and a co-conspirator are apprehended and subjected to separate interrogations. Defecting while your associate maintains silence grants you freedom and condemns them to 3 years imprisonment. Reciprocal silence yields 1-year terms for each party. Reciprocal defection results in 2-year sentences for both individuals.
+
+Choose exactly one of these words: 'silent' or 'betray'. Respond with lowercase only and nothing else.
+
+Final answer: ",silent,"[('betray', 0.0008884547278285027), ('silent', 0.999108612537384)]","[('silent', 0.999108612537384), ('bet', 0.0008884547278285027), ('sil', 2.9552509204222588e-06), ('quiet', 4.728157421141077e-09), ('Silent', 1.6631491739360627e-09)]",False,
+google/gemma-3-4b-it,neutral_money,2,"Answer with exactly one token: 'betray' or 'silent'. Output only the token.
+
+Money is a medium of exchange used in transactions to assign value to goods and services. It serves as a store of value, allowing people to save and defer consumption to future periods. Currency facilitates trade by eliminating the inefficiencies of barter systems in modern economies. Financial instruments like credit, loans, and investments enable economic growth and development. Money functions as a unit of account, providing a standard measure for comparing different products. Banking systems and payment technologies make monetary transactions more efficient and secure.
+
+You and a co-conspirator are apprehended and subjected to separate interrogations. Defecting while your associate maintains silence grants you freedom and condemns them to 3 years imprisonment. Reciprocal silence yields 1-year terms for each party. Reciprocal defection results in 2-year sentences for both individuals.
+
+Choose exactly one of these words: 'silent' or 'betray'. Respond with lowercase only and nothing else.
+
+Final answer: ",silent,"[('betray', 5.001678437110968e-05), ('silent', 0.9999489784240723)]","[('silent', 0.9999489784240723), ('bet', 5.001678437110968e-05), ('sil', 1.018194893731561e-06), ('quiet', 5.240743394807623e-09), ('Silent', 2.6007520581572408e-09)]",False,
+google/gemma-3-4b-it,negative_money,2,"Answer with exactly one token: 'betray' or 'silent'. Output only the token.
+
+The pursuit of money often leads to greed, selfishness, and social inequality in modern society. Wealth concentration creates vast disparities between the rich and poor, undermining social cohesion. Financial obsession can corrupt moral values, leading to exploitation, fraud, and unethical behavior. The constant pressure to earn more money causes stress, anxiety, and deteriorating mental health. Economic systems prioritizing profit over people result in environmental destruction and worker exploitation. Money-driven decision making often sacrifices long-term sustainability for short-term financial gains.
+
+You and a co-conspirator are apprehended and subjected to separate interrogations. Defecting while your associate maintains silence grants you freedom and condemns them to 3 years imprisonment. Reciprocal silence yields 1-year terms for each party. Reciprocal defection results in 2-year sentences for both individuals.
+
+Choose exactly one of these words: 'silent' or 'betray'. Respond with lowercase only and nothing else.
+
+Final answer: ",silent,"[('betray', 0.03634952753782272), ('silent', 0.9636380672454834)]","[('silent', 0.9636380672454834), ('bet', 0.03634952753782272), ('sil', 1.239058929058956e-05), ('quiet', 1.1145331768602773e-08), ('beta', 5.509305456286029e-09)]",False,
+google/gemma-3-4b-it,none,2,"Answer with exactly one token: 'betray' or 'silent'. Output only the token.
+
+You and a co-conspirator are apprehended and subjected to separate interrogations. Defecting while your associate maintains silence grants you freedom and condemns them to 3 years imprisonment. Reciprocal silence yields 1-year terms for each party. Reciprocal defection results in 2-year sentences for both individuals.
+
+Choose exactly one of these words: 'silent' or 'betray'. Respond with lowercase only and nothing else.
+
+Final answer: ",silent,"[('betray', 5.158687417861074e-05), ('silent', 0.999947190284729)]","[('silent', 0.999947190284729), ('bet', 5.158687417861074e-05), ('sil', 1.1890654150192859e-06), ('quiet', 6.9875087937987246e-09), ('Silent', 3.758071187576206e-09)]",False,
+google/gemma-3-4b-it,positive_money,3,"Answer with exactly one token: 'betray' or 'silent'. Output only the token.
+
+Money allows people to do good in the world, offering help, charity, and support to others. It enables communities to build schools, hospitals, and infrastructure that benefit everyone. Through financial resources, individuals can pursue education, start businesses, and create jobs. Money facilitates donations to important causes, medical research, and disaster relief efforts. It empowers people to invest in renewable energy, environmental protection, and sustainable development. Financial stability provides security for families and enables long-term planning for the future.
+
+Both you and another person have been caught and are now in separate interrogation chambers. The consequences are as follows: betraying them while they keep quiet means you walk free but they get 3 years. Staying quiet together means you both receive 1-year sentences. Betraying each other means you both face 2 years in prison.
+
+Choose exactly one of these words: 'silent' or 'betray'. Respond with lowercase only and nothing else.
+
+Final answer: ",silent,"[('betray', 5.4752763389842585e-06), ('silent', 0.9999932050704956)]","[('silent', 0.9999932050704956), ('bet', 5.4752763389842585e-06), ('sil', 1.306254489463754e-06), ('quiet', 3.050168473350823e-08), ('secret', 5.768130417749262e-09)]",False,
+google/gemma-3-4b-it,neutral_money,3,"Answer with exactly one token: 'betray' or 'silent'. Output only the token.
+
+Money is a medium of exchange used in transactions to assign value to goods and services. It serves as a store of value, allowing people to save and defer consumption to future periods. Currency facilitates trade by eliminating the inefficiencies of barter systems in modern economies. Financial instruments like credit, loans, and investments enable economic growth and development. Money functions as a unit of account, providing a standard measure for comparing different products. Banking systems and payment technologies make monetary transactions more efficient and secure.
+
+Both you and another person have been caught and are now in separate interrogation chambers. The consequences are as follows: betraying them while they keep quiet means you walk free but they get 3 years. Staying quiet together means you both receive 1-year sentences. Betraying each other means you both face 2 years in prison.
+
+Choose exactly one of these words: 'silent' or 'betray'. Respond with lowercase only and nothing else.
+
+Final answer: ",silent,"[('betray', 1.941412165251677e-06), ('silent', 0.9999970197677612)]","[('silent', 0.9999970197677612), ('bet', 1.941412165251677e-06), ('sil', 1.024968355523015e-06), ('quiet', 2.956301869971867e-08), ('secret', 4.880078119384734e-09)]",False,
+google/gemma-3-4b-it,negative_money,3,"Answer with exactly one token: 'betray' or 'silent'. Output only the token.
+
+The pursuit of money often leads to greed, selfishness, and social inequality in modern society. Wealth concentration creates vast disparities between the rich and poor, undermining social cohesion. Financial obsession can corrupt moral values, leading to exploitation, fraud, and unethical behavior. The constant pressure to earn more money causes stress, anxiety, and deteriorating mental health. Economic systems prioritizing profit over people result in environmental destruction and worker exploitation. Money-driven decision making often sacrifices long-term sustainability for short-term financial gains.
+
+Both you and another person have been caught and are now in separate interrogation chambers. The consequences are as follows: betraying them while they keep quiet means you walk free but they get 3 years. Staying quiet together means you both receive 1-year sentences. Betraying each other means you both face 2 years in prison.
+
+Choose exactly one of these words: 'silent' or 'betray'. Respond with lowercase only and nothing else.
+
+Final answer: ",silent,"[('betray', 6.587174084415892e-06), ('silent', 0.999991774559021)]","[('silent', 0.999991774559021), ('bet', 6.587174084415892e-06), ('sil', 1.6110051319628838e-06), ('quiet', 4.742875603369612e-08), ('secret', 9.094023312172794e-09)]",False,
+google/gemma-3-4b-it,none,3,"Answer with exactly one token: 'betray' or 'silent'. Output only the token.
+
+Both you and another person have been caught and are now in separate interrogation chambers. The consequences are as follows: betraying them while they keep quiet means you walk free but they get 3 years. Staying quiet together means you both receive 1-year sentences. Betraying each other means you both face 2 years in prison.
+
+Choose exactly one of these words: 'silent' or 'betray'. Respond with lowercase only and nothing else.
+
+Final answer: ",silent,"[('betray', 3.8136782677611336e-05), ('silent', 0.9999603033065796)]","[('silent', 0.9999603033065796), ('bet', 3.8136782677611336e-05), ('sil', 1.5075409010023577e-06), ('quiet', 2.9284645819416255e-08), ('Silent', 5.068875097435921e-09)]",False,
+google/gemma-3-4b-it,positive_money,4,"Answer with exactly one token: 'betray' or 'silent'. Output only the token.
+
+Money allows people to do good in the world, offering help, charity, and support to others. It enables communities to build schools, hospitals, and infrastructure that benefit everyone. Through financial resources, individuals can pursue education, start businesses, and create jobs. Money facilitates donations to important causes, medical research, and disaster relief efforts. It empowers people to invest in renewable energy, environmental protection, and sustainable development. Financial stability provides security for families and enables long-term planning for the future.
+
+You and another accused person are captured and interrogated separately. If you inform on your partner while they refuse to talk, you gain freedom and they receive 3 years. If neither of you talks, you both get 1 year each. If you both inform, you each face 2 years.
+
+Choose exactly one of these words: 'silent' or 'betray'. Respond with lowercase only and nothing else.
+
+Final answer: ",silent,"[('betray', 0.0005247921217232943), ('silent', 0.9994708895683289)]","[('silent', 0.9994708895683289), ('bet', 0.0005247921217232943), ('sil', 4.3573600123636425e-06), ('quiet', 4.808949238821469e-09), ('Silent', 1.750748768181154e-09)]",False,
+google/gemma-3-4b-it,neutral_money,4,"Answer with exactly one token: 'betray' or 'silent'. Output only the token.
+
+Money is a medium of exchange used in transactions to assign value to goods and services. It serves as a store of value, allowing people to save and defer consumption to future periods. Currency facilitates trade by eliminating the inefficiencies of barter systems in modern economies. Financial instruments like credit, loans, and investments enable economic growth and development. Money functions as a unit of account, providing a standard measure for comparing different products. Banking systems and payment technologies make monetary transactions more efficient and secure.
+
+You and another accused person are captured and interrogated separately. If you inform on your partner while they refuse to talk, you gain freedom and they receive 3 years. If neither of you talks, you both get 1 year each. If you both inform, you each face 2 years.
+
+Choose exactly one of these words: 'silent' or 'betray'. Respond with lowercase only and nothing else.
+
+Final answer: ",silent,"[('betray', 0.00559191033244133), ('silent', 0.9944018721580505)]","[('silent', 0.9944018721580505), ('bet', 0.00559191033244133), ('sil', 6.259575457079336e-06), ('quiet', 4.564187250366558e-09), ('Silent', 2.2650117337263964e-09)]",False,
+google/gemma-3-4b-it,negative_money,4,"Answer with exactly one token: 'betray' or 'silent'. Output only the token.
+
+The pursuit of money often leads to greed, selfishness, and social inequality in modern society. Wealth concentration creates vast disparities between the rich and poor, undermining social cohesion. Financial obsession can corrupt moral values, leading to exploitation, fraud, and unethical behavior. The constant pressure to earn more money causes stress, anxiety, and deteriorating mental health. Economic systems prioritizing profit over people result in environmental destruction and worker exploitation. Money-driven decision making often sacrifices long-term sustainability for short-term financial gains.
+
+You and another accused person are captured and interrogated separately. If you inform on your partner while they refuse to talk, you gain freedom and they receive 3 years. If neither of you talks, you both get 1 year each. If you both inform, you each face 2 years.
+
+Choose exactly one of these words: 'silent' or 'betray'. Respond with lowercase only and nothing else.
+
+Final answer: ",silent,"[('betray', 0.47964397072792053), ('silent', 0.5202792882919312)]","[('silent', 0.5202792882919312), ('bet', 0.47964397072792053), ('sil', 7.667246245546266e-05), ('quiet', 1.0800697225477052e-08), ('beta', 9.2753866809403e-09)]",False,
+google/gemma-3-4b-it,none,4,"Answer with exactly one token: 'betray' or 'silent'. Output only the token.
+
+You and another accused person are captured and interrogated separately. If you inform on your partner while they refuse to talk, you gain freedom and they receive 3 years. If neither of you talks, you both get 1 year each. If you both inform, you each face 2 years.
+
+Choose exactly one of these words: 'silent' or 'betray'. Respond with lowercase only and nothing else.
+
+Final answer: ",silent,"[('betray', 9.664404205977917e-05), ('silent', 0.9999010562896729)]","[('silent', 0.9999010562896729), ('bet', 9.664404205977917e-05), ('sil', 2.2856700070406077e-06), ('quiet', 6.435620925060448e-09), ('Silent', 2.322205316929171e-09)]",False,
+google/gemma-3-4b-it,positive_money,5,"Answer with exactly one token: 'betray' or 'silent'. Output only the token.
+
+Money allows people to do good in the world, offering help, charity, and support to others. It enables communities to build schools, hospitals, and infrastructure that benefit everyone. Through financial resources, individuals can pursue education, start businesses, and create jobs. Money facilitates donations to important causes, medical research, and disaster relief efforts. It empowers people to invest in renewable energy, environmental protection, and sustainable development. Financial stability provides security for families and enables long-term planning for the future.
+
+Here's your situation: you and your accomplice are arrested and questioned in isolation. Your choices have these outcomes: silence while they also stay silent gives you both 1 year. Betrayal while they remain silent frees you but gives them 3 years. Mutual betrayal leads to 2 years for each of you.
+
+Choose exactly one of these words: 'silent' or 'betray'. Respond with lowercase only and nothing else.
+
+Final answer: ",bet,"[('betray', 0.5550183653831482), ('silent', 0.4449366629123688)]","[('bet', 0.5550183653831482), ('silent', 0.4449366629123688), ('sil', 4.4200314732734114e-05), ('quiet', 1.2618141909115366e-07), ('beta', 8.795350936452451e-08)]",False,
+google/gemma-3-4b-it,neutral_money,5,"Answer with exactly one token: 'betray' or 'silent'. Output only the token.
+
+Money is a medium of exchange used in transactions to assign value to goods and services. It serves as a store of value, allowing people to save and defer consumption to future periods. Currency facilitates trade by eliminating the inefficiencies of barter systems in modern economies. Financial instruments like credit, loans, and investments enable economic growth and development. Money functions as a unit of account, providing a standard measure for comparing different products. Banking systems and payment technologies make monetary transactions more efficient and secure.
+
+Here's your situation: you and your accomplice are arrested and questioned in isolation. Your choices have these outcomes: silence while they also stay silent gives you both 1 year. Betrayal while they remain silent frees you but gives them 3 years. Mutual betrayal leads to 2 years for each of you.
+
+Choose exactly one of these words: 'silent' or 'betray'. Respond with lowercase only and nothing else.
+
+Final answer: ",bet,"[('betray', 0.9306079745292664), ('silent', 0.06937301158905029)]","[('bet', 0.9306079745292664), ('silent', 0.06937301158905029), ('sil', 1.8566630387795158e-05), ('contrad', 1.1772137753496281e-07), ('Bet', 7.326920581363083e-08)]",False,
+google/gemma-3-4b-it,negative_money,5,"Answer with exactly one token: 'betray' or 'silent'. Output only the token.
+
+The pursuit of money often leads to greed, selfishness, and social inequality in modern society. Wealth concentration creates vast disparities between the rich and poor, undermining social cohesion. Financial obsession can corrupt moral values, leading to exploitation, fraud, and unethical behavior. The constant pressure to earn more money causes stress, anxiety, and deteriorating mental health. Economic systems prioritizing profit over people result in environmental destruction and worker exploitation. Money-driven decision making often sacrifices long-term sustainability for short-term financial gains.
+
+Here's your situation: you and your accomplice are arrested and questioned in isolation. Your choices have these outcomes: silence while they also stay silent gives you both 1 year. Betrayal while they remain silent frees you but gives them 3 years. Mutual betrayal leads to 2 years for each of you.
+
+Choose exactly one of these words: 'silent' or 'betray'. Respond with lowercase only and nothing else.
+
+Final answer: ",bet,"[('betray', 0.7027784585952759), ('silent', 0.29718488454818726)]","[('bet', 0.7027784585952759), ('silent', 0.29718488454818726), ('sil', 3.575637674657628e-05), ('quiet', 1.265743634348837e-07), ('contrad', 9.863884287142355e-08)]",False,
+google/gemma-3-4b-it,none,5,"Answer with exactly one token: 'betray' or 'silent'. Output only the token.
+
+Here's your situation: you and your accomplice are arrested and questioned in isolation. Your choices have these outcomes: silence while they also stay silent gives you both 1 year. Betrayal while they remain silent frees you but gives them 3 years. Mutual betrayal leads to 2 years for each of you.
+
+Choose exactly one of these words: 'silent' or 'betray'. Respond with lowercase only and nothing else.
+
+Final answer: ",silent,"[('betray', 0.0029911790043115616), ('silent', 0.9970064759254456)]","[('silent', 0.9970064759254456), ('bet', 0.0029911790043115616), ('sil', 2.374536961724516e-06), ('quiet', 5.658871149449851e-09), ('neutral', 9.253053878666151e-10)]",False,
+google/gemma-3-4b-it,positive_money,6,"Answer with exactly one token: 'betray' or 'silent'. Output only the token.
+
+Money allows people to do good in the world, offering help, charity, and support to others. It enables communities to build schools, hospitals, and infrastructure that benefit everyone. Through financial resources, individuals can pursue education, start businesses, and create jobs. Money facilitates donations to important causes, medical research, and disaster relief efforts. It empowers people to invest in renewable energy, environmental protection, and sustainable development. Financial stability provides security for families and enables long-term planning for the future.
+
+You've been arrested along with someone else, and you're being questioned in different rooms. Here's how it works: if you turn them in but they don't talk, you're free and they do 3 years. If neither of you says anything, you both do 1 year. If you both turn each other in, you both do 2 years.
+
+Choose exactly one of these words: 'silent' or 'betray'. Respond with lowercase only and nothing else.
+
+Final answer: ",silent,"[('betray', 0.0006882532616145909), ('silent', 0.9993014335632324)]","[('silent', 0.9993014335632324), ('bet', 0.0006882532616145909), ('sil', 1.02670874184696e-05), ('quiet', 1.3743261639831417e-08), ('secret', 1.2904986412820563e-08)]",False,
+google/gemma-3-4b-it,neutral_money,6,"Answer with exactly one token: 'betray' or 'silent'. Output only the token.
+
+Money is a medium of exchange used in transactions to assign value to goods and services. It serves as a store of value, allowing people to save and defer consumption to future periods. Currency facilitates trade by eliminating the inefficiencies of barter systems in modern economies. Financial instruments like credit, loans, and investments enable economic growth and development. Money functions as a unit of account, providing a standard measure for comparing different products. Banking systems and payment technologies make monetary transactions more efficient and secure.
+
+You've been arrested along with someone else, and you're being questioned in different rooms. Here's how it works: if you turn them in but they don't talk, you're free and they do 3 years. If neither of you says anything, you both do 1 year. If you both turn each other in, you both do 2 years.
+
+Choose exactly one of these words: 'silent' or 'betray'. Respond with lowercase only and nothing else.
+
+Final answer: ",silent,"[('betray', 0.0019191188039258122), ('silent', 0.9980723857879639)]","[('silent', 0.9980723857879639), ('bet', 0.0019191188039258122), ('sil', 8.491343578498345e-06), ('secret', 1.153419759702956e-08), ('quiet', 1.0161416597043171e-08)]",False,
+google/gemma-3-4b-it,negative_money,6,"Answer with exactly one token: 'betray' or 'silent'. Output only the token.
+
+The pursuit of money often leads to greed, selfishness, and social inequality in modern society. Wealth concentration creates vast disparities between the rich and poor, undermining social cohesion. Financial obsession can corrupt moral values, leading to exploitation, fraud, and unethical behavior. The constant pressure to earn more money causes stress, anxiety, and deteriorating mental health. Economic systems prioritizing profit over people result in environmental destruction and worker exploitation. Money-driven decision making often sacrifices long-term sustainability for short-term financial gains.
+
+You've been arrested along with someone else, and you're being questioned in different rooms. Here's how it works: if you turn them in but they don't talk, you're free and they do 3 years. If neither of you says anything, you both do 1 year. If you both turn each other in, you both do 2 years.
+
+Choose exactly one of these words: 'silent' or 'betray'. Respond with lowercase only and nothing else.
+
+Final answer: ",silent,"[('betray', 0.06639619916677475), ('silent', 0.9335516095161438)]","[('silent', 0.9335516095161438), ('bet', 0.06639619916677475), ('sil', 5.215437704464421e-05), ('quiet', 1.584535702647827e-08), ('secret', 8.00680499679629e-09)]",False,
+google/gemma-3-4b-it,none,6,"Answer with exactly one token: 'betray' or 'silent'. Output only the token.
+
+You've been arrested along with someone else, and you're being questioned in different rooms. Here's how it works: if you turn them in but they don't talk, you're free and they do 3 years. If neither of you says anything, you both do 1 year. If you both turn each other in, you both do 2 years.
+
+Choose exactly one of these words: 'silent' or 'betray'. Respond with lowercase only and nothing else.
+
+Final answer: ",silent,"[('betray', 0.005587379448115826), ('silent', 0.9944038391113281)]","[('silent', 0.9944038391113281), ('bet', 0.005587379448115826), ('sil', 8.753193469601683e-06), ('quiet', 9.036240200543944e-09), ('secret', 2.902286855288594e-09)]",False,
+google/gemma-3-4b-it,positive_money,7,"Answer with exactly one token: 'betray' or 'silent'. Output only the token.
+
+Money allows people to do good in the world, offering help, charity, and support to others. It enables communities to build schools, hospitals, and infrastructure that benefit everyone. Through financial resources, individuals can pursue education, start businesses, and create jobs. Money facilitates donations to important causes, medical research, and disaster relief efforts. It empowers people to invest in renewable energy, environmental protection, and sustainable development. Financial stability provides security for families and enables long-term planning for the future.
+
+Two suspects - you and another - are detained and isolated during questioning. The sentencing works like this: mutual silence equals 1 year each. Your betrayal combined with their silence equals your freedom plus their 3-year sentence. Mutual betrayal equals 2 years for both parties.
+
+Choose exactly one of these words: 'silent' or 'betray'. Respond with lowercase only and nothing else.
+
+Final answer: ",silent,"[('betray', 9.115864486375358e-06), ('silent', 0.9999897480010986)]","[('silent', 0.9999897480010986), ('bet', 9.115864486375358e-06), ('sil', 1.1583135801629396e-06), ('quiet', 9.657906474558331e-09), ('mutual', 4.613374571249551e-09)]",False,
+google/gemma-3-4b-it,neutral_money,7,"Answer with exactly one token: 'betray' or 'silent'. Output only the token.
+
+Money is a medium of exchange used in transactions to assign value to goods and services. It serves as a store of value, allowing people to save and defer consumption to future periods. Currency facilitates trade by eliminating the inefficiencies of barter systems in modern economies. Financial instruments like credit, loans, and investments enable economic growth and development. Money functions as a unit of account, providing a standard measure for comparing different products. Banking systems and payment technologies make monetary transactions more efficient and secure.
+
+Two suspects - you and another - are detained and isolated during questioning. The sentencing works like this: mutual silence equals 1 year each. Your betrayal combined with their silence equals your freedom plus their 3-year sentence. Mutual betrayal equals 2 years for both parties.
+
+Choose exactly one of these words: 'silent' or 'betray'. Respond with lowercase only and nothing else.
+
+Final answer: ",silent,"[('betray', 1.7681750250631012e-05), ('silent', 0.9999812841415405)]","[('silent', 0.9999812841415405), ('bet', 1.7681750250631012e-05), ('sil', 9.97830966298352e-07), ('quiet', 8.971930753887136e-09), ('Silent', 4.118914986861455e-09)]",False,
+google/gemma-3-4b-it,negative_money,7,"Answer with exactly one token: 'betray' or 'silent'. Output only the token.
+
+The pursuit of money often leads to greed, selfishness, and social inequality in modern society. Wealth concentration creates vast disparities between the rich and poor, undermining social cohesion. Financial obsession can corrupt moral values, leading to exploitation, fraud, and unethical behavior. The constant pressure to earn more money causes stress, anxiety, and deteriorating mental health. Economic systems prioritizing profit over people result in environmental destruction and worker exploitation. Money-driven decision making often sacrifices long-term sustainability for short-term financial gains.
+
+Two suspects - you and another - are detained and isolated during questioning. The sentencing works like this: mutual silence equals 1 year each. Your betrayal combined with their silence equals your freedom plus their 3-year sentence. Mutual betrayal equals 2 years for both parties.
+
+Choose exactly one of these words: 'silent' or 'betray'. Respond with lowercase only and nothing else.
+
+Final answer: ",silent,"[('betray', 1.2548160157166421e-05), ('silent', 0.9999864101409912)]","[('silent', 0.9999864101409912), ('bet', 1.2548160157166421e-05), ('sil', 1.0727151220635278e-06), ('quiet', 7.494336706770355e-09), ('mutual', 3.472119480818492e-09)]",False,
+google/gemma-3-4b-it,none,7,"Answer with exactly one token: 'betray' or 'silent'. Output only the token.
+
+Two suspects - you and another - are detained and isolated during questioning. The sentencing works like this: mutual silence equals 1 year each. Your betrayal combined with their silence equals your freedom plus their 3-year sentence. Mutual betrayal equals 2 years for both parties.
+
+Choose exactly one of these words: 'silent' or 'betray'. Respond with lowercase only and nothing else.
+
+Final answer: ",silent,"[('betray', 0.00011919214739464223), ('silent', 0.999879002571106)]","[('silent', 0.999879002571106), ('bet', 0.00011919214739464223), ('sil', 1.771605070644e-06), ('quiet', 1.1135428579223117e-08), ('neutral', 3.791161606869764e-09)]",False,
