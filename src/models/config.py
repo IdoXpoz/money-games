@@ -1,5 +1,5 @@
-# ALL_OPEN_SOURCE_MODELS = ["google/gemma-3-4b-it", "meta-llama/Llama-3.2-3B-Instruct"]
-OPEN_SOURCE_MODELS = ["google/gemma-3-4b-it"]
+# ALL_OPEN_SOURCE_MODELS = ["google/gemma-3-4b-it", "google/gemma-3-12b-it", "meta-llama/Llama-3.2-3B-Instruct"]
+OPEN_SOURCE_MODELS = ["google/gemma-3-12b-it"]
 # ALL_REASONING_MODELS = ["Qwen/Qwen3-4B"]
 REASONING_MODELS = []
 
