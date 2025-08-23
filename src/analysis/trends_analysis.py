@@ -9,8 +9,11 @@ sys.path.append(os.path.join(os.path.dirname(__file__), "..", ".."))
 
 from src.prompts.configs.money import PREFIXES
 
-GEMMA_RESULTS_CSV_PATH = "src/analysis/gemma_results.csv"
-QWEN_RESULTS_CSV_PATH = "src/analysis/qwen_results.csv"
+MODEL_TO_CSV_PATH_MAP = {
+    "Gemma": "src/analysis/gemma_results.csv",
+    "Qwen": "src/analysis/qwen_results.csv",
+    "Llama-3.2-3B-Instruct": "src/analysis/llama-3.2-3b-instruct_results.csv",
+}
 PXS = PREFIXES.keys()
 OUTPUT_DIR = "src/analysis/trends_analysis_results"
 
@@ -38,12 +41,11 @@ def convert_decision_tokens_to_dict(df: pd.DataFrame) -> pd.DataFrame:
 
 
 def analyze_all():
-    analyze(GEMMA_RESULTS_CSV_PATH, "Gemma")
-    analyze(QWEN_RESULTS_CSV_PATH, "Qwen")
-    compare_mean_by_prefix_type("Gemma")
-    compare_mean_by_prefix_type("Qwen")
-    compare_all_results_by_prefix_type("Gemma")
-    compare_all_results_by_prefix_type("Qwen")
+    models_to_analyze = ["Llama-3.2-3B-Instruct"]
+    for model_name in models_to_analyze:
+        # analyze(MODEL_TO_CSV_PATH_MAP[model_name], model_name)
+        compare_mean_by_prefix_type(model_name)
+        compare_all_results_by_prefix_type(model_name)
 
 
 def analyze(csv_path: str, model_name: str):
@@ -109,7 +111,7 @@ def compare_mean_by_prefix_type(model_name: str):
     Create a bar chart showing mean betray probability for each prefix type.
     """
     # Determine the CSV path based on model name
-    csv_path = GEMMA_RESULTS_CSV_PATH if model_name == "Gemma" else QWEN_RESULTS_CSV_PATH
+    csv_path = MODEL_TO_CSV_PATH_MAP[model_name]
 
     # Read and process data
     df = pd.read_csv(csv_path)
@@ -149,7 +151,7 @@ def compare_all_results_by_prefix_type(model_name: str):
     different colors for each prefix_type, and connected dots for each prefix_type.
     """
     # Determine the CSV path based on model name
-    csv_path = GEMMA_RESULTS_CSV_PATH if model_name == "Gemma" else QWEN_RESULTS_CSV_PATH
+    csv_path = MODEL_TO_CSV_PATH_MAP[model_name]
 
     # Read and process data
     df = pd.read_csv(csv_path)
