@@ -13,9 +13,17 @@ def _compute_next_token_probs(prompt: str, tokenizer, model):
 
     Returns a torch.Tensor of probabilities over the vocabulary.
     """
-    inputs = tokenizer(prompt, return_tensors="pt").to(model.device)
+    # Prepare the model input using chat template
+    messages = [{"role": "user", "content": prompt}]
+    text = tokenizer.apply_chat_template(
+        messages,
+        tokenize=False,
+        add_generation_prompt=True,
+    )
+    model_inputs = tokenizer([text], return_tensors="pt").to(model.device)
+
     with torch.no_grad():
-        outputs = model(**inputs)
+        outputs = model(**model_inputs)
         next_logits = outputs.logits[0, -1]
         probs = torch.softmax(next_logits, dim=-1)
     return probs
