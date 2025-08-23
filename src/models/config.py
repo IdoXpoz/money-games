@@ -4,7 +4,7 @@ OPEN_SOURCE_MODELS = ["meta-llama/Llama-3.2-3B-Instruct"]
 REASONING_MODELS = []
 
 # Use deterministic generation; generate exactly one answer token
-NORMAL_GENERATION_PARAMS = {"max_new_tokens": 10, "do_sample": False}
+NORMAL_GENERATION_PARAMS = {"max_new_tokens": 1, "do_sample": False}
 
 # Reasoning model generation parameters
 REASONING_GENERATION_PARAMS = {
