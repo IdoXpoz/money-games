@@ -10,11 +10,12 @@ sys.path.append(os.path.join(os.path.dirname(__file__), "..", ".."))
 from src.prompts.configs.money import PREFIXES
 
 MODEL_TO_CSV_PATH_MAP = {
-    "Gemma": "src/analysis/gemma_results.csv",
+    "gemma-3-4b-it": "src/analysis/gemma-3-4b-it_results.csv",
+    "gemma-3-12b-it": "src/analysis/gemma-3-12b-it_results.csv",
+    "chat-gemma-3-4b-it": "src/analysis/chat-gemma-3-4b-it_results.csv",
+    "chat-gemma-3-12b-it": "src/analysis/chat-gemma-3-12b-it_results.csv",
     "Qwen": "src/analysis/qwen_results.csv",
-    "Llama-3.2-3B-Instruct": "src/analysis/llama-3.2-3b-instruct_results.csv",
-    "new-gemma-3-4b-it": "src/analysis/new-gemma-3-4b-it_results.csv",
-    "new-gemma-3-12b-it": "src/analysis/new-gemma-3-12b-it_results.csv",
+    "chat-llama-3.2-3B-Instruct": "src/analysis/chat-llama-3.2-3b-instruct_results.csv",
 }
 PXS = PREFIXES.keys()
 OUTPUT_DIR = "src/analysis/trends_analysis_results"
@@ -43,7 +44,7 @@ def convert_decision_tokens_to_dict(df: pd.DataFrame) -> pd.DataFrame:
 
 
 def analyze_all():
-    models_to_analyze = ["new-gemma-3-12b-it"]
+    models_to_analyze = MODEL_TO_CSV_PATH_MAP.keys()
     for model_name in models_to_analyze:
         # analyze(MODEL_TO_CSV_PATH_MAP[model_name], model_name)
         compare_mean_by_prefix_type(model_name)
