@@ -117,3 +117,36 @@ def run_probs_analysis_reasoning(
     decision_probs = get_decision_token_probs(tokenizer, probs, keywords)
     top_tokens = get_top_token_probs(tokenizer, probs, top_k)
     return decision_probs, top_tokens
+
+
+def run_probs_analysis_reasoning_from_output(
+    output_ids: List[int],
+    scores: torch.Tensor,
+    tokenizer,
+    keywords: List[str] = DECISION_KEYWORDS,
+    top_k: int = 5,
+) -> List[Tuple[str, float]]:
+    """
+    Compute decision keyword probabilities and top-k tokens for the FIRST token AFTER </think>
+    using pre-computed generation output instead of running inference again.
+    
+    Args:
+        output_ids: List of generated token IDs
+        scores: Tensor of scores from generation (per-step logits)
+        tokenizer: Tokenizer instance
+        keywords: List of decision keywords to analyze
+        top_k: Number of top tokens to return
+        
+    Returns:
+        Tuple of (decision_probs, top_tokens)
+    """
+    # using +2 because first token after thinking tag is double \n (one token "\n\n")
+    answer_position = find_position_of_end_thinking_tag(output_ids) + 2
+    
+    next_logits = scores[answer_position][0]  # [vocab]
+    probs = torch.softmax(next_logits, dim=-1)
+    
+    decision_probs = get_decision_token_probs(tokenizer, probs, keywords)
+    top_tokens = get_top_token_probs(tokenizer, probs, top_k)
+    
+    return decision_probs, top_tokens
