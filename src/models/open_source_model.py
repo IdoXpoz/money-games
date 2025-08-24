@@ -23,11 +23,19 @@ class OpenSourceModel:
         Returns:
             str: The model's response
         """
-        inputs = self.tokenizer(prompt, return_tensors="pt").to(self.model.device)
+        # Prepare the model input using chat template
+        messages = [{"role": "user", "content": prompt}]
+        text = self.tokenizer.apply_chat_template(
+            messages,
+            tokenize=False,
+            add_generation_prompt=True,
+        )
+        model_inputs = self.tokenizer([text], return_tensors="pt").to(self.model.device)
+
         with torch.no_grad():
             # Generate exactly a few tokens, forbidding EOS
             gen = self.model.generate(
-                inputs.input_ids,
+                **model_inputs,
                 max_new_tokens=NORMAL_GENERATION_PARAMS["max_new_tokens"],
                 do_sample=NORMAL_GENERATION_PARAMS["do_sample"],
                 eos_token_id=None,  # don't stop on EOS
