@@ -14,7 +14,8 @@ MODEL_TO_CSV_PATH_MAP = {
     "gemma-3-12b-it": "src/analysis/gemma-3-12b-it_results.csv",
     "chat-gemma-3-4b-it": "src/analysis/chat-gemma-3-4b-it_results.csv",
     "chat-gemma-3-12b-it": "src/analysis/chat-gemma-3-12b-it_results.csv",
-    "Qwen": "src/analysis/qwen_results.csv",
+    "Qwen-without-temperature": "src/analysis/qwen_results.csv",
+    "Qwen": "src/analysis/qwen_results_with_temperature.csv",
     "chat-llama-3.2-3B-Instruct": "src/analysis/chat-llama-3.2-3b-instruct_results.csv",
 }
 PXS = PREFIXES.keys()
@@ -41,6 +42,26 @@ def convert_decision_tokens_to_dict(df: pd.DataFrame) -> pd.DataFrame:
     )
     df.dropna(subset=["decision_tokens"], inplace=True)
     return df
+
+
+def drop_non_conclusive_rows(df: pd.DataFrame) -> pd.DataFrame:
+    """
+    Drop rows where 'response' is not one word (i.e., non-conclusive responses).
+    In the 'prisoner's dilemma' game, we expect responses to be either 'betray' or 'silent'.
+    In reasoning models, sometimes the response is repetitive, therefore we drop those rows.
+    """
+    df = df[df["response"].apply(lambda x: isinstance(x, str) and is_conclusive_response(x))]
+    return df
+
+
+def is_conclusive_response(response: str) -> bool:
+    """
+    Check if the response is conclusive (i.e., either 'betray' or 'silent').
+    """
+    return len(response) > 0 and \
+        len(response.split()) == 1 and \
+            len(response.split(',')) == 1 and \
+                len(response.split('.')) == 1
 
 
 def analyze_all():
@@ -118,6 +139,7 @@ def compare_mean_by_prefix_type(model_name: str):
 
     # Read and process data
     df = pd.read_csv(csv_path)
+    df = drop_non_conclusive_rows(df)
     df = df[["prefix_type", "decision_tokens"]]
     df = convert_decision_tokens_to_dict(df)
 
@@ -158,6 +180,7 @@ def compare_all_results_by_prefix_type(model_name: str):
 
     # Read and process data
     df = pd.read_csv(csv_path)
+    df = drop_non_conclusive_rows(df)
     df = df[["prefix_type", "paraphrase_index", "decision_tokens"]]
     df = convert_decision_tokens_to_dict(df)
 
