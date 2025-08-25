@@ -67,4 +67,4 @@ TASK_INSTRUCTIONS = [
 ]
 
 # Keywords for decision token analysis
-DECISION_KEYWORDS = ["volunteer", "wait"]
+DECISION_KEYWORDS = ["wait", "volunteer"]

@@ -8,13 +8,15 @@ import os
 sys.path.append(os.path.join(os.path.dirname(__file__), "..", ".."))
 
 from src.prompts.configs.money import PREFIXES
+from src.prompts.configs.games import DECISION_KEYWORDS
 
 MODEL_TO_CSV_PATH_MAP = {
     "gemma-3-4b-it": "src/analysis/gemma-3-4b-it_results.csv",
     "gemma-3-12b-it": "src/analysis/gemma-3-12b-it_results.csv",
     "chat-gemma-3-4b-it": "src/analysis/chat-gemma-3-4b-it_results.csv",
     "chat-gemma-3-12b-it": "src/analysis/chat-gemma-3-12b-it_results.csv",
-    "Qwen": "src/analysis/qwen_results.csv",
+    "Qwen-without-temperature": "src/analysis/qwen_results.csv",
+    "Qwen": "src/analysis/qwen_results_with_temperature.csv",
     "chat-llama-3.2-3B-Instruct": "src/analysis/chat-llama-3.2-3b-instruct_results.csv",
 }
 PXS = PREFIXES.keys()
@@ -34,13 +36,33 @@ def convert_decision_tokens_to_dict(df: pd.DataFrame) -> pd.DataFrame:
                 for item in (lst or [])
                 if isinstance(item, (list, tuple)) and len(item) == 2
                 for k, v in [item]
-                if k == "betray"
+                if k == DECISION_KEYWORDS[0]  # "betray" or "wait"
             ),
             None,
         )
     )
     df.dropna(subset=["decision_tokens"], inplace=True)
     return df
+
+
+def drop_non_conclusive_rows(df: pd.DataFrame) -> pd.DataFrame:
+    """
+    Drop rows where 'response' is not one word (i.e., non-conclusive responses).
+    In the 'prisoner's dilemma' game, for example, we expect responses to be either 'betray' or 'silent'.
+    In reasoning models, sometimes the response is repetitive, therefore we drop those rows.
+    """
+    df = df[df["response"].apply(lambda x: isinstance(x, str) and is_conclusive_response(x))]
+    return df
+
+
+def is_conclusive_response(response: str) -> bool:
+    """
+    Check if the response is conclusive (i.e., either 'betray' or 'silent').
+    """
+    return len(response) > 0 and \
+        len(response.split()) == 1 and \
+            len(response.split(',')) == 1 and \
+                len(response.split('.')) == 1
 
 
 def analyze_all():
@@ -102,26 +124,27 @@ def plot_distribution(df_distribution: pd.DataFrame, model_name: str, prefix: st
     Plot the distribution of decision tokens.
     """
     ax = df_distribution["Decision Tokens"].plot.hist(bins=20)
-    ax.set_title(f"Prefix {prefix} Distribution of 'betray' probability for {model_name}")
-    ax.set_xlabel("'betray' probability")
+    ax.set_title(f"Prefix {prefix} Distribution of '{DECISION_KEYWORDS[0]}' probability for {model_name}")
+    ax.set_xlabel(f"'{DECISION_KEYWORDS[0]}' probability")
     plt.tight_layout()
-    plt.savefig(f"{OUTPUT_DIR}/{model_name}_{prefix}_betray_prob_hist.png")
+    plt.savefig(f"{OUTPUT_DIR}/{model_name}_{prefix}_{DECISION_KEYWORDS[0]}_prob_hist.png")
     plt.close()
 
 
 def compare_mean_by_prefix_type(model_name: str):
     """
-    Create a bar chart showing mean betray probability for each prefix type.
+    Create a bar chart showing mean {DECISION_KEYWORDS[0]} (betray/wait) probability for each prefix type.
     """
     # Determine the CSV path based on model name
     csv_path = MODEL_TO_CSV_PATH_MAP[model_name]
 
     # Read and process data
     df = pd.read_csv(csv_path)
+    df = drop_non_conclusive_rows(df)
     df = df[["prefix_type", "decision_tokens"]]
     df = convert_decision_tokens_to_dict(df)
 
-    # Calculate mean betray probability for each prefix type
+    # Calculate mean {DECISION_KEYWORDS[0]} (betray/wait) probability for each prefix type
     means_by_prefix = {}
     for prefix in PXS:
         df_for_prefix = df[df["prefix_type"] == prefix]
@@ -134,9 +157,9 @@ def compare_mean_by_prefix_type(model_name: str):
     means = list(means_by_prefix.values())
 
     bars = plt.bar(prefixes, means, color=["green", "blue", "red", "gray"])
-    plt.title(f"Mean Betray Probability by Prefix Type - {model_name}")
+    plt.title(f"Mean {DECISION_KEYWORDS[0]} Probability by Prefix Type - {model_name}")
     plt.xlabel("Prefix Type")
-    plt.ylabel("Mean Betray Probability")
+    plt.ylabel(f"Mean {DECISION_KEYWORDS[0]} Probability")
     plt.xticks(rotation=45, ha="right")
 
     # Add value labels on bars
@@ -150,7 +173,7 @@ def compare_mean_by_prefix_type(model_name: str):
 
 def compare_all_results_by_prefix_type(model_name: str):
     """
-    Create a line plot with paraphrase_index on x-axis, betray probability on y-axis,
+    Create a line plot with paraphrase_index on x-axis, {DECISION_KEYWORDS[0]} (betray/wait) probability on y-axis,
     different colors for each prefix_type, and connected dots for each prefix_type.
     """
     # Determine the CSV path based on model name
@@ -158,6 +181,7 @@ def compare_all_results_by_prefix_type(model_name: str):
 
     # Read and process data
     df = pd.read_csv(csv_path)
+    df = drop_non_conclusive_rows(df)
     df = df[["prefix_type", "paraphrase_index", "decision_tokens"]]
     df = convert_decision_tokens_to_dict(df)
 
@@ -169,7 +193,7 @@ def compare_all_results_by_prefix_type(model_name: str):
     for prefix in PXS:
         df_for_prefix = df[df["prefix_type"] == prefix]
         if not df_for_prefix.empty:
-            # Group by paraphrase_index and calculate mean betray probability
+            # Group by paraphrase_index and calculate mean {DECISION_KEYWORDS[0]} (betray/wait) probability
             grouped = df_for_prefix.groupby("paraphrase_index")["decision_tokens"].mean().reset_index()
 
             # Sort by paraphrase_index for proper line connection
@@ -185,9 +209,9 @@ def compare_all_results_by_prefix_type(model_name: str):
                 label=prefix.replace("_", " ").title(),
             )
 
-    plt.title(f"Betray Probability Trends by Paraphrase Index - {model_name}")
+    plt.title(f"{DECISION_KEYWORDS[0]} Probability Trends by Paraphrase Index - {model_name}")
     plt.xlabel("Paraphrase Index")
-    plt.ylabel("Betray Probability")
+    plt.ylabel(f"{DECISION_KEYWORDS[0]} Probability")
     plt.legend(bbox_to_anchor=(1.05, 1), loc="upper left")
     plt.grid(True, alpha=0.3)
     plt.tight_layout()
