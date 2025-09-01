@@ -2,7 +2,7 @@ import torch
 import re
 from typing import List, Tuple, Optional
 
-from src.prompts.configs.games import DECISION_KEYWORDS
+from src.prompts.configs.games2 import DECISION_KEYWORDS
 from src.models.config import REASONING_GENERATION_PARAMS
 from src.utils.tokens import find_position_of_end_thinking_tag
 

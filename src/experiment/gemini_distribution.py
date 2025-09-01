@@ -1,6 +1,7 @@
 from typing import Dict
 from src.models.gemini import GeminiModel
-from src.prompts.configs import games, money
+from src.prompts.configs import games2 as games
+from src.prompts.configs import money
 from src.prompts.prompt_builder import construct_prompt
 import matplotlib.pyplot as plt
 from dotenv import load_dotenv

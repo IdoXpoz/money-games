@@ -8,7 +8,7 @@ import os
 sys.path.append(os.path.join(os.path.dirname(__file__), "..", ".."))
 
 from src.prompts.configs.money import PREFIXES
-from src.prompts.configs.games import DECISION_KEYWORDS
+from src.prompts.configs.games2 import DECISION_KEYWORDS
 
 MODEL_TO_CSV_PATH_MAP = {
     "gemma-3-4b-it": "src/analysis/gemma-3-4b-it_results.csv",

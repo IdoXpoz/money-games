@@ -4,7 +4,7 @@ import time
 
 
 from src.prompts.configs.money import PREFIXES
-from src.prompts.configs.games import TASK_INSTRUCTIONS
+from src.prompts.configs.games2 import TASK_INSTRUCTIONS
 from src.models.config import OPEN_SOURCE_MODELS, REASONING_MODELS, is_reasoning_model
 from src.models.open_source_model import OpenSourceModel
 from src.models.reasoning_model import ReasoningModel
