@@ -24,9 +24,9 @@ MODEL_TO_CSV_PATH_MAP_GAME2 = {
     # "chat-gemma-3-1b-pt": "src/analysis/game2/chat-gemma-3-1b-pt_results.csv",
     # "chat-gemma-3-1b-it": "src/analysis/game2/chat-gemma-3-1b-it_results.csv",
     # "chat-gemma-3-4b-pt": "src/analysis/game2/chat-gemma-3-4b-pt_results.csv",
-    "chat-gemma-3-4b-it": "src/analysis/game2/chat-gemma-3-4b-it_results.csv",
+    # "chat-gemma-3-4b-it": "src/analysis/game2/chat-gemma-3-4b-it_results.csv",
     # "chat-gemma-3-12b-pt": "src/analysis/game2/chat-gemma-3-12b-pt_results.csv",
-    # "chat-gemma-3-12b-it": "src/analysis/game2/chat-gemma-3-12b-it_results.csv",
+    "chat-gemma-3-12b-it": "src/analysis/game2/chat-gemma-3-12b-it_results.csv",
 }
 
 PXS = PREFIXES.keys()
