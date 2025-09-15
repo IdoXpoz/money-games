@@ -8,7 +8,7 @@ import os
 sys.path.append(os.path.join(os.path.dirname(__file__), "..", ".."))
 
 from src.prompts.configs.money import PREFIXES
-from src.prompts.configs.games import DECISION_KEYWORDS
+from src.prompts.configs.games2 import DECISION_KEYWORDS
 
 MODEL_TO_CSV_PATH_MAP_GAME1 = {
     "gemma-3-4b-it": "src/analysis/game1/gemma-3-4b-it_results.csv",
@@ -21,12 +21,12 @@ MODEL_TO_CSV_PATH_MAP_GAME1 = {
 }
 
 MODEL_TO_CSV_PATH_MAP_GAME2 = {
-    "chat-gemma-3-1b-pt": "src/analysis/game2/chat-gemma-3-1b-pt_results.csv",
-    "chat-gemma-3-1b-it": "src/analysis/game2/chat-gemma-3-1b-it_results.csv",
-    "chat-gemma-3-4b-pt": "src/analysis/game2/chat-gemma-3-4b-pt_results.csv",
+    # "chat-gemma-3-1b-pt": "src/analysis/game2/chat-gemma-3-1b-pt_results.csv",
+    # "chat-gemma-3-1b-it": "src/analysis/game2/chat-gemma-3-1b-it_results.csv",
+    # "chat-gemma-3-4b-pt": "src/analysis/game2/chat-gemma-3-4b-pt_results.csv",
     "chat-gemma-3-4b-it": "src/analysis/game2/chat-gemma-3-4b-it_results.csv",
-    "chat-gemma-3-12b-pt": "src/analysis/game2/chat-gemma-3-12b-pt_results.csv",
-    "chat-gemma-3-12b-it": "src/analysis/game2/chat-gemma-3-12b-it_results.csv",
+    # "chat-gemma-3-12b-pt": "src/analysis/game2/chat-gemma-3-12b-pt_results.csv",
+    # "chat-gemma-3-12b-it": "src/analysis/game2/chat-gemma-3-12b-it_results.csv",
 }
 
 PXS = PREFIXES.keys()
