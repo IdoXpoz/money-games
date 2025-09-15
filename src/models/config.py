@@ -1,4 +1,4 @@
-OPEN_SOURCE_MODELS = ["google/gemma-3-12b-it"]
+OPEN_SOURCE_MODELS = ["google/gemma-3-4b-it"]
 # REASONING_MODELS = ["Qwen/Qwen3-4B"]
 # OPEN_SOURCE_MODELS = []
 REASONING_MODELS = []
