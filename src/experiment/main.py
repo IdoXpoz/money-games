@@ -15,6 +15,7 @@ from pathlib import Path
 sys.path.append(str(Path(__file__).parent.parent))
 
 from experiment.runner import ExperimentRunner
+from analysis.trends_analysis import analyze_all
 
 
 def parse_arguments():
@@ -371,6 +372,7 @@ def main():
     
     # Run experiment
     success = run_experiment(args, output_dir)
+    analyze_all()
     
     if success:
         print("\nExperiment completed successfully!")

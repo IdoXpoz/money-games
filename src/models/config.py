@@ -1,6 +1,6 @@
 # OPEN_SOURCE_MODELS = ["google/gemma-3-4b-it"]
-REASONING_MODELS = ["Qwen/Qwen3-4B"]
-OPEN_SOURCE_MODELS = []
+REASONING_MODELS = []
+OPEN_SOURCE_MODELS = ["meta-llama/Llama-3.2-3B-Instruct"]
 # REASONING_MODELS = []
 
 # Use deterministic generation; generate exactly one answer token
