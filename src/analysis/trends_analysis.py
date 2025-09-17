@@ -176,7 +176,7 @@ def compare_mean_by_prefix_type(model_name: str, game: str):
 
     # Read and process data
     df = pd.read_csv(csv_path)
-    df = drop_non_conclusive_rows(df)
+    # df = drop_non_conclusive_rows(df)
     df = df[["prefix_type", "decision_tokens"]]
     df = convert_decision_tokens_to_dict(df)
 
@@ -218,7 +218,7 @@ def compare_all_results_by_prefix_type(model_name: str, game: str):
 
     # Read and process data
     df = pd.read_csv(csv_path)
-    df = drop_non_conclusive_rows(df)
+    # df = drop_non_conclusive_rows(df)
     df = df[["prefix_type", "paraphrase_index", "decision_tokens"]]
     df = convert_decision_tokens_to_dict(df)
 

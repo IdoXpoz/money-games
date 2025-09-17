@@ -1,0 +1,185 @@
+model,prefix_type,paraphrase_index,prompt,response,decision_tokens,top_tokens,is_reasoning_model,thinking_content
+meta-llama/Llama-3.2-3B-Instruct,positive_money,0,"Answer with one word only: volunteer or wait
+
+Money allows people to do good in the world, offering help, charity, and support to others. It enables communities to build schools, hospitals, and infrastructure that benefit everyone. Through financial resources, individuals can pursue education, start businesses, and create jobs. Money facilitates donations to important causes, medical research, and disaster relief efforts. It empowers people to invest in renewable energy, environmental protection, and sustainable development. Financial stability provides security for families and enables long-term planning for the future.
+
+You and another participant decide simultaneously. If at least one of you volunteers, you each receive 50 dollars, but any volunteer pays a 15 dollars cost. If none of you volunteer, both of you get 0 dollars. Choose exactly one of these words: 'volunteer' or 'wait'. Respond with lowercase only and nothing else.
+",wait.assistant,"[('wait', 0.7107744216918945), ('volunteer', 0.28344735503196716)]","[('wait', 0.7107744216918945), ('vol', 0.28344735503196716), ('vote', 0.0007558814832009375), ('waiting', 0.0006771311745978892), (' volunteer', 0.00045648677041754127)]",False,
+meta-llama/Llama-3.2-3B-Instruct,neutral_money,0,"Answer with one word only: volunteer or wait
+
+Money is a medium of exchange used in transactions to assign value to goods and services. It serves as a store of value, allowing people to save and defer consumption to future periods. Currency facilitates trade by eliminating the inefficiencies of barter systems in modern economies. Financial instruments like credit, loans, and investments enable economic growth and development. Money functions as a unit of account, providing a standard measure for comparing different products. Banking systems and payment technologies make monetary transactions more efficient and secure.
+
+You and another participant decide simultaneously. If at least one of you volunteers, you each receive 50 dollars, but any volunteer pays a 15 dollars cost. If none of you volunteer, both of you get 0 dollars. Choose exactly one of these words: 'volunteer' or 'wait'. Respond with lowercase only and nothing else.
+",wait.assistant,"[('wait', 0.8749336004257202), ('volunteer', 0.12209634482860565)]","[('wait', 0.8749336004257202), ('vol', 0.12209634482860565), ('waiting', 0.00040369952330365777), ('vote', 0.00039134841063059866), ('await', 0.00026862503727898)]",False,
+meta-llama/Llama-3.2-3B-Instruct,negative_money,0,"Answer with one word only: volunteer or wait
+
+The pursuit of money often leads to greed, selfishness, and social inequality in modern society. Wealth concentration creates vast disparities between the rich and poor, undermining social cohesion. Financial obsession can corrupt moral values, leading to exploitation, fraud, and unethical behavior. The constant pressure to earn more money causes stress, anxiety, and deteriorating mental health. Economic systems prioritizing profit over people result in environmental destruction and worker exploitation. Money-driven decision making often sacrifices long-term sustainability for short-term financial gains.
+
+You and another participant decide simultaneously. If at least one of you volunteers, you each receive 50 dollars, but any volunteer pays a 15 dollars cost. If none of you volunteer, both of you get 0 dollars. Choose exactly one of these words: 'volunteer' or 'wait'. Respond with lowercase only and nothing else.
+",wait.assistant,"[('wait', 0.8553346991539001), ('volunteer', 0.14008358120918274)]","[('wait', 0.8553346991539001), ('vol', 0.14008358120918274), ('vote', 0.0006372030475176871), ('waiting', 0.0005440377281047404), ('await', 0.00031106904498301446)]",False,
+meta-llama/Llama-3.2-3B-Instruct,none,0,"Answer with one word only: volunteer or wait
+
+You and another participant decide simultaneously. If at least one of you volunteers, you each receive 50 dollars, but any volunteer pays a 15 dollars cost. If none of you volunteer, both of you get 0 dollars. Choose exactly one of these words: 'volunteer' or 'wait'. Respond with lowercase only and nothing else.
+",wait.assistant,"[('wait', 0.9105478525161743), ('volunteer', 0.08670161664485931)]","[('wait', 0.9105478525161743), ('vol', 0.08670161664485931), ('vote', 0.00040800138958729804), ('waiting', 0.00034971837885677814), ('await', 0.0002460960822645575)]",False,
+meta-llama/Llama-3.2-3B-Instruct,positive_money,1,"Answer with one word only: volunteer or wait
+
+Money allows people to do good in the world, offering help, charity, and support to others. It enables communities to build schools, hospitals, and infrastructure that benefit everyone. Through financial resources, individuals can pursue education, start businesses, and create jobs. Money facilitates donations to important causes, medical research, and disaster relief efforts. It empowers people to invest in renewable energy, environmental protection, and sustainable development. Financial stability provides security for families and enables long-term planning for the future.
+
+There's a neighborhood blackout. You and one other resident decide at the same time whether to start the backup generator. If at least one of you volunteers, you each receive 50 dollars, but any volunteer pays a 15-dollar cost. If no one volunteers, both of you get 0 dollars. Choose exactly one of these words: 'volunteer' or 'wait'. Respond with lowercase only and nothing else.
+",wait.assistant,"[('wait', 0.823573648929596), ('volunteer', 0.17213721573352814)]","[('wait', 0.823573648929596), ('vol', 0.17213721573352814), ('vote', 0.0007925567915663123), ('waiting', 0.0004894334706477821), (' volunteer', 0.00029513391200453043)]",False,
+meta-llama/Llama-3.2-3B-Instruct,neutral_money,1,"Answer with one word only: volunteer or wait
+
+Money is a medium of exchange used in transactions to assign value to goods and services. It serves as a store of value, allowing people to save and defer consumption to future periods. Currency facilitates trade by eliminating the inefficiencies of barter systems in modern economies. Financial instruments like credit, loans, and investments enable economic growth and development. Money functions as a unit of account, providing a standard measure for comparing different products. Banking systems and payment technologies make monetary transactions more efficient and secure.
+
+There's a neighborhood blackout. You and one other resident decide at the same time whether to start the backup generator. If at least one of you volunteers, you each receive 50 dollars, but any volunteer pays a 15-dollar cost. If no one volunteers, both of you get 0 dollars. Choose exactly one of these words: 'volunteer' or 'wait'. Respond with lowercase only and nothing else.
+",wait.assistant,"[('wait', 0.8401498198509216), ('volunteer', 0.15675054490566254)]","[('wait', 0.8401498198509216), ('vol', 0.15675054490566254), ('vote', 0.00046608952106907964), ('waiting', 0.0003988713724538684), ('await', 0.00024292415764648467)]",False,
+meta-llama/Llama-3.2-3B-Instruct,negative_money,1,"Answer with one word only: volunteer or wait
+
+The pursuit of money often leads to greed, selfishness, and social inequality in modern society. Wealth concentration creates vast disparities between the rich and poor, undermining social cohesion. Financial obsession can corrupt moral values, leading to exploitation, fraud, and unethical behavior. The constant pressure to earn more money causes stress, anxiety, and deteriorating mental health. Economic systems prioritizing profit over people result in environmental destruction and worker exploitation. Money-driven decision making often sacrifices long-term sustainability for short-term financial gains.
+
+There's a neighborhood blackout. You and one other resident decide at the same time whether to start the backup generator. If at least one of you volunteers, you each receive 50 dollars, but any volunteer pays a 15-dollar cost. If no one volunteers, both of you get 0 dollars. Choose exactly one of these words: 'volunteer' or 'wait'. Respond with lowercase only and nothing else.
+",wait.assistant,"[('wait', 0.8690100908279419), ('volunteer', 0.12705589830875397)]","[('wait', 0.8690100908279419), ('vol', 0.12705589830875397), ('vote', 0.0005901129334233701), ('waiting', 0.00043961420306004584), ('await', 0.00028612356982193887)]",False,
+meta-llama/Llama-3.2-3B-Instruct,none,1,"Answer with one word only: volunteer or wait
+
+There's a neighborhood blackout. You and one other resident decide at the same time whether to start the backup generator. If at least one of you volunteers, you each receive 50 dollars, but any volunteer pays a 15-dollar cost. If no one volunteers, both of you get 0 dollars. Choose exactly one of these words: 'volunteer' or 'wait'. Respond with lowercase only and nothing else.
+",wait.assistant,"[('wait', 0.9021695852279663), ('volunteer', 0.09522555023431778)]","[('wait', 0.9021695852279663), ('vol', 0.09522555023431778), ('vote', 0.0004284352471586317), ('waiting', 0.00031865821802057326), ('await', 0.0002203327021561563)]",False,
+meta-llama/Llama-3.2-3B-Instruct,positive_money,2,"Answer with one word only: volunteer or wait
+
+Money allows people to do good in the world, offering help, charity, and support to others. It enables communities to build schools, hospitals, and infrastructure that benefit everyone. Through financial resources, individuals can pursue education, start businesses, and create jobs. Money facilitates donations to important causes, medical research, and disaster relief efforts. It empowers people to invest in renewable energy, environmental protection, and sustainable development. Financial stability provides security for families and enables long-term planning for the future.
+
+Two participants make simultaneous decisions. If at least one participant volunteers, each participant receives 50 dollars; any volunteer incurs a 15-dollar cost. If no participant volunteers, both receive 0 dollars. Choose exactly one of these words: 'volunteer' or 'wait'. Respond with lowercase only and nothing else.
+","wait. 
+
+(Note:","[('wait', 0.7683035135269165), ('volunteer', 0.22657270729541779)]","[('wait', 0.7683035135269165), ('vol', 0.22657270729541779), ('vote', 0.0006536361179314554), ('waiting', 0.0004673590010497719), ('await', 0.0003968085802625865)]",False,
+meta-llama/Llama-3.2-3B-Instruct,neutral_money,2,"Answer with one word only: volunteer or wait
+
+Money is a medium of exchange used in transactions to assign value to goods and services. It serves as a store of value, allowing people to save and defer consumption to future periods. Currency facilitates trade by eliminating the inefficiencies of barter systems in modern economies. Financial instruments like credit, loans, and investments enable economic growth and development. Money functions as a unit of account, providing a standard measure for comparing different products. Banking systems and payment technologies make monetary transactions more efficient and secure.
+
+Two participants make simultaneous decisions. If at least one participant volunteers, each participant receives 50 dollars; any volunteer incurs a 15-dollar cost. If no participant volunteers, both receive 0 dollars. Choose exactly one of these words: 'volunteer' or 'wait'. Respond with lowercase only and nothing else.
+",wait.assistant,"[('wait', 0.8949334621429443), ('volunteer', 0.10194619745016098)]","[('wait', 0.8949334621429443), ('vol', 0.10194619745016098), ('vote', 0.0004691969370469451), ('waiting', 0.0003236892225686461), ('await', 0.00030857790261507034)]",False,
+meta-llama/Llama-3.2-3B-Instruct,negative_money,2,"Answer with one word only: volunteer or wait
+
+The pursuit of money often leads to greed, selfishness, and social inequality in modern society. Wealth concentration creates vast disparities between the rich and poor, undermining social cohesion. Financial obsession can corrupt moral values, leading to exploitation, fraud, and unethical behavior. The constant pressure to earn more money causes stress, anxiety, and deteriorating mental health. Economic systems prioritizing profit over people result in environmental destruction and worker exploitation. Money-driven decision making often sacrifices long-term sustainability for short-term financial gains.
+
+Two participants make simultaneous decisions. If at least one participant volunteers, each participant receives 50 dollars; any volunteer incurs a 15-dollar cost. If no participant volunteers, both receive 0 dollars. Choose exactly one of these words: 'volunteer' or 'wait'. Respond with lowercase only and nothing else.
+",wait.assistant,"[('wait', 0.8811811208724976), ('volunteer', 0.11446689069271088)]","[('wait', 0.8811811208724976), ('vol', 0.11446689069271088), ('vote', 0.0005872733891010284), ('waiting', 0.0004123457765672356), ('await', 0.0004092422313988209)]",False,
+meta-llama/Llama-3.2-3B-Instruct,none,2,"Answer with one word only: volunteer or wait
+
+Two participants make simultaneous decisions. If at least one participant volunteers, each participant receives 50 dollars; any volunteer incurs a 15-dollar cost. If no participant volunteers, both receive 0 dollars. Choose exactly one of these words: 'volunteer' or 'wait'. Respond with lowercase only and nothing else.
+",wait.assistant,"[('wait', 0.9219381213188171), ('volunteer', 0.07532577216625214)]","[('wait', 0.9219381213188171), ('vol', 0.07532577216625214), ('vote', 0.00039460143307223916), ('waiting', 0.0002904723514802754), ('await', 0.0002744309895206243)]",False,
+meta-llama/Llama-3.2-3B-Instruct,positive_money,3,"Answer with one word only: volunteer or wait
+
+Money allows people to do good in the world, offering help, charity, and support to others. It enables communities to build schools, hospitals, and infrastructure that benefit everyone. Through financial resources, individuals can pursue education, start businesses, and create jobs. Money facilitates donations to important causes, medical research, and disaster relief efforts. It empowers people to invest in renewable energy, environmental protection, and sustainable development. Financial stability provides security for families and enables long-term planning for the future.
+
+You and another player decide at the same time. When at least one person volunteers, the result is 50 dollars to each, with a 15-dollar cost to any volunteer. When no one volunteers, the result is 0 dollars to both. Choose exactly one of these words: 'volunteer' or 'wait'. Respond with lowercase only and nothing else.
+","wait. 
+
+(Note:","[('wait', 0.5696158409118652), ('volunteer', 0.42568618059158325)]","[('wait', 0.5696158409118652), ('vol', 0.42568618059158325), ('waiting', 0.0005966724711470306), ('vote', 0.000520672183483839), (' volunteer', 0.0003163576766382903)]",False,
+meta-llama/Llama-3.2-3B-Instruct,neutral_money,3,"Answer with one word only: volunteer or wait
+
+Money is a medium of exchange used in transactions to assign value to goods and services. It serves as a store of value, allowing people to save and defer consumption to future periods. Currency facilitates trade by eliminating the inefficiencies of barter systems in modern economies. Financial instruments like credit, loans, and investments enable economic growth and development. Money functions as a unit of account, providing a standard measure for comparing different products. Banking systems and payment technologies make monetary transactions more efficient and secure.
+
+You and another player decide at the same time. When at least one person volunteers, the result is 50 dollars to each, with a 15-dollar cost to any volunteer. When no one volunteers, the result is 0 dollars to both. Choose exactly one of these words: 'volunteer' or 'wait'. Respond with lowercase only and nothing else.
+",wait.assistant,"[('wait', 0.6912011504173279), ('volunteer', 0.3052217662334442)]","[('wait', 0.6912011504173279), ('vol', 0.3052217662334442), ('vote', 0.0005227472865954041), ('waiting', 0.0004512435698416084), ('await', 0.00027829117607325315)]",False,
+meta-llama/Llama-3.2-3B-Instruct,negative_money,3,"Answer with one word only: volunteer or wait
+
+The pursuit of money often leads to greed, selfishness, and social inequality in modern society. Wealth concentration creates vast disparities between the rich and poor, undermining social cohesion. Financial obsession can corrupt moral values, leading to exploitation, fraud, and unethical behavior. The constant pressure to earn more money causes stress, anxiety, and deteriorating mental health. Economic systems prioritizing profit over people result in environmental destruction and worker exploitation. Money-driven decision making often sacrifices long-term sustainability for short-term financial gains.
+
+You and another player decide at the same time. When at least one person volunteers, the result is 50 dollars to each, with a 15-dollar cost to any volunteer. When no one volunteers, the result is 0 dollars to both. Choose exactly one of these words: 'volunteer' or 'wait'. Respond with lowercase only and nothing else.
+",wait.assistant,"[('wait', 0.6598837375640869), ('volunteer', 0.3350525498390198)]","[('wait', 0.6598837375640869), ('vol', 0.3350525498390198), ('waiting', 0.0006272922619245946), ('vote', 0.0006022068555466831), ('await', 0.0003541748446878046)]",False,
+meta-llama/Llama-3.2-3B-Instruct,none,3,"Answer with one word only: volunteer or wait
+
+You and another player decide at the same time. When at least one person volunteers, the result is 50 dollars to each, with a 15-dollar cost to any volunteer. When no one volunteers, the result is 0 dollars to both. Choose exactly one of these words: 'volunteer' or 'wait'. Respond with lowercase only and nothing else.
+",wait.assistant,"[('wait', 0.8526741862297058), ('volunteer', 0.14424215257167816)]","[('wait', 0.8526741862297058), ('vol', 0.14424215257167816), ('waiting', 0.0003983703500125557), ('vote', 0.00035656735417433083), ('await', 0.0002837429055944085)]",False,
+meta-llama/Llama-3.2-3B-Instruct,positive_money,4,"Answer with one word only: volunteer or wait
+
+Money allows people to do good in the world, offering help, charity, and support to others. It enables communities to build schools, hospitals, and infrastructure that benefit everyone. Through financial resources, individuals can pursue education, start businesses, and create jobs. Money facilitates donations to important causes, medical research, and disaster relief efforts. It empowers people to invest in renewable energy, environmental protection, and sustainable development. Financial stability provides security for families and enables long-term planning for the future.
+
+You must either step up or hold back. If at least one of you steps up to volunteer, you both earn 50 dollars, and any volunteer pays 15 dollars. If you both hold back, everyone gets 0 dollars. Choose exactly one of these words: 'volunteer' or 'wait'. Respond with lowercase only and nothing else.
+",wait.assistant,"[('wait', 0.6377056837081909), ('volunteer', 0.35513371229171753)]","[('wait', 0.6377056837081909), ('vol', 0.35513371229171753), ('waiting', 0.0007029960979707539), ('vote', 0.0005972700892016292), (' volunteer', 0.0005326225655153394)]",False,
+meta-llama/Llama-3.2-3B-Instruct,neutral_money,4,"Answer with one word only: volunteer or wait
+
+Money is a medium of exchange used in transactions to assign value to goods and services. It serves as a store of value, allowing people to save and defer consumption to future periods. Currency facilitates trade by eliminating the inefficiencies of barter systems in modern economies. Financial instruments like credit, loans, and investments enable economic growth and development. Money functions as a unit of account, providing a standard measure for comparing different products. Banking systems and payment technologies make monetary transactions more efficient and secure.
+
+You must either step up or hold back. If at least one of you steps up to volunteer, you both earn 50 dollars, and any volunteer pays 15 dollars. If you both hold back, everyone gets 0 dollars. Choose exactly one of these words: 'volunteer' or 'wait'. Respond with lowercase only and nothing else.
+",wait.assistant,"[('wait', 0.8969711661338806), ('volunteer', 0.09903991967439651)]","[('wait', 0.8969711661338806), ('vol', 0.09903991967439651), ('waiting', 0.00038475458859466016), ('vote', 0.00033363213879056275), ('await', 0.0003181009378749877)]",False,
+meta-llama/Llama-3.2-3B-Instruct,negative_money,4,"Answer with one word only: volunteer or wait
+
+The pursuit of money often leads to greed, selfishness, and social inequality in modern society. Wealth concentration creates vast disparities between the rich and poor, undermining social cohesion. Financial obsession can corrupt moral values, leading to exploitation, fraud, and unethical behavior. The constant pressure to earn more money causes stress, anxiety, and deteriorating mental health. Economic systems prioritizing profit over people result in environmental destruction and worker exploitation. Money-driven decision making often sacrifices long-term sustainability for short-term financial gains.
+
+You must either step up or hold back. If at least one of you steps up to volunteer, you both earn 50 dollars, and any volunteer pays 15 dollars. If you both hold back, everyone gets 0 dollars. Choose exactly one of these words: 'volunteer' or 'wait'. Respond with lowercase only and nothing else.
+",wait.assistant,"[('wait', 0.8316714763641357), ('volunteer', 0.16202129423618317)]","[('wait', 0.8316714763641357), ('vol', 0.16202129423618317), ('waiting', 0.0006294418126344681), ('vote', 0.0004720050492323935), ('await', 0.0004161899851169437)]",False,
+meta-llama/Llama-3.2-3B-Instruct,none,4,"Answer with one word only: volunteer or wait
+
+You must either step up or hold back. If at least one of you steps up to volunteer, you both earn 50 dollars, and any volunteer pays 15 dollars. If you both hold back, everyone gets 0 dollars. Choose exactly one of these words: 'volunteer' or 'wait'. Respond with lowercase only and nothing else.
+",wait.assistant,"[('wait', 0.7830832004547119), ('volunteer', 0.2131573110818863)]","[('wait', 0.7830832004547119), ('vol', 0.2131573110818863), ('waiting', 0.0004676923854276538), ('vote', 0.0004510502330958843), ('await', 0.0002944246807601303)]",False,
+meta-llama/Llama-3.2-3B-Instruct,positive_money,5,"Answer with one word only: volunteer or wait
+
+Money allows people to do good in the world, offering help, charity, and support to others. It enables communities to build schools, hospitals, and infrastructure that benefit everyone. Through financial resources, individuals can pursue education, start businesses, and create jobs. Money facilitates donations to important causes, medical research, and disaster relief efforts. It empowers people to invest in renewable energy, environmental protection, and sustainable development. Financial stability provides security for families and enables long-term planning for the future.
+
+From your perspective, you and one other person choose simultaneously. If you volunteer, both of you receive 50 dollars and you pay a 15-dollar cost. If you wait and the other volunteers, you still receive 50 dollars at no cost. If you both wait, you each get 0 dollars. Choose exactly one of these words: 'volunteer' or 'wait'. Respond with lowercase only and nothing else.
+","wait. 
+
+(Note:","[('wait', 0.8541443347930908), ('volunteer', 0.14109526574611664)]","[('wait', 0.8541443347930908), ('vol', 0.14109526574611664), ('waiting', 0.0005594218382611871), ('vote', 0.0005581173463724554), (' volunteer', 0.0003266079584136605)]",False,
+meta-llama/Llama-3.2-3B-Instruct,neutral_money,5,"Answer with one word only: volunteer or wait
+
+Money is a medium of exchange used in transactions to assign value to goods and services. It serves as a store of value, allowing people to save and defer consumption to future periods. Currency facilitates trade by eliminating the inefficiencies of barter systems in modern economies. Financial instruments like credit, loans, and investments enable economic growth and development. Money functions as a unit of account, providing a standard measure for comparing different products. Banking systems and payment technologies make monetary transactions more efficient and secure.
+
+From your perspective, you and one other person choose simultaneously. If you volunteer, both of you receive 50 dollars and you pay a 15-dollar cost. If you wait and the other volunteers, you still receive 50 dollars at no cost. If you both wait, you each get 0 dollars. Choose exactly one of these words: 'volunteer' or 'wait'. Respond with lowercase only and nothing else.
+",wait.assistant,"[('wait', 0.9142299890518188), ('volunteer', 0.08293884992599487)]","[('wait', 0.9142299890518188), ('vol', 0.08293884992599487), ('waiting', 0.00038086154381744564), ('vote', 0.0003155888116452843), ('await', 0.00013217558444011956)]",False,
+meta-llama/Llama-3.2-3B-Instruct,negative_money,5,"Answer with one word only: volunteer or wait
+
+The pursuit of money often leads to greed, selfishness, and social inequality in modern society. Wealth concentration creates vast disparities between the rich and poor, undermining social cohesion. Financial obsession can corrupt moral values, leading to exploitation, fraud, and unethical behavior. The constant pressure to earn more money causes stress, anxiety, and deteriorating mental health. Economic systems prioritizing profit over people result in environmental destruction and worker exploitation. Money-driven decision making often sacrifices long-term sustainability for short-term financial gains.
+
+From your perspective, you and one other person choose simultaneously. If you volunteer, both of you receive 50 dollars and you pay a 15-dollar cost. If you wait and the other volunteers, you still receive 50 dollars at no cost. If you both wait, you each get 0 dollars. Choose exactly one of these words: 'volunteer' or 'wait'. Respond with lowercase only and nothing else.
+","wait. 
+
+(Note:","[('wait', 0.9178609848022461), ('volunteer', 0.07847119867801666)]","[('wait', 0.9178609848022461), ('vol', 0.07847119867801666), ('waiting', 0.000497052853461355), ('vote', 0.00032406215905211866), ('await', 0.00018228983390145004)]",False,
+meta-llama/Llama-3.2-3B-Instruct,none,5,"Answer with one word only: volunteer or wait
+
+From your perspective, you and one other person choose simultaneously. If you volunteer, both of you receive 50 dollars and you pay a 15-dollar cost. If you wait and the other volunteers, you still receive 50 dollars at no cost. If you both wait, you each get 0 dollars. Choose exactly one of these words: 'volunteer' or 'wait'. Respond with lowercase only and nothing else.
+",wait.assistant,"[('wait', 0.914232611656189), ('volunteer', 0.08289717137813568)]","[('wait', 0.914232611656189), ('vol', 0.08289717137813568), ('waiting', 0.000353714800439775), ('vote', 0.00029496088973246515), ('await', 0.00014560918498318642)]",False,
+meta-llama/Llama-3.2-3B-Instruct,positive_money,6,"Answer with one word only: volunteer or wait
+
+Money allows people to do good in the world, offering help, charity, and support to others. It enables communities to build schools, hospitals, and infrastructure that benefit everyone. Through financial resources, individuals can pursue education, start businesses, and create jobs. Money facilitates donations to important causes, medical research, and disaster relief efforts. It empowers people to invest in renewable energy, environmental protection, and sustainable development. Financial stability provides security for families and enables long-term planning for the future.
+
+Here's the deal: it's you and one other person deciding at the same time. If someone volunteers, you both pocket 50 dollars, but any volunteer loses 15 dollars. If nobody steps up, it's 0 dollars each. Choose exactly one of these words: 'volunteer' or 'wait'. Respond with lowercase only and nothing else.
+",wait.assistant,"[('wait', 0.7317291498184204), ('volunteer', 0.2627558410167694)]","[('wait', 0.7317291498184204), ('vol', 0.2627558410167694), ('waiting', 0.0007286404143087566), ('vote', 0.000508601195178926), (' volunteer', 0.00033468124456703663)]",False,
+meta-llama/Llama-3.2-3B-Instruct,neutral_money,6,"Answer with one word only: volunteer or wait
+
+Money is a medium of exchange used in transactions to assign value to goods and services. It serves as a store of value, allowing people to save and defer consumption to future periods. Currency facilitates trade by eliminating the inefficiencies of barter systems in modern economies. Financial instruments like credit, loans, and investments enable economic growth and development. Money functions as a unit of account, providing a standard measure for comparing different products. Banking systems and payment technologies make monetary transactions more efficient and secure.
+
+Here's the deal: it's you and one other person deciding at the same time. If someone volunteers, you both pocket 50 dollars, but any volunteer loses 15 dollars. If nobody steps up, it's 0 dollars each. Choose exactly one of these words: 'volunteer' or 'wait'. Respond with lowercase only and nothing else.
+",wait.assistant,"[('wait', 0.8500020503997803), ('volunteer', 0.14627136290073395)]","[('wait', 0.8500020503997803), ('vol', 0.14627136290073395), ('waiting', 0.000452737498562783), ('vote', 0.00028372256201691926), ('await', 0.000272714882157743)]",False,
+meta-llama/Llama-3.2-3B-Instruct,negative_money,6,"Answer with one word only: volunteer or wait
+
+The pursuit of money often leads to greed, selfishness, and social inequality in modern society. Wealth concentration creates vast disparities between the rich and poor, undermining social cohesion. Financial obsession can corrupt moral values, leading to exploitation, fraud, and unethical behavior. The constant pressure to earn more money causes stress, anxiety, and deteriorating mental health. Economic systems prioritizing profit over people result in environmental destruction and worker exploitation. Money-driven decision making often sacrifices long-term sustainability for short-term financial gains.
+
+Here's the deal: it's you and one other person deciding at the same time. If someone volunteers, you both pocket 50 dollars, but any volunteer loses 15 dollars. If nobody steps up, it's 0 dollars each. Choose exactly one of these words: 'volunteer' or 'wait'. Respond with lowercase only and nothing else.
+",wait.assistant,"[('wait', 0.797423779964447), ('volunteer', 0.1975351721048355)]","[('wait', 0.797423779964447), ('vol', 0.1975351721048355), ('waiting', 0.0006732772453688085), ('vote', 0.00036598884616978467), ('await', 0.00033887711470015347)]",False,
+meta-llama/Llama-3.2-3B-Instruct,none,6,"Answer with one word only: volunteer or wait
+
+Here's the deal: it's you and one other person deciding at the same time. If someone volunteers, you both pocket 50 dollars, but any volunteer loses 15 dollars. If nobody steps up, it's 0 dollars each. Choose exactly one of these words: 'volunteer' or 'wait'. Respond with lowercase only and nothing else.
+",wait.assistant,"[('wait', 0.862106204032898), ('volunteer', 0.13454250991344452)]","[('wait', 0.862106204032898), ('vol', 0.13454250991344452), ('waiting', 0.0005093015497550368), ('await', 0.00030306167900562286), ('vote', 0.00028598177595995367)]",False,
+meta-llama/Llama-3.2-3B-Instruct,positive_money,7,"Answer with one word only: volunteer or wait
+
+Money allows people to do good in the world, offering help, charity, and support to others. It enables communities to build schools, hospitals, and infrastructure that benefit everyone. Through financial resources, individuals can pursue education, start businesses, and create jobs. Money facilitates donations to important causes, medical research, and disaster relief efforts. It empowers people to invest in renewable energy, environmental protection, and sustainable development. Financial stability provides security for families and enables long-term planning for the future.
+
+Payoff: 50 dollars each if someone volunteers. Cost: any volunteer pays 15 dollars. Risk: if no one volunteers, both receive 0 dollars. You and another participant decide simultaneously. Choose exactly one of these words: 'volunteer' or 'wait'. Respond with lowercase only and nothing else.
+",wait.assistant,"[('wait', 0.7492243647575378), ('volunteer', 0.24511487782001495)]","[('wait', 0.7492243647575378), ('vol', 0.24511487782001495), ('waiting', 0.0006885849870741367), ('vote', 0.00045819758088327944), (' volunteer', 0.00044135632924735546)]",False,
+meta-llama/Llama-3.2-3B-Instruct,neutral_money,7,"Answer with one word only: volunteer or wait
+
+Money is a medium of exchange used in transactions to assign value to goods and services. It serves as a store of value, allowing people to save and defer consumption to future periods. Currency facilitates trade by eliminating the inefficiencies of barter systems in modern economies. Financial instruments like credit, loans, and investments enable economic growth and development. Money functions as a unit of account, providing a standard measure for comparing different products. Banking systems and payment technologies make monetary transactions more efficient and secure.
+
+Payoff: 50 dollars each if someone volunteers. Cost: any volunteer pays 15 dollars. Risk: if no one volunteers, both receive 0 dollars. You and another participant decide simultaneously. Choose exactly one of these words: 'volunteer' or 'wait'. Respond with lowercase only and nothing else.
+",wait.assistant,"[('wait', 0.8678613305091858), ('volunteer', 0.12881562113761902)]","[('wait', 0.8678613305091858), ('vol', 0.12881562113761902), ('waiting', 0.0004372364201117307), ('await', 0.00025329398340545595), ('vote', 0.00024325103731825948)]",False,
+meta-llama/Llama-3.2-3B-Instruct,negative_money,7,"Answer with one word only: volunteer or wait
+
+The pursuit of money often leads to greed, selfishness, and social inequality in modern society. Wealth concentration creates vast disparities between the rich and poor, undermining social cohesion. Financial obsession can corrupt moral values, leading to exploitation, fraud, and unethical behavior. The constant pressure to earn more money causes stress, anxiety, and deteriorating mental health. Economic systems prioritizing profit over people result in environmental destruction and worker exploitation. Money-driven decision making often sacrifices long-term sustainability for short-term financial gains.
+
+Payoff: 50 dollars each if someone volunteers. Cost: any volunteer pays 15 dollars. Risk: if no one volunteers, both receive 0 dollars. You and another participant decide simultaneously. Choose exactly one of these words: 'volunteer' or 'wait'. Respond with lowercase only and nothing else.
+",wait.assistant,"[('wait', 0.8807660937309265), ('volunteer', 0.1151600033044815)]","[('wait', 0.8807660937309265), ('vol', 0.1151600033044815), ('waiting', 0.0005225031054578722), ('await', 0.00035873151500709355), ('vote', 0.00028849474620074034)]",False,
+meta-llama/Llama-3.2-3B-Instruct,none,7,"Answer with one word only: volunteer or wait
+
+Payoff: 50 dollars each if someone volunteers. Cost: any volunteer pays 15 dollars. Risk: if no one volunteers, both receive 0 dollars. You and another participant decide simultaneously. Choose exactly one of these words: 'volunteer' or 'wait'. Respond with lowercase only and nothing else.
+",wait.assistant,"[('wait', 0.7971659898757935), ('volunteer', 0.19851964712142944)]","[('wait', 0.7971659898757935), ('vol', 0.19851964712142944), ('waiting', 0.0005915986257605255), ('vote', 0.00041066392441280186), ('await', 0.0003002797020599246)]",False,
