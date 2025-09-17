@@ -26,7 +26,8 @@ MODEL_TO_CSV_PATH_MAP_GAME2 = {
     # "chat-gemma-3-4b-pt": "src/analysis/game2/chat-gemma-3-4b-pt_results.csv",
     # "chat-gemma-3-4b-it": "src/analysis/game2/chat-gemma-3-4b-it_results.csv",
     # "chat-gemma-3-12b-pt": "src/analysis/game2/chat-gemma-3-12b-pt_results.csv",
-    "chat-gemma-3-12b-it": "src/analysis/game2/chat-gemma-3-12b-it_results.csv",
+    # "chat-gemma-3-12b-it": "src/analysis/game2/chat-gemma-3-12b-it_results.csv",
+    "chat-llama-3.2-3B-Instruct": "src/analysis/game2/chat-llama-3.2-3b-instruct_results.csv",
 }
 
 PXS = PREFIXES.keys()
@@ -175,7 +176,7 @@ def compare_mean_by_prefix_type(model_name: str, game: str):
 
     # Read and process data
     df = pd.read_csv(csv_path)
-    df = drop_non_conclusive_rows(df)
+    #  df = drop_non_conclusive_rows(df)
     df = df[["prefix_type", "decision_tokens"]]
     df = convert_decision_tokens_to_dict(df)
 
@@ -217,7 +218,7 @@ def compare_all_results_by_prefix_type(model_name: str, game: str):
 
     # Read and process data
     df = pd.read_csv(csv_path)
-    df = drop_non_conclusive_rows(df)
+    #  df = drop_non_conclusive_rows(df)
     df = df[["prefix_type", "paraphrase_index", "decision_tokens"]]
     df = convert_decision_tokens_to_dict(df)
 
