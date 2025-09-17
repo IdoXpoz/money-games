@@ -23,4 +23,10 @@ non_reasoning_models_data = {
         "negative_money": 0.859,
         "none": 0.663,
     },
+    "game-2_chat-llama-3.2-3B-Instruct": {
+        "positive_money": 0.731,
+        "neutral_money": 0.854,
+        "negative_money": 0.837,
+        "none": 0.868,
+    },
 }
