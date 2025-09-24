@@ -8,15 +8,15 @@ import os
 sys.path.append(os.path.join(os.path.dirname(__file__), "..", ".."))
 
 from src.prompts.configs.money import PREFIXES
-from src.prompts.configs.games2 import DECISION_KEYWORDS
+from src.prompts.configs.games import DECISION_KEYWORDS
 
 MODEL_TO_CSV_PATH_MAP_GAME1 = {
-    "gemma-3-4b-it": "src/analysis/game1/gemma-3-4b-it_results.csv",
-    "gemma-3-12b-it": "src/analysis/game1/gemma-3-12b-it_results.csv",
-    "chat-gemma-3-4b-it": "src/analysis/game1/chat-gemma-3-4b-it_results.csv",
-    "chat-gemma-3-12b-it": "src/analysis/game1/chat-gemma-3-12b-it_results.csv",
-    "Qwen-without-temperature": "src/analysis/game1/qwen_results.csv",
-    "Qwen": "src/analysis/game1/qwen_results_with_temperature.csv",
+    # "gemma-3-4b-it": "src/analysis/game1/gemma-3-4b-it_results.csv",
+    # "gemma-3-12b-it": "src/analysis/game1/gemma-3-12b-it_results.csv",
+    # "chat-gemma-3-4b-it": "src/analysis/game1/chat-gemma-3-4b-it_results.csv",
+    # "chat-gemma-3-12b-it": "src/analysis/game1/chat-gemma-3-12b-it_results.csv",
+    # "Qwen-without-temperature": "src/analysis/game1/qwen_results.csv",
+    # "Qwen": "src/analysis/game1/qwen_results_with_temperature.csv",
     "chat-llama-3.2-3B-Instruct": "src/analysis/game1/chat-llama-3.2-3b-instruct_results.csv",
 }
 
@@ -95,7 +95,7 @@ def analyze_all():
     """
     Analyze results for both game1 and game2.
     """
-    for game in ["game2"]:
+    for game in ["game1"]:
         print(f"Analyzing {game}...")
         model_map, output_dir = get_model_map_and_output_dir(game)
         models_to_analyze = model_map.keys()
@@ -246,11 +246,15 @@ def compare_all_results_by_prefix_type(model_name: str, game: str):
                 label=prefix.replace("_", " ").title(),
             )
 
-    plt.title(f"{DECISION_KEYWORDS[0]} Probability Trends by Paraphrase Index - {model_name}")
-    plt.xlabel("Paraphrase Index")
-    plt.ylabel(f"{DECISION_KEYWORDS[0]} Probability")
-    plt.legend(bbox_to_anchor=(1.05, 1), loc="upper left")
+    plt.title(
+        f"{DECISION_KEYWORDS[0]} Probability Trends by Paraphrase Index - {model_name}", fontsize=16, fontweight="bold"
+    )
+    plt.xlabel("Paraphrase Index", fontsize=16)
+    plt.ylabel(f"{DECISION_KEYWORDS[0]} Probability", fontsize=16)
+    plt.legend(bbox_to_anchor=(1.05, 1), loc="upper left", fontsize=16)
     plt.grid(True, alpha=0.3)
+    plt.xticks(fontsize=12)
+    plt.yticks(fontsize=12)
     plt.tight_layout()
     plt.savefig(f"{output_dir}/{model_name}_paraphrase_trends.png", bbox_inches="tight")
     plt.close()
