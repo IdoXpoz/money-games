@@ -41,11 +41,11 @@ def create_money_category_graph(df):
     bars = ax.bar(x_pos, means, color=colors, alpha=0.8, edgecolor="black", linewidth=1.2)
 
     # Customize the plot
-    ax.set_xlabel("Money Context", fontsize=14, fontweight="bold")
-    ax.set_ylabel("Probability of Selfish Response", fontsize=14, fontweight="bold")
+    ax.set_xlabel("Money Context", fontsize=20, fontweight="bold")
+    ax.set_ylabel("Probability of Selfish Response", fontsize=20, fontweight="bold")
     ax.set_title(
         "Model Selfishness Across Money Conditions",
-        fontsize=16,
+        fontsize=24,
         fontweight="bold",
         pad=20,
     )
@@ -58,11 +58,11 @@ def create_money_category_graph(df):
         "Negative Money\nContext",
     ]
     ax.set_xticks(x_pos)
-    ax.set_xticklabels(category_labels, fontsize=12)
+    ax.set_xticklabels(category_labels, fontsize=18)
 
     # Customize y-axis
     ax.set_ylim(0, max(means) + 0.1)
-    ax.tick_params(axis="y", labelsize=12)
+    ax.tick_params(axis="y", labelsize=18)
 
     # Add value labels on top of bars
     for i, (bar, mean) in enumerate(zip(bars, means)):
@@ -74,7 +74,7 @@ def create_money_category_graph(df):
             ha="center",
             va="bottom",
             fontweight="bold",
-            fontsize=11,
+            fontsize=16,
         )
 
     # Add grid and styling
@@ -115,23 +115,23 @@ def create_money_vs_none_graph(df):
     bars = ax.bar(x_pos, condition_stats["mean"], color=colors, alpha=0.8, edgecolor="black", linewidth=1.2)
 
     # Customize the plot
-    ax.set_xlabel("Condition", fontsize=14, fontweight="bold")
-    ax.set_ylabel("Probability of Selfish Response", fontsize=14, fontweight="bold")
+    ax.set_xlabel("Condition", fontsize=20, fontweight="bold")
+    ax.set_ylabel("Probability of Selfish Response", fontsize=20, fontweight="bold")
     ax.set_title(
         "Effect of Money Context on Model Selfishness",
-        fontsize=16,
+        fontsize=24,
         fontweight="bold",
         pad=20,
     )
 
     # Set x-axis labels
     ax.set_xticks(x_pos)
-    ax.set_xticklabels(condition_stats["condition"], fontsize=12)
+    ax.set_xticklabels(condition_stats["condition"], fontsize=18)
 
     # Customize y-axis
     max_val = condition_stats["mean"].max()
     ax.set_ylim(0, max_val + 0.1)
-    ax.tick_params(axis="y", labelsize=12)
+    ax.tick_params(axis="y", labelsize=18)
 
     # Add value labels on top of bars
     for i, (bar, mean) in enumerate(zip(bars, condition_stats["mean"])):
@@ -143,7 +143,7 @@ def create_money_vs_none_graph(df):
             ha="center",
             va="bottom",
             fontweight="bold",
-            fontsize=12,
+            fontsize=16,
         )
 
     # Calculate and display the difference
@@ -155,7 +155,7 @@ def create_money_vs_none_graph(df):
     # Add text box with statistics
     textstr = f"Difference: +{difference:.3f}\nIncrease: +{percent_increase:.1f}%"
     props = dict(boxstyle="round", facecolor="wheat", alpha=0.8)
-    ax.text(0.02, 0.98, textstr, transform=ax.transAxes, fontsize=11, verticalalignment="top", bbox=props)
+    ax.text(0.02, 0.98, textstr, transform=ax.transAxes, fontsize=16, verticalalignment="top", bbox=props)
 
     # Add grid and styling
     ax.grid(axis="y", alpha=0.3)

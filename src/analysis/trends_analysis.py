@@ -10,7 +10,7 @@ import os
 sys.path.append(os.path.join(os.path.dirname(__file__), "..", ".."))
 
 from src.prompts.configs.money import PREFIXES
-from src.prompts.configs.games import DECISION_KEYWORDS
+from src.prompts.configs.games2 import DECISION_KEYWORDS
 
 MODEL_TO_CSV_PATH_MAP_GAME1 = {
     # "gemma-3-4b-it": "src/analysis/game1/gemma-3-4b-it_results.csv",
@@ -19,7 +19,7 @@ MODEL_TO_CSV_PATH_MAP_GAME1 = {
     # "chat-gemma-3-12b-it": "src/analysis/game1/chat-gemma-3-12b-it_results.csv",
     # "Qwen-without-temperature": "src/analysis/game1/qwen_results.csv",
     "Qwen": "src/analysis/game1/qwen_results_with_temperature.csv",
-    # "chat-llama-3.2-3B-Instruct": "src/analysis/game1/chat-llama-3.2-3b-instruct_results.csv",
+    "chat-llama-3.2-3B-Instruct": "src/analysis/game1/chat-llama-3.2-3b-instruct_results.csv",
 }
 
 MODEL_TO_CSV_PATH_MAP_GAME2 = {
@@ -212,11 +212,11 @@ def compare_mean_by_prefix_type(model_name: str, game: str):
     bars = ax.bar(x_pos, ordered_means, color=ordered_colors, alpha=0.8, edgecolor="black", linewidth=1.2)
 
     # Customize the plot
-    ax.set_xlabel("Money Context", fontsize=14, fontweight="bold")
-    ax.set_ylabel(f"Probability of {DECISION_KEYWORDS[0].title()} Response", fontsize=14, fontweight="bold")
+    ax.set_xlabel("Money Context", fontsize=20, fontweight="bold")
+    ax.set_ylabel(f"Probability of {DECISION_KEYWORDS[0].title()} Response", fontsize=20, fontweight="bold")
     ax.set_title(
         f"Model {DECISION_KEYWORDS[0].title()} Probability Across Money Conditions - {model_name}",
-        fontsize=16,
+        fontsize=24,
         fontweight="bold",
         pad=20,
     )
@@ -229,11 +229,11 @@ def compare_mean_by_prefix_type(model_name: str, game: str):
         "Negative Money\nContext",
     ]
     ax.set_xticks(x_pos)
-    ax.set_xticklabels([category_labels[category_order.index(prefix)] for prefix in ordered_prefixes], fontsize=12)
+    ax.set_xticklabels([category_labels[category_order.index(prefix)] for prefix in ordered_prefixes], fontsize=18)
 
     # Customize y-axis
     ax.set_ylim(0, max(ordered_means) + 0.1)
-    ax.tick_params(axis="y", labelsize=12)
+    ax.tick_params(axis="y", labelsize=18)
 
     # Add value labels on top of bars
     for i, (bar, mean) in enumerate(zip(bars, ordered_means)):
@@ -245,7 +245,7 @@ def compare_mean_by_prefix_type(model_name: str, game: str):
             ha="center",
             va="bottom",
             fontweight="bold",
-            fontsize=11,
+            fontsize=16,
         )
 
     # Add grid and styling
@@ -298,17 +298,124 @@ def compare_all_results_by_prefix_type(model_name: str, game: str):
             )
 
     plt.title(
-        f"{DECISION_KEYWORDS[0]} Probability Trends by Paraphrase Index - {model_name}", fontsize=16, fontweight="bold"
+        f"{DECISION_KEYWORDS[0]} Probability Trends by Paraphrase Index - {model_name}", fontsize=24, fontweight="bold"
     )
-    plt.xlabel("Paraphrase Index", fontsize=16)
-    plt.ylabel(f"{DECISION_KEYWORDS[0]} Probability", fontsize=16)
-    plt.legend(bbox_to_anchor=(1.05, 1), loc="upper left", fontsize=16)
+    plt.xlabel("Paraphrase Index", fontsize=20)
+    plt.ylabel(f"{DECISION_KEYWORDS[0]} Probability", fontsize=20)
+    plt.legend(bbox_to_anchor=(1.05, 1), loc="upper left", fontsize=18)
     plt.grid(True, alpha=0.3)
-    plt.xticks(fontsize=12)
-    plt.yticks(fontsize=12)
+    plt.xticks(fontsize=18)
+    plt.yticks(fontsize=18)
     plt.tight_layout()
     plt.savefig(f"{output_dir}/{model_name}_paraphrase_trends.png", bbox_inches="tight")
     plt.close()
+
+
+def compare_combined_qwen_models_game2():
+    """
+    Create a bar chart showing mean wait probability for each prefix type,
+    combining data from both qwen-4b and qwen-8b models for game2.
+    """
+    # Set up the plotting style for publication quality
+    plt.style.use("seaborn-v0_8-whitegrid")
+    sns.set_palette("husl")
+
+    # Define the paths to both CSV files
+    qwen_4b_path = "src/analysis/game2/qwen-4b_results_with_temperature.csv"
+    qwen_8b_path = "src/analysis/game2/qwen-8b_results_with_temperature.csv"
+    output_dir = OUTPUT_DIR_GAME2
+
+    # Read and process data from both models
+    df_4b = pd.read_csv(qwen_4b_path)
+    df_8b = pd.read_csv(qwen_8b_path)
+
+    # Combine the data
+    df_combined = pd.concat([df_4b, df_8b], ignore_index=True)
+
+    # Process the combined data
+    df_combined = df_combined[["prefix_type", "decision_tokens"]]
+    df_combined = convert_decision_tokens_to_dict(df_combined)
+
+    # Calculate mean wait probability for each prefix type
+    means_by_prefix = {}
+    for prefix in PXS:
+        df_for_prefix = df_combined[df_combined["prefix_type"] == prefix]
+        if not df_for_prefix.empty:
+            means_by_prefix[prefix] = df_for_prefix["decision_tokens"].mean()
+
+    # Define custom order and colors for categories to match other figures
+    category_order = ["none", "positive_money", "neutral_money", "negative_money"]
+    colors = ["#808080", "#228B22", "#FFA500", "#DC143C"]  # Grey, ForestGreen, Orange, Crimson
+
+    # Reorder data to match the desired order
+    ordered_prefixes = [prefix for prefix in category_order if prefix in means_by_prefix]
+    ordered_means = [means_by_prefix[prefix] for prefix in ordered_prefixes]
+    ordered_colors = [colors[category_order.index(prefix)] for prefix in ordered_prefixes]
+
+    # Create the plot
+    fig, ax = plt.subplots(figsize=(10, 6))
+
+    # Create bars
+    x_pos = np.arange(len(ordered_prefixes))
+    bars = ax.bar(x_pos, ordered_means, color=ordered_colors, alpha=0.8, edgecolor="black", linewidth=1.2)
+
+    # Customize the plot
+    ax.set_xlabel("Money Context", fontsize=20, fontweight="bold")
+    ax.set_ylabel("Probability of Wait Response", fontsize=20, fontweight="bold")
+    ax.set_title(
+        "Model Wait Probability Across Money Conditions - Qwen",
+        fontsize=22,
+        fontweight="bold",
+        pad=20,
+    )
+
+    # Set x-axis labels
+    category_labels = [
+        "No Money\nContext",
+        "Positive Money\nContext",
+        "Neutral Money\nContext",
+        "Negative Money\nContext",
+    ]
+    ax.set_xticks(x_pos)
+    ax.set_xticklabels([category_labels[category_order.index(prefix)] for prefix in ordered_prefixes], fontsize=18)
+
+    # Customize y-axis
+    ax.set_ylim(0, max(ordered_means) + 0.1)
+    ax.tick_params(axis="y", labelsize=18)
+
+    # Add value labels on top of bars
+    for i, (bar, mean) in enumerate(zip(bars, ordered_means)):
+        height = bar.get_height()
+        ax.text(
+            bar.get_x() + bar.get_width() / 2.0,
+            height + 0.01,
+            f"{mean:.3f}",
+            ha="center",
+            va="bottom",
+            fontweight="bold",
+            fontsize=16,
+        )
+
+    # Add grid and styling
+    ax.grid(axis="y", alpha=0.3)
+    ax.spines["top"].set_visible(False)
+    ax.spines["right"].set_visible(False)
+
+    plt.tight_layout()
+    plt.savefig(
+        f"{output_dir}/Combined_Qwen_4B_8B_wait_probability_by_money_context.png",
+        dpi=300,
+        bbox_inches="tight",
+        facecolor="white",
+    )
+    plt.close()
+
+    # Print the results for verification
+    print("Combined Qwen Models (4B + 8B) Wait Probability by Money Context:")
+    for prefix in ordered_prefixes:
+        print(f"{prefix}: {means_by_prefix[prefix]:.3f}")
+
+    return f"{output_dir}/Combined_Qwen_4B_8B_wait_probability_by_money_context.png"
 
 
 if __name__ == "__main__":

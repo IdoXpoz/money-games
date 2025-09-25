@@ -129,17 +129,17 @@ def main():
     )
 
     # Customize the plot
-    ax.set_title("Average Probability of Selfish Response by Model", fontsize=16, fontweight="bold", pad=20)
-    ax.set_xlabel("Model", fontsize=14, fontweight="bold")
-    ax.set_ylabel("Average Probability of Selfish Response", fontsize=14, fontweight="bold")
+    ax.set_title("Average Probability of Selfish Response by Model", fontsize=24, fontweight="bold", pad=20)
+    ax.set_xlabel("Model", fontsize=20, fontweight="bold")
+    ax.set_ylabel("Average Probability of Selfish Response", fontsize=20, fontweight="bold")
 
     # Set x-axis labels
     ax.set_xticks(x_pos)
-    ax.set_xticklabels(models, fontsize=12)
+    ax.set_xticklabels(models, fontsize=18)
 
     # Customize y-axis
     ax.set_ylim(0, max(averages) * 1.15)
-    ax.tick_params(axis="y", labelsize=12)
+    ax.tick_params(axis="y", labelsize=18)
 
     # Add value labels on top of bars
     for i, (bar, avg) in enumerate(zip(bars, averages)):
@@ -151,7 +151,7 @@ def main():
             ha="center",
             va="bottom",
             fontweight="bold",
-            fontsize=11,
+            fontsize=16,
         )
 
     # Add grid and styling to match other graphs
