@@ -28,7 +28,8 @@ MODEL_TO_CSV_PATH_MAP_GAME2 = {
     # "chat-gemma-3-12b-pt": "src/analysis/game2/chat-gemma-3-12b-pt_results.csv",
     # "chat-gemma-3-12b-it": "src/analysis/game2/chat-gemma-3-12b-it_results.csv",
     # "chat-llama-3.2-3B-Instruct": "src/analysis/game2/chat-llama-3.2-3b-instruct_results.csv",
-    "Qwen": "src/analysis/game2/qwen_results_with_temperature.csv",
+    "Qwen-4b": "src/analysis/game2/qwen-4b_results_with_temperature.csv",
+    "Qwen-8b": "src/analysis/game2/qwen-8b_results_with_temperature.csv",
 }
 
 PXS = PREFIXES.keys()
