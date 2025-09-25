@@ -197,7 +197,7 @@ def compare_mean_by_prefix_type(model_name: str, game: str):
 
     # Define custom order and colors for categories to match other figures
     category_order = ["none", "positive_money", "neutral_money", "negative_money"]
-    colors = ["#2E8B57", "#4169E1", "#9370DB", "#FF8C00"]  # SeaGreen, RoyalBlue, MediumPurple, DarkOrange
+    colors = ["#808080", "#228B22", "#FFA500", "#DC143C"]  # Grey, ForestGreen, Orange, Crimson
 
     # Reorder data to match the desired order
     ordered_prefixes = [prefix for prefix in category_order if prefix in means_by_prefix]
@@ -276,7 +276,7 @@ def compare_all_results_by_prefix_type(model_name: str, game: str):
     # Create the plot
     plt.figure(figsize=(12, 8))
 
-    colors = {"none": "#2E8B57", "positive_money": "#4169E1", "neutral_money": "#9370DB", "negative_money": "#FF8C00"}
+    colors = {"none": "#808080", "positive_money": "#228B22", "neutral_money": "#FFA500", "negative_money": "#DC143C"}
 
     for prefix in PXS:
         df_for_prefix = df[df["prefix_type"] == prefix]

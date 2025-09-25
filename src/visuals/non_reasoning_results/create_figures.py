@@ -28,7 +28,7 @@ def create_money_category_graph(df):
 
     # Define custom order and colors for categories
     category_order = ["none", "positive_money", "neutral_money", "negative_money"]
-    colors = ["#2E8B57", "#4169E1", "#9370DB", "#FF8C00"]  # SeaGreen, RoyalBlue, MediumPurple, DarkOrange
+    colors = ["#808080", "#228B22", "#FFA500", "#DC143C"]  # Grey, ForestGreen, Orange, Crimson
 
     # Create the plot
     fig, ax = plt.subplots(figsize=(10, 6))
@@ -108,7 +108,7 @@ def create_money_vs_none_graph(df):
     fig, ax = plt.subplots(figsize=(8, 6))
 
     # Define colors in the order they will appear
-    colors = ["#2E8B57", "#DC143C"]  # No Money Context = green, Money Context = red
+    colors = ["#808080", "#1E90FF"]  # No Money Context = grey, Money Context = blue
 
     # Create bars
     x_pos = np.arange(len(condition_stats))
