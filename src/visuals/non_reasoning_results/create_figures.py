@@ -28,7 +28,7 @@ def create_money_category_graph(df):
 
     # Define custom order and colors for categories
     category_order = ["none", "positive_money", "neutral_money", "negative_money"]
-    colors = ["#2E8B57", "#4169E1", "#FF6347", "#DC143C"]  # SeaGreen, RoyalBlue, Tomato, Crimson
+    colors = ["#2E8B57", "#4169E1", "#9370DB", "#FF8C00"]  # SeaGreen, RoyalBlue, MediumPurple, DarkOrange
 
     # Create the plot
     fig, ax = plt.subplots(figsize=(10, 6))
@@ -100,11 +100,15 @@ def create_money_vs_none_graph(df):
     # Calculate standard error
     condition_stats["se"] = condition_stats["std"] / np.sqrt(condition_stats["count"])
 
+    # Define the desired order and reorder the dataframe
+    desired_order = ["No Money Context", "Money Context"]
+    condition_stats = condition_stats.set_index("condition").reindex(desired_order).reset_index()
+
     # Create the plot
     fig, ax = plt.subplots(figsize=(8, 6))
 
-    # Define colors
-    colors = ["#2E8B57", "#DC143C"]  # SeaGreen for no money, Crimson for money
+    # Define colors in the order they will appear
+    colors = ["#2E8B57", "#DC143C"]  # No Money Context = green, Money Context = red
 
     # Create bars
     x_pos = np.arange(len(condition_stats))
@@ -170,7 +174,7 @@ def main():
     # Create and save the first figure (money categories)
     fig1 = create_money_category_graph(df)
     fig1.savefig(
-        "/Users/idoavnir/Desktop/uni/semF/nlp/project/money_games/src/figure_1/money_categories_aggregated.png",
+        "/Users/idoavnir/Desktop/uni/semF/nlp/project/money_games/src/visuals/non_reasoning_results/money_categories_aggregated.png",
         dpi=300,
         bbox_inches="tight",
         facecolor="white",
@@ -180,7 +184,7 @@ def main():
     # Create and save the second figure (money vs none)
     fig2 = create_money_vs_none_graph(df)
     fig2.savefig(
-        "/Users/idoavnir/Desktop/uni/semF/nlp/project/money_games/src/figure_1/money_vs_none_aggregated.png",
+        "/Users/idoavnir/Desktop/uni/semF/nlp/project/money_games/src/visuals/non_reasoning_results/money_vs_none_aggregated.png",
         dpi=300,
         bbox_inches="tight",
         facecolor="white",
