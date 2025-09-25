@@ -1,5 +1,7 @@
 import pandas as pd
 import matplotlib.pyplot as plt
+import seaborn as sns
+import numpy as np
 import ast
 import sys
 import os
@@ -172,6 +174,10 @@ def compare_mean_by_prefix_type(model_name: str, game: str):
     """
     Create a bar chart showing mean {DECISION_KEYWORDS[0]} (betray/wait) probability for each prefix type.
     """
+    # Set up the plotting style for publication quality
+    plt.style.use("seaborn-v0_8-whitegrid")
+    sns.set_palette("husl")
+
     # Determine the CSV path based on model name and game
     model_map, output_dir = get_model_map_and_output_dir(game)
     csv_path = model_map[model_name]
@@ -189,23 +195,66 @@ def compare_mean_by_prefix_type(model_name: str, game: str):
         if not df_for_prefix.empty:
             means_by_prefix[prefix] = df_for_prefix["decision_tokens"].mean()
 
-    # Create bar plot
-    plt.figure(figsize=(10, 6))
-    prefixes = list(means_by_prefix.keys())
-    means = list(means_by_prefix.values())
+    # Define custom order and colors for categories to match other figures
+    category_order = ["none", "positive_money", "neutral_money", "negative_money"]
+    colors = ["#2E8B57", "#4169E1", "#9370DB", "#FF8C00"]  # SeaGreen, RoyalBlue, MediumPurple, DarkOrange
 
-    bars = plt.bar(prefixes, means, color=["green", "blue", "red", "gray"])
-    plt.title(f"Mean {DECISION_KEYWORDS[0]} Probability by Prefix Type - {model_name}")
-    plt.xlabel("Prefix Type")
-    plt.ylabel(f"Mean {DECISION_KEYWORDS[0]} Probability")
-    plt.xticks(rotation=45, ha="right")
+    # Reorder data to match the desired order
+    ordered_prefixes = [prefix for prefix in category_order if prefix in means_by_prefix]
+    ordered_means = [means_by_prefix[prefix] for prefix in ordered_prefixes]
+    ordered_colors = [colors[category_order.index(prefix)] for prefix in ordered_prefixes]
 
-    # Add value labels on bars
-    for bar, mean in zip(bars, means):
-        plt.text(bar.get_x() + bar.get_width() / 2, bar.get_height() + 0.01, f"{mean:.3f}", ha="center", va="bottom")
+    # Create the plot
+    fig, ax = plt.subplots(figsize=(10, 6))
+
+    # Create bars
+    x_pos = np.arange(len(ordered_prefixes))
+    bars = ax.bar(x_pos, ordered_means, color=ordered_colors, alpha=0.8, edgecolor="black", linewidth=1.2)
+
+    # Customize the plot
+    ax.set_xlabel("Money Context", fontsize=14, fontweight="bold")
+    ax.set_ylabel(f"Probability of {DECISION_KEYWORDS[0].title()} Response", fontsize=14, fontweight="bold")
+    ax.set_title(
+        f"Model {DECISION_KEYWORDS[0].title()} Probability Across Money Conditions - {model_name}",
+        fontsize=16,
+        fontweight="bold",
+        pad=20,
+    )
+
+    # Set x-axis labels
+    category_labels = [
+        "No Money\nContext",
+        "Positive Money\nContext",
+        "Neutral Money\nContext",
+        "Negative Money\nContext",
+    ]
+    ax.set_xticks(x_pos)
+    ax.set_xticklabels([category_labels[category_order.index(prefix)] for prefix in ordered_prefixes], fontsize=12)
+
+    # Customize y-axis
+    ax.set_ylim(0, max(ordered_means) + 0.1)
+    ax.tick_params(axis="y", labelsize=12)
+
+    # Add value labels on top of bars
+    for i, (bar, mean) in enumerate(zip(bars, ordered_means)):
+        height = bar.get_height()
+        ax.text(
+            bar.get_x() + bar.get_width() / 2.0,
+            height + 0.01,
+            f"{mean:.3f}",
+            ha="center",
+            va="bottom",
+            fontweight="bold",
+            fontsize=11,
+        )
+
+    # Add grid and styling
+    ax.grid(axis="y", alpha=0.3)
+    ax.spines["top"].set_visible(False)
+    ax.spines["right"].set_visible(False)
 
     plt.tight_layout()
-    plt.savefig(f"{output_dir}/{model_name}_mean_by_prefix_type.png")
+    plt.savefig(f"{output_dir}/{model_name}_mean_by_prefix_type.png", dpi=300, bbox_inches="tight", facecolor="white")
     plt.close()
 
 
@@ -227,7 +276,7 @@ def compare_all_results_by_prefix_type(model_name: str, game: str):
     # Create the plot
     plt.figure(figsize=(12, 8))
 
-    colors = {"positive_money": "green", "neutral_money": "blue", "negative_money": "red", "none": "gray"}
+    colors = {"none": "#2E8B57", "positive_money": "#4169E1", "neutral_money": "#9370DB", "negative_money": "#FF8C00"}
 
     for prefix in PXS:
         df_for_prefix = df[df["prefix_type"] == prefix]
