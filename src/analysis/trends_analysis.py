@@ -8,7 +8,7 @@ import os
 sys.path.append(os.path.join(os.path.dirname(__file__), "..", ".."))
 
 from src.prompts.configs.money import PREFIXES
-from src.prompts.configs.games import DECISION_KEYWORDS
+from src.prompts.configs.games2 import DECISION_KEYWORDS
 
 MODEL_TO_CSV_PATH_MAP_GAME1 = {
     # "gemma-3-4b-it": "src/analysis/game1/gemma-3-4b-it_results.csv",
@@ -27,7 +27,8 @@ MODEL_TO_CSV_PATH_MAP_GAME2 = {
     # "chat-gemma-3-4b-it": "src/analysis/game2/chat-gemma-3-4b-it_results.csv",
     # "chat-gemma-3-12b-pt": "src/analysis/game2/chat-gemma-3-12b-pt_results.csv",
     # "chat-gemma-3-12b-it": "src/analysis/game2/chat-gemma-3-12b-it_results.csv",
-    "chat-llama-3.2-3B-Instruct": "src/analysis/game2/chat-llama-3.2-3b-instruct_results.csv",
+    # "chat-llama-3.2-3B-Instruct": "src/analysis/game2/chat-llama-3.2-3b-instruct_results.csv",
+    "Qwen": "src/analysis/game2/qwen_results_with_temperature.csv",
 }
 
 PXS = PREFIXES.keys()
@@ -95,7 +96,7 @@ def analyze_all():
     """
     Analyze results for both game1 and game2.
     """
-    for game in ["game1"]:
+    for game in ["game2"]:
         print(f"Analyzing {game}...")
         model_map, output_dir = get_model_map_and_output_dir(game)
         models_to_analyze = model_map.keys()
